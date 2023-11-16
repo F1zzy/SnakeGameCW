@@ -1,13 +1,15 @@
 package example;
 
 import java.awt.Graphics;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Random;
 import java.awt.Graphics2D;
 import java.awt.Image;
 
-public class Food extends MyFrame.SnakeObject
-{
+public class Food extends MyFrame.SnakeObject  {
 
+	@Serial
 	private static final long serialVersionUID = -3641221053272056036L;
 
 
@@ -29,7 +31,7 @@ public class Food extends MyFrame.SnakeObject
 		if (mySnake.getRectangle().intersects(this.getRectangle()) && l && mySnake.l)		{
 			this.l = false;
 			mySnake.changeLength(mySnake.getLength() + 1);
-			mySnake.score += 521;
+			mySnake.score += 1;
 		}
 	}
 	@Override

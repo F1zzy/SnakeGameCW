@@ -5,18 +5,21 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.io.Serial;
 
 /**
  * 
  * @Project Snakee
- * @Description Spilaðu leikinn
+ * @Description
+ * Play the game
  * @Author Sigurður Sigurðardóttir
- * @version Ekki viss
+ * @version
  */ 
 
 public class Play extends MyFrame
 {
 
+	@Serial
 	private static final long serialVersionUID = -3641221053272056036L;
 
 	public MySnake mySnake = new MySnake(100, 100);// x , y
@@ -38,7 +41,7 @@ public class Play extends MyFrame
 		super.paint(g);
 		g.drawImage(background, 0, 0, null);
 
-		// Ákveða stöðu leiksins.
+		// Determine the state of the game.
 		if (mySnake.l)
 		{
 			mySnake.draw(g);

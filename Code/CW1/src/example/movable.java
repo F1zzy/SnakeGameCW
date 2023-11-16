@@ -2,7 +2,7 @@ package example;
 
 /**
  * 
- * @Project Snakee
+ * @Project Snake
  * @Description Fyrsta viðmótið
  * @Author Sigurður Sigurðardóttir
  * @version Ekki viss
