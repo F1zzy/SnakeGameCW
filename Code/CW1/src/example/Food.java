@@ -2,41 +2,54 @@ package example;
 
 import java.awt.Graphics;
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.Random;
-import java.awt.Graphics2D;
-import java.awt.Image;
 
+/**
+ * Represents a food object in the Snake game.
+ */
 public class Food extends MyFrame.SnakeObject  {
 
 	@Serial
 	private static final long serialVersionUID = -3641221053272056036L;
 
 
-
+	/**
+	 * Constructor to make a new Food object with a random image and position.
+	 */
 	public Food()	{
-		this.l = true;
+		this.isAlive = true;
 
-		this.i = ImageUtil.images.get(String.valueOf(new Random().nextInt(10)));
+		this.image = ImageUtil.images.get(String.valueOf(new Random().nextInt(10)));
 
-		this.w = i.getWidth(null);
-		this.h = i.getHeight(null);
+		this.width = image.getWidth(null);
+		this.height = image.getHeight(null);
 
-		this.x = (int) (Math.random() * (870 - w + 10));
-		this.y = (int) (Math.random() * (560 - h - 40));
+		// Set random coordinates for the food within the game panel
+		this.x = (int) (Math.random() * (870 - width + 10));
+		this.y = (int) (Math.random() * (560 - height - 40));
 	}
-
+	/**
+	 * When the food is eaten by the snake.
+	 *
+	 * @param snake The snake object.
+	 */
 	public void eaten(MyFrame.MySnake mySnake)	{
 
-		if (mySnake.getRectangle().intersects(this.getRectangle()) && l && mySnake.l)		{
-			this.l = false;
+		// Check for collision between snake and food
+		if (mySnake.getRectangle().intersects(this.getRectangle()) && isAlive && mySnake.isAlive)		{
+			this.isAlive = false;
+			// Increase the snake's length and update the score when food is eaten
 			mySnake.changeLength(mySnake.getLength() + 1);
 			mySnake.score += 1;
 		}
 	}
+	/**
+	 * Draws the food on the game panel.
+	 *
+	 */
 	@Override
 	public void draw(Graphics g)
-	{
-		g.drawImage(i, x, y, null);
+	{	// Draw the food on the game panel
+		g.drawImage(image, x, y, null);
 	}
 }

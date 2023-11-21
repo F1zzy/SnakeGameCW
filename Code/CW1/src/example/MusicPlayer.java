@@ -2,21 +2,29 @@ package example;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.util.Random;
-import java.awt.Graphics2D;
 
 import javazoom.jl.player.Player;
 
+/**
+ * The MusicPlayer class is responsible for playing music in a separate thread.
+ */
 public class MusicPlayer extends Thread
 {
-	private String filename;
-	public Player player;
-
+	private String musicFilePath;
+	public Player musicPlayer;
+	/**
+	 * Constructs a MusicPlayer with the given music file path.
+	 *
+	 * @param musicFilePath The path of the music file to be played.
+	 */
 	public MusicPlayer(String filename)
 	{
-		this.filename = filename;
+		this.musicFilePath = filename;
 	}
 
+	/**
+	 * Plays the music in a separate thread.
+	 */
 	public void play()
 	{
 		new Thread()
@@ -28,8 +36,8 @@ public class MusicPlayer extends Thread
 				try
 				{
 					//BufferedInputStream buffer = new BufferedInputStream(new FileInputStream(filename));
-					player = new Player(new BufferedInputStream(new FileInputStream(filename)));
-					player.play();
+					musicPlayer = new Player(new BufferedInputStream(new FileInputStream(musicFilePath)));
+					musicPlayer.play();
 
 				} catch (Exception e)
 				{
@@ -40,7 +48,11 @@ public class MusicPlayer extends Thread
 	}
 
 
-
+	/**
+	 * Simplifies the process of creating a MusicPlayer instance and starting music playback.
+	 *
+	 * @param musicFilePath The path of the music file to be played.
+	 */
 	public static void getMusicPlay(String filename)
 	{
 		MusicPlayer musicPlayer = new MusicPlayer(filename);

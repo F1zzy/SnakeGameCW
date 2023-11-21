@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
-import java.io.Serial;
 
 /**
  * 
@@ -16,11 +15,7 @@ import java.io.Serial;
  * @version
  */ 
 
-public class Play extends MyFrame
-{
-
-	@Serial
-	private static final long serialVersionUID = -3641221053272056036L;
+public class Play extends MyFrame {
 
 	public MySnake mySnake = new MySnake(100, 100);// x , y
 	public Food food = new Food();
@@ -29,51 +24,47 @@ public class Play extends MyFrame
 	public Image fail = ImageUtil.images.get("game-scene-01");
 
 	@Override
-	public void keyPressed(KeyEvent e)
-	{
+	public void keyPressed(KeyEvent e) {
 		super.keyPressed(e);
 		mySnake.keyPressed(e);
 	}
 
 	@Override
-	public void paint(Graphics g)
-	{
+	public void paint(Graphics g) {
 		super.paint(g);
 		g.drawImage(background, 0, 0, null);
 
 		// Determine the state of the game.
-		if (mySnake.l)
-		{
+		if (mySnake.isAlive) {
 			mySnake.draw(g);
-			if (food.l)
-			{
+			if (food.isAlive) {
 				food.draw(g);
 				food.eaten(mySnake);
-			} else
-			{
+			} else {
 				food = new Food();
 			}
-		} else
-		{
+		} else {
 			g.drawImage(fail, 0, 0, null);
 		}
 		drawScore(g);
 	}
 
-	public void drawScore(Graphics g)
-	{
+	public void drawScore(Graphics g) {
 		g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
 		g.setColor(Color.MAGENTA);
 		g.drawString("SCORE : " + mySnake.score, 20, 40);
 	}
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
+
+
 		new Play().loadFrame();
-		MusicPlayer.getMusicPlay("src/example/frogger.mp3");
+//		MusicPlayer.getMusicPlay("src/example/frogger.mp3");
 
 	}
-/*	
+
+
+/*
 	public static void main(String[] args)
 	{
 		JFrame frame = new JFrame();
@@ -91,4 +82,11 @@ public class Play extends MyFrame
 		MusicPlayer.getMusicPlay("resource\\music\\background.mp3");
 	} 
 */
+
+
+
+
+
+
+
 }
