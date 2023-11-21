@@ -42,7 +42,9 @@ As a part of initial maintenance understand the code. You can perhaps do the fol
   - Video recording should not be more than 3 minutes. We will look for the quality of the video, clarity of the voice, clear images, clear navigation synch with clear explanation.
 
 **Milestone 2 – Final deliverable (90%)**
-See the marking scheme for the individual requirements and attached `begum_maior.xlsx`.
+
+[See the marking scheme for the individual requirements and attached .](COMP2013%20Marking%20Scheme.md)
+
 **2nd Video presentation 7 minutes**
 Use screen-capturing software to demonstrate your achievements.
 - Show each of refactoring and additions activities.
