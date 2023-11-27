@@ -33,15 +33,15 @@ public class MusicPlayer extends Thread
 			public void run()
 			{
 				super.run();
-				while (true) {
-					try {
-						//BufferedInputStream buffer = new BufferedInputStream(new FileInputStream(filename));
-						musicPlayer = new Player(new BufferedInputStream(new FileInputStream(musicFilePath)));
-						musicPlayer.play();
+				try
+				{
+					//BufferedInputStream buffer = new BufferedInputStream(new FileInputStream(filename));
+					musicPlayer = new Player(new BufferedInputStream(new FileInputStream(musicFilePath)));
+					musicPlayer.play();
 
-					} catch (Exception e) {
-						System.out.println(e);
-					}
+				} catch (Exception e)
+				{
+					System.out.println(e);
 				}
 			}
 		}.start();
