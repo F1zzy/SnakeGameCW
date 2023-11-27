@@ -8,7 +8,7 @@ import java.io.File;
 public class ImageUtil
 {
 	public static Map<String, Image> images = new HashMap<>();
-	private static final String IMAGE_PATH = "example/";
+	//private static final String IMAGE_PATH = "example/";
 	static
 	{
 		loadSnakeImages();

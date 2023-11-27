@@ -33,7 +33,8 @@ public abstract class MyFrame extends JPanel implements KeyListener
 
 	public MyFrame()
 	{
-		//jFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(MyFrame.class.getResource("snake-logo.png")));
+		jFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("snake-logo.png")));
+
 	}
 
 	public void loadFrame()
