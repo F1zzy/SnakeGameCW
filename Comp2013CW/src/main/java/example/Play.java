@@ -44,7 +44,7 @@ public class Play extends MyFrame {
 				food = new Food();
 			}
 		} else {
-			g.drawImage(fail, 0, 0, getWidth(), getHeight(), null);
+			g.drawImage(fail, 0, 0, null);
 		}
 		drawScore(g);
 	}
@@ -59,7 +59,7 @@ public class Play extends MyFrame {
 
 
 		new Play().loadFrame();
-		MusicPlayer.getMusicPlay("src/main/resources/frogger.mp3");
+		MusicPlayer.getMusicPlay("frogger.mp3");
 
 	}
 
