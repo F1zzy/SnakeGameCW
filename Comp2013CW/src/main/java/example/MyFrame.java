@@ -13,38 +13,43 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- * 
+ *
  * @Project Snakee
- * @Description Hladdu leikinn og endurnýjaðu hann stöðugt
- * @Author Sigurður Sigurðardóttir
- * @version Ekki viss
- */ 
+ * @Description Load the game and refresh it constantly
+ * @Author Abdullah Tukur
+ * @version 0.1
+ */
 
 
-public class MyFrame extends JPanel implements KeyListener
+public abstract class MyFrame extends JPanel implements KeyListener
 {
 	private static final long serialVersionUID = -3149926831770554380L;
+
+	private static final int FRAME_WIDTH = 870;
+	private static final int FRAME_HEIGHT = 560;
+	private static final int SNAKE_SPEED = 5;
 
 	public JFrame jFrame = new JFrame();
 
 	public MyFrame()
 	{
-		jFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(MyFrame.class.getResource("snake-logo.png")));
+		//jFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(MyFrame.class.getResource("snake-logo.png")));
 	}
 
 	public void loadFrame()
 	{
-		/*
-		 * Komið í veg fyrir að myndin blikki.
+		/**
+		 * Configures and loads the game frame.
 		 */
 		this.setDoubleBuffered(true);
 		jFrame.add(this);
 		jFrame.addKeyListener(this);
 
 		jFrame.setTitle("Snakee Yipee");
-		jFrame.setSize(870, 560);
+		jFrame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		jFrame.setLocationRelativeTo(null);
-		jFrame.addWindowListener(new WindowAdapter()// loka
+		//Closing Window safely
+		jFrame.addWindowListener(new WindowAdapter()
 		{
 			@Override
 			public void windowClosing(WindowEvent e)
@@ -55,9 +60,28 @@ public class MyFrame extends JPanel implements KeyListener
 		});
 		jFrame.setVisible(true);
 
-		new MyThread().start();
+		new gameThread().start();
 	}
-	class MyThread extends Thread
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+
+	}
+
+	/**
+	 * Thread for continuously updating and repainting the Game Frame.
+	 */
+	class gameThread extends Thread
 	{
 		@Override
 		public void run()
@@ -76,34 +100,14 @@ public class MyFrame extends JPanel implements KeyListener
 			}
 		}
 	}
-
-	@Override
-	public void keyTyped(KeyEvent e)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
+	/**
+	 * The Snake Object.
+	 */
 	public static class MySnake extends SnakeObject implements movable
 	{
-		// Leikjabreytan.
 		private int speed_XY;
 		private int length;
-		private int num; // ?
+		private int numOfBodies; // ?
 		public int score = 0;
 
 		private static final BufferedImage IMG_SNAKE_HEAD = (BufferedImage) ImageUtil.images.get("snake-head-right");
@@ -115,20 +119,20 @@ public class MyFrame extends JPanel implements KeyListener
 
 		public MySnake(int x, int y)
 		{
-			this.l = true;
+			this.isAlive = true;
 			this.x = x;
 			this.y = y;
-			this.i = ImageUtil.images.get("snake-body");
-			this.w = i.getWidth(null);
-			this.h = i.getHeight(null);
+			this.image = ImageUtil.images.get("snake-body");
+			this.width = image.getWidth(null);
+			this.height = image.getHeight(null);
 
-			this.speed_XY = 5;
+			this.speed_XY = SNAKE_SPEED;
 			this.length = 1;
 
 			/*
 			 * Attention : ?
 			 */
-			this.num = w / speed_XY;
+			this.numOfBodies = width / speed_XY;
 			newImgSnakeHead = IMG_SNAKE_HEAD;
 
 		}
@@ -145,7 +149,7 @@ public class MyFrame extends JPanel implements KeyListener
 
 		public void keyPressed(KeyEvent e)
 		{
-			// athugaðu lykilinn
+			// Check The Key pressed. if not arrow keys ignore
 			switch (e.getKeyCode())
 			{
 			case KeyEvent.VK_UP:
@@ -204,7 +208,7 @@ public class MyFrame extends JPanel implements KeyListener
 
 		public void move()
 		{
-			// láta kvikindið hreyfa sig
+			//let the swarm move
 			if (up)
 			{
 				y -= speed_XY;
@@ -229,7 +233,7 @@ public class MyFrame extends JPanel implements KeyListener
 
 			bodyPoints.add(new Point(x, y));
 
-			if (bodyPoints.size() == (this.length + 1) * num)
+			if (bodyPoints.size() == (this.length + 1) * numOfBodies)
 			{
 				bodyPoints.remove(0);
 			}
@@ -239,6 +243,9 @@ public class MyFrame extends JPanel implements KeyListener
 			move();
 		}
 
+		/**
+		 * Checks for collisions with the snake's own body.
+		 */
 		public void eatBody()
 		{
 			for (Point point : bodyPoints)
@@ -247,50 +254,58 @@ public class MyFrame extends JPanel implements KeyListener
 				{
 					if (point.equals(point2) && point != point2)
 					{
-						this.l = false;
+						this.isAlive = false;
 					}
 				}
 			}
 		}
-
+		/**
+		 * Draws the snake's body on the screen.
+		 */
 		public void drawBody(Graphics g)
 		{
-			int length = bodyPoints.size() - 1 - num;
+			int length = bodyPoints.size() - 1 - numOfBodies;
 
-			for (int i = length; i >= num; i -= num)
+			for (int i = length; i >= numOfBodies; i -= numOfBodies)
 			{
 				Point point = bodyPoints.get(i);
-				g.drawImage(this.i, point.x, point.y, null);
+				g.drawImage(this.image, point.x, point.y, null);
 			}
 		}
-
+		/**
+		 * Checks if the snake is out of bounds and sets isAlive fasle.
+		 */
 		private void outofBounds()
 		{
-			boolean xOut = (x <= 0 || x >= (870 - w));
-			boolean yOut = (y <= 40 || y >= (560 - h));
+			boolean xOut = (x <= 0 || x >= (870 - width));
+			boolean yOut = (y <= 0 || y >= (560 - height));
 			if (xOut || yOut)
 			{
-				l = false;
+				isAlive = false;
 			}
 		}
 	}
-
+	/**
+	 * Abstract class representing a generic Snake object.
+	 */
 	public abstract static class SnakeObject
 	{
 		int x;
 		int y;
-		Image i;
-		int w;
-		int h;
+		Image image;
+		int width;
+		int height;
 
-		public boolean l;
+		public boolean isAlive;
 
-
+		/**
+		 * Abstract method to draw the SnakeObject on the screen.
+		 */
 		public abstract void draw(Graphics g);
 
 		public Rectangle getRectangle()
 		{
-			return new Rectangle(x, y, w, h);
+			return new Rectangle(x, y, width, height);
 		}
 	}
 }
