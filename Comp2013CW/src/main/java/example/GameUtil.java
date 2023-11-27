@@ -22,9 +22,6 @@ public class GameUtil
 		} catch (Exception e)
 		{
 			System.err.println("ERROR : SPECIFIC IMAGE NOT FOUND !\n");
-			//System.out.println(System.getProperty("java.class.path"));
-			//System.out.println("Working Directory: " + System.getProperty("user.dir"));
-			//printMainDirectoryContents();
 
 			e.printStackTrace();
 		}
@@ -51,24 +48,4 @@ public class GameUtil
 
 	}
 
-	public static void printMainDirectoryContents() {
-		String currentDirectoryPath = "src/main/resources";
-		File currentDirectory = new File(currentDirectoryPath);
-
-		if (currentDirectory.exists() && currentDirectory.isDirectory()) {
-			File[] files = currentDirectory.listFiles();
-
-			if (files != null) {
-				for (File file : files) {
-					System.out.println(file.getName());
-				}
-			} else {
-				System.out.println("The main directory is empty.");
-			}
-		} else {
-			System.out.println("Unable to access the main directory.");
-		}
-	}
-
-	
 }

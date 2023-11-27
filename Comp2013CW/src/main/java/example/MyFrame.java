@@ -277,8 +277,8 @@ public abstract class MyFrame extends JPanel implements KeyListener
 		 */
 		private void outofBounds()
 		{
-			boolean xOut = (x <= 0 || x >= (870 - width));
-			boolean yOut = (y <= 0 || y >= (560 - height));
+			boolean xOut = (x <= 0 || x >= (FRAME_WIDTH - width));
+			boolean yOut = (y <= 0 || y >= (FRAME_HEIGHT - height));
 			if (xOut || yOut)
 			{
 				isAlive = false;
