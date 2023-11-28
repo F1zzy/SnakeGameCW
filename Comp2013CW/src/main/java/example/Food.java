@@ -33,7 +33,7 @@ public class Food extends MyFrame.SnakeObject  {
 	 *
 	 * @param snake The snake object.
 	 */
-	public void eaten(MyFrame.MySnake mySnake)	{
+	public void eaten(ModelSnake mySnake)	{
 
 		// Check for collision between snake and food
 		if (mySnake.getRectangle().intersects(this.getRectangle()) && isAlive && mySnake.isAlive)		{
