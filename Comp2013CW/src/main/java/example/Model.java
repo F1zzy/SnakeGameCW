@@ -71,9 +71,10 @@ public class Model extends Observable {
 
     public void eatBody()
     {
-        for (Point point : ModelSnake.bodyPoints)
+        if(SnakeObject.getLength() == 1) return;
+        for (Point point : SnakeObject.bodyPoints)
         {
-            for (Point point2 : ModelSnake.bodyPoints)
+            for (Point point2 : SnakeObject.bodyPoints)
             {
                 if (point.equals(point2) && point != point2)
                 {
