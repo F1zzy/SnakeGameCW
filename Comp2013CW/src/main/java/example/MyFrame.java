@@ -13,7 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- *
  * @Project Snakee
  * @Description Load the game and refresh it constantly
  * @Author Abdullah Tukur
@@ -33,8 +32,7 @@ public abstract class MyFrame extends JPanel implements KeyListener
 
 	public MyFrame()
 	{
-		jFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("snake-logo.png")));
-
+		jFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(MyFrame.class.getResource("/snake-logo.png")));
 	}
 
 	public void loadFrame()
@@ -116,6 +114,7 @@ public abstract class MyFrame extends JPanel implements KeyListener
 		public static List<Point> bodyPoints = new LinkedList<>();
 
 		private static BufferedImage newImgSnakeHead;
+
 		boolean up, down, left, right = true;
 
 		public MySnake(int x, int y)
@@ -130,9 +129,6 @@ public abstract class MyFrame extends JPanel implements KeyListener
 			this.speed_XY = SNAKE_SPEED;
 			this.length = 1;
 
-			/*
-			 * Attention : ?
-			 */
 			this.numOfBodies = width / speed_XY;
 			newImgSnakeHead = IMG_SNAKE_HEAD;
 

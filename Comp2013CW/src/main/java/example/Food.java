@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * Represents a food object in the Snake game.
  */
-public class Food extends MyFrame.SnakeObject  {
+public class Food extends GameObject  {
 
 	@Serial
 	private static final long serialVersionUID = -3641221053272056036L;
@@ -33,7 +33,7 @@ public class Food extends MyFrame.SnakeObject  {
 	 *
 	 * @param snake The snake object.
 	 */
-	public void eaten(MyFrame.MySnake mySnake)	{
+	public void eaten(ModelSnake mySnake)	{
 
 		// Check for collision between snake and food
 		if (mySnake.getRectangle().intersects(this.getRectangle()) && isAlive && mySnake.isAlive)		{
@@ -47,7 +47,7 @@ public class Food extends MyFrame.SnakeObject  {
 	 * Draws the food on the game panel.
 	 *
 	 */
-	@Override
+
 	public void draw(Graphics g)
 	{	// Draw the food on the game panel
 		g.drawImage(image, x, y, null);

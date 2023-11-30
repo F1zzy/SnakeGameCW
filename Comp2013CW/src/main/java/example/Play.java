@@ -1,10 +1,18 @@
 package example;
 
+//import sun.awt.windows.WPathGraphics;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import static java.lang.Thread.sleep;
 
 /**
  * 
@@ -31,22 +39,23 @@ public class Play extends MyFrame {
 
 	@Override
 	public void paint(Graphics g) {
-		super.paint(g);
-		g.drawImage(background, 0, 0, null);
 
-		// Determine the state of the game.
-		if (mySnake.isAlive) {
-			mySnake.draw(g);
-			if (food.isAlive) {
-				food.draw(g);
-				food.eaten(mySnake);
-			} else {
-				food = new Food();
-			}
-		} else {
-			g.drawImage(fail, 0, 0, getWidth(), getHeight(), null);
-		}
-		drawScore(g);
+//		super.paint(g);
+//		g.drawImage(background, 0, 0, null);
+//
+//		// Determine the state of the game.
+//		if (mySnake.isAlive) {
+//			mySnake.draw(g);
+//			if (food.isAlive) {
+//				food.draw(g);
+//				//food.eaten(mySnake);
+//			} else {
+//				food = new Food();
+//			}
+//		} else {
+//			//g.drawImage(fail, 0, 0, getWidth(), getHeight(), null);
+//		}
+//		drawScore(g);
 	}
 
 	public void drawScore(Graphics g) {
@@ -54,8 +63,12 @@ public class Play extends MyFrame {
 		g.setColor(Color.MAGENTA);
 		g.drawString("SCORE : " + mySnake.score, 20, 40);
 	}
-
+/*
 	public static void main(String[] args) {
+
+		//Model model = new Model();
+		//View view = new View(model);
+		//Controller controller = new Controller(model);
 
 
 		new Play().loadFrame();
@@ -63,25 +76,34 @@ public class Play extends MyFrame {
 
 	}
 
-
-/*
-	public static void main(String[] args)
-	{
-		JFrame frame = new JFrame();
-		// frame.setSize(400,600);
-		frame.setBounds(450, 200, 920, 600);
-		// frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		SnakePanel panel = new SnakePanel();
-		frame.add(panel);
-
-		frame.setVisible(true);
-
-		// Play the background music.
-		MusicPlayer.getMusicPlay("resource\\music\\background.mp3");
-	} 
 */
+
+    public static void main(String[] args) throws InterruptedException {
+        Model model = new Model();
+		Controller controller = new Controller(model);
+        View view = new View(model , controller);
+
+
+		MusicPlayer.getMusicPlay("src/main/resources/frogger.mp3");
+
+        // Game loop
+        while (true) {
+            model.updateGame();
+			if(model.EndGame) {
+				sleep(20);
+				break;
+			}
+			try
+			{
+				sleep(30);
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+        }
+
+    }
+
 
 
 

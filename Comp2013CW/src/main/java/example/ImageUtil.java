@@ -3,7 +3,6 @@ package example;
 import java.awt.Image;
 import java.util.HashMap;
 import java.util.Map;
-import java.io.File;
 
 public class ImageUtil
 {
@@ -50,7 +49,7 @@ public class ImageUtil
 	}
 
 	private static void loadSceneImages() {
-		images.put("game-scene-01", GameUtil.getImage("game-scene-01.jpg"));
+		images.put("Fail-Scene", GameUtil.getImage("Fail-Scene.jpg"));
 
 	}
 }
