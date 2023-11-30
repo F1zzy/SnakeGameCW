@@ -1,7 +1,9 @@
 package example;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ExecutionException;
@@ -9,6 +11,7 @@ import java.util.concurrent.ExecutionException;
 
 public class View extends JPanel implements Observer {
     private Model model;
+    private Controller controller;
     JPanel panel;
 
     public Image background = ImageUtil.images.get("UI-background");
@@ -24,18 +27,46 @@ public class View extends JPanel implements Observer {
         panel.repaint();
     }
 
-    public View(Model model) {
+    public View(Model model , Controller controller) {
         this.model = model;
+        this.controller = controller;
         this.panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.drawImage(background, 0, 0, null);
-                //g.drawImage(fail, 0, 0, getWidth(), getHeight(), null);
-                //g.drawImage(ImageUtil.images.get("Fail-Scene"), 0, 0, getWidth(), getHeight(), null);
                 draw(g);
             }
         };
+
+        panel.setFocusable(true);
+        panel.addKeyListener(this.controller);
+
+        // Set up the frame
+        JFrame frame = new JFrame("Snake Game");
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+
+        // Set up the panel
+
+
+
+        // Add the panel to the frame
+        frame.add(this.panel);
+
+        // Add a window listener to handle closing the window
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                System.exit(0);
+            }
+        });
+
+        // Make the frame visible
+        frame.setVisible(true);
+
         model.addObserver(this);
     }
 
@@ -52,7 +83,7 @@ public class View extends JPanel implements Observer {
 
         } else {
             // Handle end of the game
-                g.drawImage(fail, 0, 0, FRAME_WIDTH,FRAME_HEIGHT, null);
+            g.drawImage(fail, 0, 0, FRAME_WIDTH,FRAME_HEIGHT, null);
         }
 
 

@@ -80,35 +80,11 @@ public class Play extends MyFrame {
 
     public static void main(String[] args) throws InterruptedException {
         Model model = new Model();
-        View view = new View(model);
-        Controller controller = new Controller(model);
+		Controller controller = new Controller(model);
+        View view = new View(model , controller);
 
-        // Set up the frame
-        JFrame frame = new JFrame("Snake Game");
-        frame.setSize(900, 600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
 
-        // Set up the panel
-
-        view.panel.setFocusable(true);
-        view.panel.addKeyListener(controller);
-
-        // Add the panel to the frame
-        frame.add(view.panel);
-
-        // Add a window listener to handle closing the window
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-                System.exit(0);
-            }
-        });
-
-        // Make the frame visible
-        frame.setVisible(true);
-		//MusicPlayer.getMusicPlay("src/main/resources/frogger.mp3");
+		MusicPlayer.getMusicPlay("src/main/resources/frogger.mp3");
 
         // Game loop
         while (true) {
@@ -125,6 +101,7 @@ public class Play extends MyFrame {
 				e.printStackTrace();
 			}
         }
+
     }
 
 
