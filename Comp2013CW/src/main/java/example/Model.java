@@ -10,9 +10,8 @@ public class Model extends Observable {
     private Food food;
     private int score;
 
-    private boolean EndGame = false;
+    boolean EndGame = false;
 
-    public static List<Point> bodyPoints = new LinkedList<>();
 
     private static final int FRAME_WIDTH = 870;
     private static final int FRAME_HEIGHT = 560;
@@ -21,11 +20,12 @@ public class Model extends Observable {
 
     public Model() {
         SnakeObject = new ModelSnake(100, 100);
+
         food = new Food();
         score = 0;
+
     }
     public void updateGame() {
-        SnakeObject.move();
         outofBounds();
         eatBody();
 
@@ -35,16 +35,18 @@ public class Model extends Observable {
                 food.eaten(SnakeObject);
             } else {
                 food = new Food();
-                score++;
             }
         } else {
+            //System.out.println("END GAME");
             EndGame = true;
-
         }
 
+        SnakeObject.move();
         setChanged();
         notifyObservers();
     }
+
+
     public ModelSnake getSnake() {
         return SnakeObject;
     }
@@ -52,19 +54,30 @@ public class Model extends Observable {
         return food;
     }
 
+    public List<Point> getBodyPoints(){return ModelSnake.bodyPoints;}
+
+    public int getNumOfBodies(){return SnakeObject.numOfBodies;}
+
+    public  Food NewFood(){
+        this.food = new Food();
+        return this.food;
+    }
+
+
+
     public int getScore() {
         return score;
     }
 
     public void eatBody()
     {
-        for (Point point : bodyPoints)
+        for (Point point : ModelSnake.bodyPoints)
         {
-            for (Point point2 : bodyPoints)
+            for (Point point2 : ModelSnake.bodyPoints)
             {
                 if (point.equals(point2) && point != point2)
                 {
-                    this.isAlive = false;
+                    SnakeObject.isAlive = false;
                 }
             }
         }
@@ -76,7 +89,7 @@ public class Model extends Observable {
         boolean yOut = (SnakeObject.y <= 0 || SnakeObject.y  >= (FRAME_HEIGHT - SnakeObject.height));
         if (xOut || yOut)
         {
-            isAlive = false;
+            SnakeObject.isAlive = false;
         }
     }
 
