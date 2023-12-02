@@ -1,29 +1,19 @@
 package example;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
 
-public class Controller implements KeyListener {
-    private final Model model;
+public class Controller {
+    private Model model;
 
-    boolean up, down, left, right = true;
     public Controller(Model model) {
         this.model = model;
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
+    public EventHandler<? super KeyEvent> keyPressed() {
 
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        model.getSnake().keyPressed(e);
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
+        return event -> {
+            model.getSnake().keyPressed(event);
+        };
     }
 }
