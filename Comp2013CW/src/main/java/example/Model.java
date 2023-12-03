@@ -2,8 +2,6 @@ package example;
 import javafx.application.Platform;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 
@@ -22,7 +20,7 @@ public class Model extends Observable {
 
     public Model() {
         SnakeObject = new ModelSnake(100, 100);
-        food = new Food();
+        food = FoodFactory.createNewFood();
         score = 0;
 
     }
@@ -35,8 +33,8 @@ public class Model extends Observable {
             if (food.isAlive) {
                 food.eaten(SnakeObject);
             } else {
-                food = new Food();
-                //score++;
+                food = FoodFactory.createNewFood();
+
 
             }
         } else {
@@ -65,7 +63,7 @@ public class Model extends Observable {
     public int getNumOfBodies(){return SnakeObject.numOfBodies;}
 
     public  Food NewFood(){
-        this.food = new Food();
+        this.food = FoodFactory.createNewFood();
         return this.food;
     }
 
