@@ -1,6 +1,7 @@
 package example;
 
-import java.awt.Graphics;
+import javafx.scene.image.Image;
+
 import java.io.Serial;
 import java.util.Random;
 
@@ -21,13 +22,17 @@ public class Food extends GameObject  {
 
 		this.image = ImageUtil.images.get(String.valueOf(new Random().nextInt(10)));
 
-		this.width = image.getWidth(null);
-		this.height = image.getHeight(null);
+		this.width = (int) image.getWidth();
+		this.height = (int) image.getHeight();
 
 		// Set random coordinates for the food within the game panel
 		this.x = (int) (Math.random() * (870 - width + 10));
 		this.y = (int) (Math.random() * (560 - height - 40));
 	}
+	public Image getFoodImage(){return this.image;}
+
+
+
 	/**
 	 * When the food is eaten by the snake.
 	 *
@@ -37,19 +42,15 @@ public class Food extends GameObject  {
 
 		// Check for collision between snake and food
 		if (mySnake.getRectangle().intersects(this.getRectangle()) && isAlive && mySnake.isAlive)		{
+
 			this.isAlive = false;
 			// Increase the snake's length and update the score when food is eaten
 			mySnake.changeLength(mySnake.getLength() + 1);
 			mySnake.score += 1;
+			System.out.println("Length " + mySnake.getLength() + "\t Score:" + mySnake.score);
 		}
 	}
-	/**
-	 * Draws the food on the game panel.
-	 *
-	 */
 
-	public void draw(Graphics g)
-	{	// Draw the food on the game panel
-		g.drawImage(image, x, y, null);
-	}
+
+
 }

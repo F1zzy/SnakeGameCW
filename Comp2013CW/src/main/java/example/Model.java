@@ -1,4 +1,6 @@
 package example;
+import javafx.application.Platform;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
@@ -13,14 +15,13 @@ public class Model extends Observable {
     boolean EndGame = false;
 
 
-    private static final int FRAME_WIDTH = 870;
-    private static final int FRAME_HEIGHT = 560;
+    private static final int FRAME_WIDTH = 900;
+    private static final int FRAME_HEIGHT = 600;
     private static final int SNAKE_SPEED = 5;
     private boolean isAlive;
 
     public Model() {
         SnakeObject = new ModelSnake(100, 100);
-
         food = new Food();
         score = 0;
 
@@ -35,16 +36,21 @@ public class Model extends Observable {
                 food.eaten(SnakeObject);
             } else {
                 food = new Food();
+                //score++;
+
             }
         } else {
-            //System.out.println("END GAME");
+
             EndGame = true;
         }
 
         SnakeObject.move();
-        setChanged();
-        notifyObservers();
+        Platform.runLater(() -> {
+            setChanged();
+            notifyObservers();
+        });
     }
+
 
 
     public ModelSnake getSnake() {
@@ -66,7 +72,7 @@ public class Model extends Observable {
 
 
     public int getScore() {
-        return score;
+        return SnakeObject.score;
     }
 
     public void eatBody()

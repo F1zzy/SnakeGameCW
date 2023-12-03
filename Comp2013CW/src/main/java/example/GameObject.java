@@ -1,5 +1,7 @@
 package example;
 
+import javafx.scene.image.Image;
+
 import java.awt.*;
 
 /**
@@ -13,11 +15,6 @@ public abstract class GameObject {
     int height;
 
     public boolean isAlive;
-
-    /**
-     * Abstract method to draw the SnakeObject on the screen.
-     */
-
 
     public Rectangle getRectangle() {
         return new Rectangle(x, y, width, height);
