@@ -50,7 +50,7 @@ public class ImageUtil {
 
 	private static void loadUIImages() {
 		images.put("UI-background", new Image("UI-background.png"));
-		//images.put("MainMenu-Background", new Image("MainMenu-Background.png"));
+		images.put("MainMenu-background", new Image("MainMenu-Background.jpg"));
 	}
 
 

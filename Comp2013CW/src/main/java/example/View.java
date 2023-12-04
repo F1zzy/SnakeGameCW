@@ -1,12 +1,10 @@
 package example;
 
-import javafx.animation.TranslateTransition;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
@@ -16,7 +14,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javafx.scene.paint.Color;
-import javafx.util.Duration;
 
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -37,18 +34,20 @@ public class View  implements Observer {
     private Canvas canvas;
     private GraphicsContext gc;
 
+    private Stage stage;
 
 
-    public View(Model model , Controller controller) {
+
+    public View(Model model , Controller controller , Stage stage) {
         this.model = model;
         this.controller = controller;
 
-        initializeUI();
+        initializeUI(stage);
 
         model.addObserver(this);
     }
 
-    private void initializeUI() {
+    private void initializeUI(Stage stage) {
 
         root = new StackPane();
 
@@ -62,7 +61,7 @@ public class View  implements Observer {
         root.setFocusTraversable(true);
 
         // Add the scene to the stage
-        Stage stage = new Stage();
+
         stage.setTitle("Snake Game");
         stage.setScene(scene);
         stage.setResizable(false);
@@ -175,5 +174,9 @@ public class View  implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         draw();
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
     }
 }
