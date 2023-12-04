@@ -58,9 +58,6 @@ public class Model extends Observable {
         return food;
     }
 
-    public List<Point> getBodyPoints(){return Snake.bodyPoints;}
-
-    public int getNumOfBodies(){return SnakeObject.numOfBodies;}
 
     public  Food NewFood(){
         this.food = FoodFactory.createNewFood();
@@ -101,6 +98,14 @@ public class Model extends Observable {
     public void notifyObservers() {
         setChanged();
         super.notifyObservers();
+    }
+
+    public void reset() {
+        // ADD 3-Second Countdown then ruun
+        SnakeObject = new Snake(100, 100);
+        FoodFactory.reset();
+        food = FoodFactory.createNewFood();
+        score = 0;
     }
 }
 

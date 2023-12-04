@@ -16,4 +16,15 @@ public class Controller {
             model.getSnake().keyPressed(event);
         };
     }
+
+    public void goBack() {
+
+        MainMenu.display();
+    }
+
+    public void retry() {
+
+        MainMenu.startGame();  // Assuming you have a reset method in your Model
+
+    }
 }

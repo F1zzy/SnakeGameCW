@@ -1,22 +1,26 @@
 package example;
 
+import javafx.animation.FadeTransition;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.StackPane;
 import javafx.scene.canvas.Canvas;
-import javafx.stage.Stage;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafx.scene.text.Font;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-
-import javafx.scene.paint.Color;
-
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 
 
 public class View  implements Observer {
@@ -55,6 +59,7 @@ public class View  implements Observer {
         gc = canvas.getGraphicsContext2D();
         root.getChildren().add(canvas);
         drawBackground();
+
         // Set up key event handling
         Scene scene = new Scene(root);
         scene.setOnKeyPressed(controller.keyPressed());
@@ -76,8 +81,6 @@ public class View  implements Observer {
             drawSnake();
             drawFood();
             drawScore();
-        } else {
-            drawFailScene();
         }
     }
 
@@ -147,7 +150,7 @@ public class View  implements Observer {
 
         for (int i = length; i >= snake.getNumOfBodies(); i -= snake.getNumOfBodies())
         {
-            System.out.println("Drawing Bodies");
+            //System.out.println("Drawing Bodies");
             Point point = snake.getBodyPoints().get(i);
             gc.drawImage(snakeBody, point.x, point.y);
         }
@@ -167,10 +170,38 @@ public class View  implements Observer {
 
     }
 
-    private void drawFailScene() {
-        Image failScene = ImageUtil.images.get("Fail-Scene");
-        gc.drawImage(failScene, 0, 0, canvas.getWidth(), canvas.getHeight());
+    public void drawFailScene() {
+
+        gc.drawImage(fail, 0, 0, canvas.getWidth(), canvas.getHeight());
+
+        // Add "Go Back" button
+        Button goBackButton = createStyledButton("Go Back", "-fx-background-color: #45A049; -fx-text-fill: white; -fx-font-size: 18px;");
+        goBackButton.setOnAction(e -> {
+            controller.goBack();
+        });
+        goBackButton.setFocusTraversable(true);
+
+        // Add "Retry" button
+        Button retryButton = createStyledButton("Retry", "-fx-background-color: #45A049; -fx-text-fill: white; -fx-font-size: 18px;");
+        retryButton.setOnAction(e -> controller.retry());
+        root.setFocusTraversable(true);
+
+        // Create layout for buttons
+        HBox buttonsLayout = new HBox(10);
+        buttonsLayout.setAlignment(Pos.BOTTOM_CENTER);
+        buttonsLayout.getChildren().addAll(goBackButton, retryButton);
+
+        // Draw buttons
+        root.getChildren().add(buttonsLayout);
+        root.requestFocus();
     }
+
+    private Button createStyledButton(String text, String inlineStyle) {
+        Button button = new Button(text);
+        button.setStyle(inlineStyle);
+        return button;
+    }
+
     @Override
     public void update(Observable o, Object arg) {
         draw();
@@ -178,5 +209,32 @@ public class View  implements Observer {
 
     public Canvas getCanvas() {
         return canvas;
+    }
+
+    public void drawCountdown(int i) {
+        // Create a Text node with the countdown number or "GO"
+        Text countdownText = new Text(i == 4 ? "GO" : Integer.toString(i));
+        countdownText.setFont(new Font("Arial" , 200.0));
+
+        countdownText.setFill(i == 4 ? Color.GREEN : Color.WHITE);
+
+        // Set the initial opacity
+        countdownText.setOpacity(1.0);
+
+        // Add the Text node to the canvas
+        root.getChildren().add(countdownText);
+
+        // Create a FadeTransition with a duration of 1 second
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1.0), countdownText);
+
+        // Set the start and end values for opacity
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+
+        // Set up an event handler to remove the Text node when the transition finishes
+        fadeTransition.setOnFinished(event -> root.getChildren().remove(countdownText));
+
+        // Play the fade transition
+        fadeTransition.play();
     }
 }

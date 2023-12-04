@@ -12,6 +12,7 @@ public class ImageUtil {
 		loadObstacleImages();
 		loadUIImages();
 		loadSceneImages();
+		images.put("logo", new Image("snake-logo.png"));
 	}
 
 	private static void loadSnakeImages() {

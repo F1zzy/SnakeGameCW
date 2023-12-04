@@ -46,4 +46,7 @@ public class FoodFactory {
         return new Food(retImage , scoreValue);
     }
 
+    public static void reset() {
+        numOfFood = 0;
+    }
 }

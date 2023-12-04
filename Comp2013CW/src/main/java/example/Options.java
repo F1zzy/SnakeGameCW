@@ -12,11 +12,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Options {
+    private static final int FRAME_WIDTH = 900;
+    private static final int FRAME_HEIGHT = 600;
 
-    public static void display(Stage Stage) {
+    public static void display(Stage stage) {
 
-        Stage.setTitle("Options");
-        Stage.setResizable(false);
+        stage.setTitle("Options");
+        stage.setResizable(false);
 
         // Create controls for the Options window
         Label colorLabel = new Label("Color Scheme:");
@@ -27,7 +29,7 @@ public class Options {
         CheckBox soundCheckBox = new CheckBox("Sound On/Off");
 
         Button closeButton = new Button("Close");
-        closeButton.setOnAction(e -> Stage.close());
+        closeButton.setOnAction(e -> stage.close());
 
 
         Button goBackButton = new Button("Go Back");
@@ -46,9 +48,10 @@ public class Options {
         layout.add(closeButton, 1, 2);
 
         // Set up the scene
-        Scene scene = new Scene(layout, 300, 200);
-        Stage.setScene(scene);
-        Stage.show();
+        Scene scene = new Scene(layout, FRAME_WIDTH, FRAME_HEIGHT);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
     }
 
     private static void goBack() {
