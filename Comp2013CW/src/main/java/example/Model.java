@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Observable;
 
 public class Model extends Observable {
-    private ModelSnake SnakeObject;
+    private Snake SnakeObject;
     private Food food;
     private int score;
 
@@ -19,7 +19,7 @@ public class Model extends Observable {
     private boolean isAlive;
 
     public Model() {
-        SnakeObject = new ModelSnake(100, 100);
+        SnakeObject = new Snake(100, 100);
         food = FoodFactory.createNewFood();
         score = 0;
 
@@ -51,14 +51,14 @@ public class Model extends Observable {
 
 
 
-    public ModelSnake getSnake() {
+    public Snake getSnake() {
         return SnakeObject;
     }
     public Food getFood() {
         return food;
     }
 
-    public List<Point> getBodyPoints(){return ModelSnake.bodyPoints;}
+    public List<Point> getBodyPoints(){return Snake.bodyPoints;}
 
     public int getNumOfBodies(){return SnakeObject.numOfBodies;}
 

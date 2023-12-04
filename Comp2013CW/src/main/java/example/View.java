@@ -1,26 +1,22 @@
 package example;
 
+import javafx.animation.TranslateTransition;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
-import javax.swing.*;
+
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.concurrent.ExecutionException;
-import javafx.scene.paint.Color;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -92,7 +88,7 @@ public class View  implements Observer {
     }
 
     private void drawSnake() {
-        ModelSnake snake = model.getSnake();
+        Snake snake = model.getSnake();
         Image snakeHead = ImageUtil.images.get("snake-head-right");
         Image newImgSnakeHead = snakeHead;
         List<Point> bodyPoints = snake.getBodyPoints();
@@ -146,7 +142,7 @@ public class View  implements Observer {
     }
     public void drawBody()
     {
-        ModelSnake snake  = model.getSnake();
+        Snake snake  = model.getSnake();
         Image snakeBody = ImageUtil.images.get("snake-body");
         int length = snake.getBodyPoints().size() - 1 - snake.getNumOfBodies();
 
@@ -168,6 +164,8 @@ public class View  implements Observer {
         gc.setFill(Magenta);
         gc.setFont(new javafx.scene.text.Font("Arial", 20));
         gc.fillText("SCORE: " + model.getScore(), 20, 30);
+
+
     }
 
     private void drawFailScene() {
