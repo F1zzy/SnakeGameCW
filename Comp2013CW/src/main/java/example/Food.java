@@ -17,7 +17,7 @@ public class Food extends GameObject  {
 	/**
 	 * Constructor to make a new Food object with a random image and position.
 	 */
-	public Food(Image image , int scoreValue)	{
+	public Food(Image image , int scoreValue){
 		this.isAlive = true;
 		//ImageUtil.images.get(String.valueOf(new Random().nextInt(10)));
 		this.image = image;
@@ -41,11 +41,10 @@ public class Food extends GameObject  {
 	 *
 	 * @param snake The snake object.
 	 */
-	public void eaten(Snake mySnake)	{
+	public void eaten(Snake mySnake){
 
 		// Check for collision between snake and food
-		if (mySnake.getRectangle().intersects(this.getRectangle()) && isAlive && mySnake.isAlive)		{
-
+		if (mySnake.getRectangle().intersects(this.getRectangle()) && isAlive && mySnake.isAlive)	{
 			this.isAlive = false;
 			// Increase the snake's length and update the score when food is eaten
 			mySnake.changeLength(mySnake.getLength() + 1);
