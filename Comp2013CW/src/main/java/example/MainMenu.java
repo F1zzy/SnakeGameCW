@@ -55,6 +55,7 @@ public class MainMenu {
         });
 
         leaderboardsButton.setOnAction(e -> {
+            openLeaderboard();
 
         });
 
@@ -79,6 +80,10 @@ public class MainMenu {
         Scene scene = new Scene(layout, FRAME_WIDTH, FRAME_HEIGHT);
         mainStage.setScene(scene);
         mainStage.show();
+    }
+
+    private static void openLeaderboard() {
+        LeaderBoard.display(getMainStage());
     }
 
 
@@ -142,7 +147,7 @@ public class MainMenu {
 
 
     private static void openOptions() {
-        Options.display(mainStage);
+        Options.display(getMainStage());
     }
 
 }

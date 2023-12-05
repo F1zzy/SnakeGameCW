@@ -22,7 +22,6 @@ public class Model extends Observable {
         SnakeObject = new Snake(100, 100);
         food = FoodFactory.createNewFood();
         score = 0;
-
     }
     public void updateGame() {
         outofBounds();
@@ -86,7 +85,6 @@ public class Model extends Observable {
     }
     private void outofBounds()
     {
-
         boolean xOut = (SnakeObject.x <= 0 || SnakeObject.x >= (FRAME_WIDTH - SnakeObject.width));
         boolean yOut = (SnakeObject.y <= 0 || SnakeObject.y  >= (FRAME_HEIGHT - SnakeObject.height));
         if (xOut || yOut)
