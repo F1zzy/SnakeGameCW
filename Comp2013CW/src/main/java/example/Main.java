@@ -12,6 +12,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        //Gather Data for High Score Comparisons
+        LeaderBoard.Init();
+
+        Style.init();
         MainMenu.display();
 
     }

@@ -55,6 +55,7 @@ public class MainMenu {
         });
 
         leaderboardsButton.setOnAction(e -> {
+            openLeaderboard();
 
         });
 
@@ -81,6 +82,11 @@ public class MainMenu {
         mainStage.show();
     }
 
+    private static void openLeaderboard() {
+
+        LeaderBoard.display(getMainStage());
+    }
+
 
     private static Button createStyledButton(String text, String inlineStyle) {
         Button button = new Button(text);
@@ -100,7 +106,7 @@ public class MainMenu {
             @Override
             public void handle(long now) {
                 if(model.EndGame) {
-                    view.drawFailScene();
+                    view.gameOverScene();
                     this.stop();
                 }
                 else{
@@ -142,7 +148,7 @@ public class MainMenu {
 
 
     private static void openOptions() {
-        Options.display(mainStage);
+        Options.display(getMainStage());
     }
 
 }

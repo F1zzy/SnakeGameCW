@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -21,6 +22,9 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import javafx.scene.control.TextField;
+
+import static example.LeaderBoard.GreaterThanHighScore;
 
 
 public class View  implements Observer {
@@ -165,12 +169,19 @@ public class View  implements Observer {
         Color Magenta = Color.MAGENTA;
         gc.setFill(Magenta);
         gc.setFont(new javafx.scene.text.Font("Arial", 20));
-        gc.fillText("SCORE: " + model.getScore(), 20, 30);
+        GreaterThanHighScore(model.getScore());
+        if(GreaterThanHighScore(model.getScore())){
+            gc.fillText("NEW HIGH SCORE: " + model.getScore(), 20, 30);
+        }
+       else{
+            gc.fillText("SCORE: " + model.getScore(), 20, 30);
+        }
+
 
 
     }
 
-    public void drawFailScene() {
+    public void gameOverScene() {
 
         gc.drawImage(fail, 0, 0, canvas.getWidth(), canvas.getHeight());
 
@@ -186,14 +197,38 @@ public class View  implements Observer {
         retryButton.setOnAction(e -> controller.retry());
         root.setFocusTraversable(true);
 
+        // Add Username input box
+        TextField usernameInput = new TextField();
+        usernameInput.setText("");
+
+
+        Button submitButton = createStyledButton("Submit Score", "-fx-background-color: #45A049; -fx-text-fill: white; -fx-font-size: 18px;");
+        submitButton.setOnAction(e -> {
+            String username = usernameInput.getText();
+            controller.submitScore(username , model.getScore());
+            submitButton.setText("ADDED");
+            submitButton.setDisable(true);
+        });
+
+        VBox userInputLayout = new VBox(10);
+        userInputLayout.setAlignment(Pos.CENTER);
+        userInputLayout.getChildren().addAll(usernameInput);
+
         // Create layout for buttons
         HBox buttonsLayout = new HBox(10);
         buttonsLayout.setAlignment(Pos.BOTTOM_CENTER);
-        buttonsLayout.getChildren().addAll(goBackButton, retryButton);
+        buttonsLayout.getChildren().addAll(submitButton, goBackButton, retryButton);
 
-        // Draw buttons
+        // Create layout for the entire scene
+        VBox allLayout = new VBox(20);
+        allLayout.setAlignment(Pos.CENTER);
+
+        allLayout.getChildren().addAll(userInputLayout, buttonsLayout);
+
+        // Draw buttons And Score
+        drawScore();
+        root.getChildren().add(userInputLayout);
         root.getChildren().add(buttonsLayout);
-        root.requestFocus();
     }
 
     private Button createStyledButton(String text, String inlineStyle) {
