@@ -1,6 +1,5 @@
 package example;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,7 +15,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.*;
-
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 
 public class LeaderBoard{
@@ -24,10 +25,19 @@ public class LeaderBoard{
     private static final int FRAME_HEIGHT = 600;
     private static final String LEADERBOARD_FILE = "src/main/java/example/leaderboard.csv";
 
+    private static ObservableList<ScoreEntry> data;
+
+    private static int Highscore;
+    public static void Init(){
+        data = readDataFromCSV();
+        Highscore = data.getFirst().getScore();
+    }
+
+
     public static void display(Stage stage) {
         stage.setTitle("Leaderboard");
 
-        ObservableList<ScoreEntry> data = readDataFromCSV();
+        data = readDataFromCSV();
 
         // Create TableView
         TableView<ScoreEntry> tableView = new TableView<>(data);
@@ -79,6 +89,10 @@ public class LeaderBoard{
     }
 
 
+
+
+
+
     private static ObservableList<ScoreEntry> readDataFromCSV() {
         ObservableList<ScoreEntry> data = FXCollections.observableArrayList();
 
@@ -86,10 +100,10 @@ public class LeaderBoard{
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                    String username = parts[0].trim();
-                    int score = Integer.parseInt(parts[1].trim());
-                    String timestamp = parts[2].trim();
-                    data.add(new ScoreEntry(username, score, timestamp));
+                String username = parts[0].trim();
+                int score = Integer.parseInt(parts[1].trim());
+                String timestamp = parts[2].trim();
+                data.add(new ScoreEntry(username, score, timestamp));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -97,4 +111,32 @@ public class LeaderBoard{
 
         return data;
     }
+
+    public static void addScoreRecord(ScoreEntry scoreRecord) {
+        List<ScoreEntry> existingData = readDataFromCSV();
+
+        //Insert into correct space
+        int insertIndex = 0;
+        while (insertIndex < data.size() && scoreRecord.getScore() < data.get(insertIndex).getScore()) {
+            insertIndex++;
+        }
+        // Insert the new score record at the found position
+        data.add(insertIndex, scoreRecord);
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(LEADERBOARD_FILE))) {
+            for (ScoreEntry Record : data) {
+                writer.println(Record.getUsername() + "," + Record.getScore() + "," + Record.getTimestamp());
+            }
+        } catch (IOException e) {
+            // Handle the exception more gracefully, e.g., log or notify the user
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean GreaterThanHighScore(int givenScore) {
+        return Highscore < givenScore;
+        //return true;
+    }
+
+
 }

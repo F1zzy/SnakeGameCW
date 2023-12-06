@@ -3,6 +3,9 @@ package example;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Controller {
     private Model model;
 
@@ -24,7 +27,16 @@ public class Controller {
 
     public void retry() {
 
-        MainMenu.startGame();  // Assuming you have a reset method in your Model
+        MainMenu.startGame();
 
+    }
+
+
+
+    public void submitScore(String username, int score) {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
+        System.out.println("ADDING SCORE");
+        LeaderBoard.addScoreRecord(new ScoreEntry(username , score , currentDateTime.format(formatter)));
     }
 }

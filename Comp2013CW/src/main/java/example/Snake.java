@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Snake extends GameObject implements movable {
-    private static final int SNAKE_SPEED = 2;
+    private static final int SNAKE_SPEED = 3;
     private int speed_XY;
     private int length;
     int numOfBodies;

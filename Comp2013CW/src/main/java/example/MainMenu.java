@@ -83,6 +83,7 @@ public class MainMenu {
     }
 
     private static void openLeaderboard() {
+
         LeaderBoard.display(getMainStage());
     }
 
@@ -105,7 +106,7 @@ public class MainMenu {
             @Override
             public void handle(long now) {
                 if(model.EndGame) {
-                    view.drawFailScene();
+                    view.gameOverScene();
                     this.stop();
                 }
                 else{
