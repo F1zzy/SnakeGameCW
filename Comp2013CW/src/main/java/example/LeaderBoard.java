@@ -135,7 +135,7 @@ public class LeaderBoard{
 
     public static boolean GreaterThanHighScore(int givenScore) {
         return Highscore < givenScore;
-        //return true;
+
     }
 
 

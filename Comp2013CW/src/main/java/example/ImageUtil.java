@@ -12,6 +12,8 @@ public class ImageUtil {
 		loadObstacleImages();
 		loadUIImages();
 		loadSceneImages();
+
+
 		images.put("logo", new Image("snake-logo.png"));
 	}
 
@@ -51,7 +53,7 @@ public class ImageUtil {
 
 	private static void loadUIImages() {
 		images.put("UI-background", new Image("UI-background.png"));
-		images.put("MainMenu-background", new Image("MainMenu-Background.jpg"));
+		images.put("MainMenu-background", new Image("MainMenu-Background-removebg-preview.png"));
 	}
 
 

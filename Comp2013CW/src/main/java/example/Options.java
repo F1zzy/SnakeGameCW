@@ -1,62 +1,68 @@
-package example;
+    package example;
 
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+    import javafx.geometry.Insets;
+    import javafx.scene.Scene;
+    import javafx.scene.control.Button;
+    import javafx.scene.control.CheckBox;
+    import javafx.scene.control.ComboBox;
+    import javafx.scene.control.Label;
+    import javafx.scene.image.Image;
+    import javafx.scene.image.ImageView;
+    import javafx.scene.layout.Background;
+    import javafx.scene.layout.BackgroundFill;
+    import javafx.scene.layout.GridPane;
+    import javafx.scene.layout.VBox;
+    import javafx.scene.paint.Color;
+    import javafx.scene.paint.LinearGradient;
+    import javafx.scene.paint.Stop;
+    import javafx.stage.Modality;
+    import javafx.stage.Stage;
 
-public class Options {
-    private static final int FRAME_WIDTH = 900;
-    private static final int FRAME_HEIGHT = 600;
+    public class Options {
+        private static final int FRAME_WIDTH = 900;
+        private static final int FRAME_HEIGHT = 600;
 
-    public static void display(Stage stage) {
-
-        stage.setTitle("Options");
-        stage.setResizable(false);
-
-        // Create controls for the Options window
-        Label colorLabel = new Label("Color Scheme:");
-        ComboBox<String> colorComboBox = new ComboBox<>();
-        colorComboBox.getItems().addAll("Default", "Dark Mode", "Light Mode" , "Green");
-        colorComboBox.setValue("Default");
-
-        CheckBox soundCheckBox = new CheckBox("Sound On/Off");
-
-        Button closeButton = new Button("Close");
-        closeButton.setOnAction(e -> stage.close());
+        public static void display(Stage stage) {
+            stage.setTitle("Options");
+            stage.setResizable(false);
 
 
-        Button goBackButton = new Button("Go Back");
-        goBackButton.setOnAction(e -> Options.goBack());
+            VBox layout = new VBox(10);
+            layout.setPadding(new Insets(10));
 
-        // Create layout
-        GridPane layout = new GridPane();
-        layout.setVgap(10);
-        layout.setHgap(10);
-        layout.setPadding(new Insets(10));
+            //game preview
+            ImageView gamePreview = createGamePreview();
+            layout.getChildren().add(gamePreview);
 
-        layout.add(colorLabel, 0, 0);
-        layout.add(colorComboBox, 1, 0);
-        layout.add(soundCheckBox, 0, 1, 2, 1);
-        layout.add(goBackButton, 0, 2);
-        layout.add(closeButton, 1, 2);
 
-        // Set up the scene
-        Scene scene = new Scene(layout, FRAME_WIDTH, FRAME_HEIGHT);
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
-    }
+            ComboBox<String> headComboBox = new ComboBox<>();
+            headComboBox.getItems().addAll("Head1", "Head2", "Head3");
+            headComboBox.setValue("Current Head"); // Set the default value
+            ComboBox<String> bodyComboBox = new ComboBox<>();
+            bodyComboBox.getItems().addAll("Body1", "Body2", "Body3"); // Add your body options
+            bodyComboBox.setValue("Current Body"); // Set the default value
 
-    private static void goBack() {
-        MainMenu.display();
-    }
+            // Add controls to change head and body
+            layout.getChildren().addAll(headComboBox, bodyComboBox);
+
+
+
+            Scene scene = new Scene(layout, FRAME_WIDTH, FRAME_HEIGHT);
+            stage.setScene(scene);
+            stage.show();
+        }
+
+        private static ImageView createGamePreview() {
+            ImageView gamePreview = new ImageView(); // Replace with actual images
+            gamePreview.setFitWidth(400);
+            gamePreview.setFitHeight(200);
+            gamePreview.setImage(new ImageView(ImageUtil.images.get("UI-background")).getImage());
+            return gamePreview;
+        }
+
+        private static void goBack() {
+            MainMenu.display();
+        }
 
 
 }

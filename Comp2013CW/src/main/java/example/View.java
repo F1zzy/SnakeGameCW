@@ -183,8 +183,11 @@ public class View  implements Observer {
 
     public void gameOverScene() {
 
-        gc.drawImage(fail, 0, 0, canvas.getWidth(), canvas.getHeight());
+        //gc.drawImage(fail, 0, 0, canvas.getWidth(), canvas.getHeight());
 
+        drawBackground();
+        drawSnake();
+        drawBody();
         // Add "Go Back" button
         Button goBackButton = createStyledButton("Go Back", "-fx-background-color: #45A049; -fx-text-fill: white; -fx-font-size: 18px;");
         goBackButton.setOnAction(e -> {
@@ -209,6 +212,11 @@ public class View  implements Observer {
             submitButton.setText("ADDED");
             submitButton.setDisable(true);
         });
+
+        Color Magenta = Color.RED;
+        gc.setFill(Magenta);
+        gc.setFont(new javafx.scene.text.Font("Arial", 120));
+        gc.fillText("YOU DIED :(", 140, 200);
 
         VBox userInputLayout = new VBox(10);
         userInputLayout.setAlignment(Pos.CENTER);
