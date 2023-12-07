@@ -1,6 +1,7 @@
     package example;
 
     import javafx.geometry.Insets;
+    import javafx.geometry.Pos;
     import javafx.scene.Scene;
     import javafx.scene.control.Button;
     import javafx.scene.control.CheckBox;
@@ -8,10 +9,7 @@
     import javafx.scene.control.Label;
     import javafx.scene.image.Image;
     import javafx.scene.image.ImageView;
-    import javafx.scene.layout.Background;
-    import javafx.scene.layout.BackgroundFill;
-    import javafx.scene.layout.GridPane;
-    import javafx.scene.layout.VBox;
+    import javafx.scene.layout.*;
     import javafx.scene.paint.Color;
     import javafx.scene.paint.LinearGradient;
     import javafx.scene.paint.Stop;
@@ -31,7 +29,7 @@
             layout.setPadding(new Insets(10));
 
             //game preview
-            ImageView gamePreview = createGamePreview();
+            StackPane gamePreview = createGamePreview();
             layout.getChildren().add(gamePreview);
 
 
@@ -52,13 +50,51 @@
             stage.show();
         }
 
-        private static ImageView createGamePreview() {
-            ImageView gamePreview = new ImageView(); // Replace with actual images
-            gamePreview.setFitWidth(400);
-            gamePreview.setFitHeight(200);
-            gamePreview.setImage(new ImageView(ImageUtil.images.get("UI-background")).getImage());
-            return gamePreview;
+        private static StackPane createGamePreview() {
+            // Create ImageViews for each image
+            ImageView backgroundImageView = new ImageView(ImageUtil.images.get("UI-background"));
+            ImageView headImageView = new ImageView(ImageUtil.images.get("snake-head-right"));
+            ImageView bodyImageView1 = new ImageView(ImageUtil.images.get("snake-body"));
+            ImageView bodyImageView2 = new ImageView(ImageUtil.images.get("snake-body"));
+            ImageView bodyImageView3 = new ImageView(ImageUtil.images.get("snake-body"));
+
+            // Set the preserve ratio for images
+            backgroundImageView.setPreserveRatio(true);
+            headImageView.setPreserveRatio(true);
+            bodyImageView1.setPreserveRatio(true);
+            bodyImageView2.setPreserveRatio(true);
+            bodyImageView3.setPreserveRatio(true);
+
+            // Set the fit width and height for images
+            backgroundImageView.setFitWidth(300);  // Adjust the width as needed
+            backgroundImageView.setFitHeight(400);  // Adjust the height as needed
+            headImageView.setFitWidth(30);
+            bodyImageView1.setFitWidth(30);
+            bodyImageView2.setFitWidth(30);
+            bodyImageView3.setFitWidth(30);
+
+            StackPane stackPane = new StackPane();
+
+            // Add background and position it at the bottom
+            stackPane.getChildren().add(backgroundImageView);
+            StackPane.setAlignment(backgroundImageView, Pos.BOTTOM_CENTER);
+
+            // Add bodies
+            stackPane.getChildren().addAll(bodyImageView3, bodyImageView2, bodyImageView1);
+
+            // Add head and translate it up to avoid overlap with the body
+            stackPane.getChildren().add(headImageView);
+            StackPane.setAlignment(headImageView, Pos.CENTER);
+
+            headImageView.setTranslateX(30);  // Adjust the translation based on the head size and layout
+            bodyImageView1.setTranslateX(0);
+            bodyImageView2.setTranslateX(-30);
+            bodyImageView3.setTranslateX(-60);
+
+            return stackPane;
         }
+
+
 
         private static void goBack() {
             MainMenu.display();
