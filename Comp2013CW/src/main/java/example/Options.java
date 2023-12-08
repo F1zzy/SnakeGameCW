@@ -1,5 +1,7 @@
     package example;
 
+    import javafx.collections.FXCollections;
+    import javafx.collections.ObservableList;
     import javafx.geometry.Insets;
     import javafx.geometry.Pos;
     import javafx.scene.Scene;
@@ -16,6 +18,12 @@
     import javafx.stage.Modality;
     import javafx.stage.Stage;
 
+    import java.util.ArrayList;
+    import java.util.List;
+
+    import static example.ImageUtil.changeSnakeBodyImage;
+    import static example.ImageUtil.changeSnakeHeadImage;
+
     public class Options {
         private static final int FRAME_WIDTH = 900;
         private static final int FRAME_HEIGHT = 600;
@@ -23,25 +31,77 @@
         public static void display(Stage stage) {
             stage.setTitle("Options");
             stage.setResizable(false);
+            String CurrentHeadPath;
+            String CurrentBodyPath;
 
 
             VBox layout = new VBox(10);
             layout.setPadding(new Insets(10));
 
             //game preview
-            StackPane gamePreview = createGamePreview();
+            StackPane gamePreview = createGamePreview(new ImageView(ImageUtil.images.get("snake-head-right")) , new ImageView(ImageUtil.images.get("snake-body")));
             layout.getChildren().add(gamePreview);
 
 
-            ComboBox<String> headComboBox = new ComboBox<>();
-            headComboBox.getItems().addAll("Head1", "Head2", "Head3");
-            headComboBox.setValue("Current Head"); // Set the default value
-            ComboBox<String> bodyComboBox = new ComboBox<>();
-            bodyComboBox.getItems().addAll("Body1", "Body2", "Body3"); // Add your body options
-            bodyComboBox.setValue("Current Body"); // Set the default value
+            ComboBox<String> headComboBox;
+            ObservableList<String> comboBoxData = FXCollections.observableArrayList(
+                    "default",
+                    "helmet",
+                    "alien",
+                    "frog",
+                    "ninja",
+                    "deer"
+            );
+            headComboBox = Settings.createComboBox(comboBoxData);
+            headComboBox.setValue(Settings.ReturnSnakeHeadName());
 
+            // Add event handler for headComboBox
+            headComboBox.setOnAction(event -> {
+                String selectedHead = headComboBox.getValue();
+                System.out.println("Selected Head: " + selectedHead);
+                ImageUtil.changeTempSnakeHeadImage("snake-head-" + selectedHead + ".png");
+                StackPane updatedGamePreview = createGamePreview(new ImageView(ImageUtil.images.get("temp-snake-head")) , new ImageView(ImageUtil.images.get("temp-snake-body")) );
+                layout.getChildren().set(0, updatedGamePreview);
+
+            });
+
+
+
+            ComboBox<String> bodyComboBox;
+            comboBoxData = FXCollections.observableArrayList(
+                    "default",
+                    "crystal",
+                    "bubble",
+                    "moon",
+                    "diamond"
+            );
+            bodyComboBox = Settings.createComboBox(comboBoxData);
+            bodyComboBox.setValue(Settings.ReturnSnakeBodyName());
+
+            // Add event handler for bodyComboBox
+            bodyComboBox.setOnAction(event -> {
+                String selectedBody = bodyComboBox.getValue();
+                System.out.println("Selected Body: " + selectedBody);
+                ImageUtil.changeTempSnakeBodyImage("snake-body-"+ selectedBody +".png");
+                StackPane updatedGamePreview = createGamePreview(new ImageView(ImageUtil.images.get("temp-snake-head")) , new ImageView(ImageUtil.images.get("temp-snake-body")) );
+                layout.getChildren().set(0, updatedGamePreview);
+
+
+            });
+
+            Button Apply =  Settings.createStyledButton("Apply");
+            Apply.setOnAction(e ->{
+                changeSnakeHeadImage("snake-head-"+ headComboBox.getValue() +".png");
+                changeSnakeBodyImage("snake-body-"+ bodyComboBox.getValue()+ ".png");
+            });
+            // Create "Go Back" button
+            Button goBackButton = new Button("Go Back");
+            goBackButton.setOnAction(e -> {
+                MainMenu.display();
+            });
+            goBackButton.setStyle(Settings.CSSFormat);
             // Add controls to change head and body
-            layout.getChildren().addAll(headComboBox, bodyComboBox);
+            layout.getChildren().addAll(headComboBox, bodyComboBox,goBackButton,Apply);
 
 
 
@@ -50,28 +110,28 @@
             stage.show();
         }
 
-        private static StackPane createGamePreview() {
-            // Create ImageViews for each image
+
+
+
+        private static StackPane createGamePreview(ImageView snakeHead, ImageView snakeBody) {
+            List<ImageView> bodyImageViews = new ArrayList<>();
             ImageView backgroundImageView = new ImageView(ImageUtil.images.get("UI-background"));
-            ImageView headImageView = new ImageView(ImageUtil.images.get("snake-head-right"));
-            ImageView bodyImageView1 = new ImageView(ImageUtil.images.get("snake-body"));
-            ImageView bodyImageView2 = new ImageView(ImageUtil.images.get("snake-body"));
-            ImageView bodyImageView3 = new ImageView(ImageUtil.images.get("snake-body"));
+
+            for (int i = 0; i < 3; i++) {
+                ImageView bodyImageView = new ImageView(snakeBody.getImage());  // Create a new instance
+                bodyImageView.setPreserveRatio(true);
+                bodyImageView.setFitWidth(30);
+                bodyImageViews.add(bodyImageView);
+            }
 
             // Set the preserve ratio for images
             backgroundImageView.setPreserveRatio(true);
-            headImageView.setPreserveRatio(true);
-            bodyImageView1.setPreserveRatio(true);
-            bodyImageView2.setPreserveRatio(true);
-            bodyImageView3.setPreserveRatio(true);
+            snakeHead.setPreserveRatio(true);
 
             // Set the fit width and height for images
             backgroundImageView.setFitWidth(300);  // Adjust the width as needed
             backgroundImageView.setFitHeight(400);  // Adjust the height as needed
-            headImageView.setFitWidth(30);
-            bodyImageView1.setFitWidth(30);
-            bodyImageView2.setFitWidth(30);
-            bodyImageView3.setFitWidth(30);
+            snakeHead.setFitWidth(30);
 
             StackPane stackPane = new StackPane();
 
@@ -80,19 +140,23 @@
             StackPane.setAlignment(backgroundImageView, Pos.BOTTOM_CENTER);
 
             // Add bodies
-            stackPane.getChildren().addAll(bodyImageView3, bodyImageView2, bodyImageView1);
+            stackPane.getChildren().addAll(bodyImageViews);
 
             // Add head and translate it up to avoid overlap with the body
-            stackPane.getChildren().add(headImageView);
-            StackPane.setAlignment(headImageView, Pos.CENTER);
+            stackPane.getChildren().add(snakeHead);
+            StackPane.setAlignment(snakeHead, Pos.CENTER);
 
-            headImageView.setTranslateX(30);  // Adjust the translation based on the head size and layout
-            bodyImageView1.setTranslateX(0);
-            bodyImageView2.setTranslateX(-30);
-            bodyImageView3.setTranslateX(-60);
+            snakeHead.setTranslateX(30);  // Adjust the translation based on the head size and layout
+
+            // Set translations for bodies
+            for (int i = 0; i < bodyImageViews.size(); i++) {
+                ImageView bodyImageView = bodyImageViews.get(i);
+                bodyImageView.setTranslateX(-30 * i);
+            }
 
             return stackPane;
         }
+
 
 
 

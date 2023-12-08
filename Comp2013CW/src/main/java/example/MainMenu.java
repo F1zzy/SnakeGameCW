@@ -5,16 +5,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -39,10 +33,10 @@ public class MainMenu {
         mainStage.setTitle("Main Menu");
 
         // Create buttons with inline styles
-        Button playButton = Style.createStyledButton("Play");
-        Button leaderboardsButton = Style.createStyledButton("LeaderBoard");
-        Button optionsButton = Style.createStyledButton("Options");
-        Button exitButton = Style.createStyledButton("Exit");
+        Button playButton = Settings.createStyledButton("Play");
+        Button leaderboardsButton = Settings.createStyledButton("LeaderBoard");
+        Button optionsButton = Settings.createStyledButton("Options");
+        Button exitButton = Settings.createStyledButton("Exit");
 
         // Create title
         Label titleLabel = new Label("Snake Game");
@@ -76,7 +70,7 @@ public class MainMenu {
 
         StackPane rootLayout = new StackPane();
 
-        buttonLayout.setBackground(Style.ReturnBackgroundFill());
+        buttonLayout.setBackground(Settings.ReturnBackgroundFill());
 
 
         StackPane.setAlignment(MMSnake, Pos.BOTTOM_RIGHT);
