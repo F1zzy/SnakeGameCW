@@ -12,11 +12,21 @@ public class ImageUtil {
 		loadObstacleImages();
 		loadUIImages();
 		loadSceneImages();
+
+
+		images.put("logo", new Image("snake-logo.png"));
 	}
 
 	private static void loadSnakeImages() {
-		images.put("snake-head-right", new Image("snake-head-right.png"));
-		images.put("snake-body", new Image("snake-body.png"));
+		Image SnakeHead = new Image(Settings.ReturnSnakeHeadPath(), 25, 25, true, true);
+		Image SnakeBody = new Image(Settings.ReturnSnakeBodyPath(), 25, 25, true, true);
+
+		// Store the resized images in the images map
+		images.put("snake-head-right", SnakeHead);
+		images.put("snake-body", SnakeBody);
+
+		images.put("temp-snake-head" , SnakeHead);
+		images.put("temp-snake-body" , SnakeBody);
 	}
 
 	private static void loadObstacleImages() {
@@ -50,11 +60,44 @@ public class ImageUtil {
 
 	private static void loadUIImages() {
 		images.put("UI-background", new Image("UI-background.png"));
-		//images.put("MainMenu-Background", new Image("MainMenu-Background.png"));
+		images.put("MainMenu-background", new Image("MainMenu-Background-removebg-preview.png"));
 	}
 
 
 	private static void loadSceneImages() {
 		images.put("Fail-Scene", new Image("Fail-Scene.jpg"));
+	}
+	public static void changeSnakeHeadImage(String newImagePath ) {
+		// Remove the old snake head image from the map
+		images.remove("snake-head-right");
+
+		// Load and store the new snake head image
+		Image newSnakeHead = new Image(newImagePath, 25, 25, true, true);
+		images.put("snake-head-right", newSnakeHead);
+	}
+	public static void changeSnakeBodyImage(String newImagePath ) {
+		// Remove the old snake head image from the map
+		images.remove("snake-body");
+
+		// Load and store the new snake head image
+		Image newSnakeBody = new Image(newImagePath, 25, 25, true, true);
+		images.put("snake-body", newSnakeBody);
+	}
+
+	public static void changeTempSnakeHeadImage(String newImagePath ) {
+		// Remove the old snake head image from the map
+		images.remove("temp-snake-head");
+
+		// Load and store the new snake head image
+		Image newSnakeHead = new Image(newImagePath, 25, 25, true, true);
+		images.put("temp-snake-head", newSnakeHead);
+	}
+	public static void changeTempSnakeBodyImage(String newImagePath ) {
+		// Remove the old snake head image from the map
+		images.remove("temp-snake-body");
+
+		// Load and store the new snake head image
+		Image newSnakeBody = new Image(newImagePath, 25, 25, true, true);
+		images.put("temp-snake-body", newSnakeBody);
 	}
 }

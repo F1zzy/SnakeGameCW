@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Snake extends GameObject implements movable {
-    private static final int SNAKE_SPEED = 1;
+    private static final int SNAKE_SPEED = 3;
     private int speed_XY;
     private int length;
     int numOfBodies;
@@ -14,7 +14,7 @@ public class Snake extends GameObject implements movable {
 
     //Using North(1) East(2) South(3) West(4).
     public int Direction = 2;
-    public static List<Point> bodyPoints = new LinkedList<>();
+    public  List<Point> bodyPoints = new LinkedList<>();
     //private static final BufferedImage IMG_SNAKE_HEAD = (BufferedImage) ImageUtil.images.get("snake-head-right");
     private static BufferedImage newImgSnakeHead;
     boolean up, down, left, right = true;

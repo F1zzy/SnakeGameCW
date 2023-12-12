@@ -1,6 +1,5 @@
 package example;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -12,6 +11,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        //Gather Data for High Score Comparisons
+        LeaderBoard.Init();
+        Settings.Init();
         MainMenu.display();
 
     }

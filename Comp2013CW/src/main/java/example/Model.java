@@ -15,14 +15,13 @@ public class Model extends Observable {
 
     private static final int FRAME_WIDTH = 900;
     private static final int FRAME_HEIGHT = 600;
-    private static final int SNAKE_SPEED = 5;
+    private static final int SNAKE_SPEED = 1;
     private boolean isAlive;
 
     public Model() {
         SnakeObject = new Snake(100, 100);
         food = FoodFactory.createNewFood();
         score = 0;
-
     }
     public void updateGame() {
         outofBounds();
@@ -58,9 +57,6 @@ public class Model extends Observable {
         return food;
     }
 
-    public List<Point> getBodyPoints(){return Snake.bodyPoints;}
-
-    public int getNumOfBodies(){return SnakeObject.numOfBodies;}
 
     public  Food NewFood(){
         this.food = FoodFactory.createNewFood();
@@ -89,7 +85,6 @@ public class Model extends Observable {
     }
     private void outofBounds()
     {
-
         boolean xOut = (SnakeObject.x <= 0 || SnakeObject.x >= (FRAME_WIDTH - SnakeObject.width));
         boolean yOut = (SnakeObject.y <= 0 || SnakeObject.y  >= (FRAME_HEIGHT - SnakeObject.height));
         if (xOut || yOut)
@@ -101,6 +96,14 @@ public class Model extends Observable {
     public void notifyObservers() {
         setChanged();
         super.notifyObservers();
+    }
+
+    public void reset() {
+        // ADD 3-Second Countdown then ruun
+        SnakeObject = new Snake(100, 100);
+        FoodFactory.reset();
+        food = FoodFactory.createNewFood();
+        score = 0;
     }
 }
 
