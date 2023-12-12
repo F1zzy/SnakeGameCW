@@ -6,10 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,7 +27,7 @@ public class LeaderBoard{
     private static int Highscore;
     public static void Init(){
         data = readDataFromCSV();
-        Highscore = data.getFirst().getScore();
+        //Highscore = data.getFirst().getScore();
     }
 
 
@@ -44,26 +41,30 @@ public class LeaderBoard{
         // Create columns
         TableColumn<ScoreEntry, String> usernameCol = new TableColumn<>("Username");
         usernameCol.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
+        usernameCol.setStyle(Settings.CSSFormat);
+
 
         TableColumn<ScoreEntry, Integer> scoreCol = new TableColumn<>("Score");
         scoreCol.setCellValueFactory(cellData -> cellData.getValue().scoreProperty().asObject());
+        scoreCol.setStyle(Settings.CSSFormat);
 
         TableColumn<ScoreEntry, String> timestampCol = new TableColumn<>("Time");
         timestampCol.setCellValueFactory(cellData -> cellData.getValue().timestampProperty());
+        timestampCol.setStyle(Settings.CSSFormat);
 
         tableView.getColumns().addAll(usernameCol, scoreCol, timestampCol);
 
-        tableView.setStyle("-fx-background-color: transparent;");
+        tableView.setStyle(Settings.CSSFormat);
 
         // Customize the row background
         tableView.setRowFactory(tv -> {
             TableRow<ScoreEntry> row = new TableRow<>();
-            row.setStyle("-fx-background-color: rgba(0, 0, 0, 0);"); //Set as Transparent
+            row.setStyle(Settings.CSSFormat);
             return row;
         });
 
         for (TableColumn<ScoreEntry, ?> col : tableView.getColumns()) {
-            col.prefWidthProperty().bind(tableView.widthProperty().divide(3.0)); //Strecth to fit Window
+            col.prefWidthProperty().bind(tableView.widthProperty().divide(3));
         }
 
         // Create "Go Back" button
@@ -71,21 +72,19 @@ public class LeaderBoard{
         goBackButton.setOnAction(e -> {
             MainMenu.display();
         });
-
-        // Create HBox for the "Go Back" button and spacer
-        HBox topBar = new HBox(goBackButton, new Region());
-        HBox.setHgrow(topBar.getChildren().get(1), Priority.ALWAYS);
-
-        //TableView
-        VBox root = new VBox(topBar, tableView);
-        root.setAlignment(Pos.CENTER);
-        VBox.setVgrow(tableView, Priority.ALWAYS);
+        goBackButton.setStyle(Settings.CSSFormat);
 
 
-        Scene scene = new Scene(root, FRAME_WIDTH, FRAME_HEIGHT);
-        root.setStyle("-fx-background-color: #45A049;"); //Background Color
+        // Create StackPane to overlap "Go Back" button over TableView
+        StackPane stackPane = new StackPane(tableView, goBackButton);
+        stackPane.setAlignment(Pos.TOP_RIGHT); // Align the stackPane content to the top right
+
+        // Set up the scene
+        Scene scene = new Scene(stackPane, FRAME_WIDTH, FRAME_HEIGHT);
+        stackPane.setStyle(Settings.CSSFormat);
         stage.setScene(scene);
         stage.show();
+
     }
 
 
@@ -135,7 +134,7 @@ public class LeaderBoard{
 
     public static boolean GreaterThanHighScore(int givenScore) {
         return Highscore < givenScore;
-        //return true;
+
     }
 
 

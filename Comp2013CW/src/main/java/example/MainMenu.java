@@ -7,7 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -31,24 +31,18 @@ public class MainMenu {
     public static void display() {
         mainStage = getMainStage();
         mainStage.setTitle("Main Menu");
-        Image mainMenuBackground = ImageUtil.images.get("MainMenu-background");
-        BackgroundSize backgroundSize = new BackgroundSize(FRAME_WIDTH, FRAME_HEIGHT, false, false, false, true);
-        BackgroundImage mainMenuBackgroundImage = new BackgroundImage(mainMenuBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
-        Background background = new Background(mainMenuBackgroundImage);
 
-
-
-        String CSSFormat = "-fx-background-color: #45A049; -fx-text-fill: white; -fx-font-size: 18px;";
         // Create buttons with inline styles
-        Button playButton = createStyledButton("Play", CSSFormat);
-        Button leaderboardsButton = createStyledButton("Leaderboards", CSSFormat);
-        Button tutorialButton = createStyledButton("Tutorial", CSSFormat);
-        Button optionsButton = createStyledButton("Options", CSSFormat);
-        Button exitButton = createStyledButton("Exit", CSSFormat);
+        Button playButton = Settings.createStyledButton("Play");
+        Button leaderboardsButton = Settings.createStyledButton("LeaderBoard");
+        Button optionsButton = Settings.createStyledButton("Options");
+        Button exitButton = Settings.createStyledButton("Exit");
 
         // Create title
         Label titleLabel = new Label("Snake Game");
         titleLabel.setStyle("-fx-font-size: 90px; -fx-text-fill: white;");
+
+        ImageView MMSnake = new ImageView(ImageUtil.images.get("MainMenu-background"));
 
         playButton.setOnAction(e -> {
             startGame();
@@ -59,40 +53,45 @@ public class MainMenu {
 
         });
 
-        tutorialButton.setOnAction(e -> {
-
-        });
-
         optionsButton.setOnAction(e -> {
             openOptions();
         });
 
         exitButton.setOnAction(e -> mainStage.close());
 
-        // Create layout
-        layout = new VBox(10);
-        layout.setId("main-menu");
-        layout.getChildren().addAll(titleLabel,playButton, leaderboardsButton, tutorialButton, optionsButton, exitButton);
-        layout.setAlignment(Pos.CENTER);
-        layout.setBackground(background);
+        // Create layout for buttons
+        VBox buttonLayout = new VBox(10);
+        buttonLayout.setId("main-menu");
+        buttonLayout.getChildren().addAll(titleLabel,playButton, leaderboardsButton, optionsButton, exitButton);
+        buttonLayout.setAlignment(Pos.CENTER);
 
-        // Set up the scene
-        Scene scene = new Scene(layout, FRAME_WIDTH, FRAME_HEIGHT);
-        mainStage.setScene(scene);
+
+        Scene scene = new Scene(buttonLayout, FRAME_WIDTH, FRAME_HEIGHT);
+
+        StackPane rootLayout = new StackPane();
+
+        buttonLayout.setBackground(Settings.ReturnBackgroundFill());
+
+
+        StackPane.setAlignment(MMSnake, Pos.BOTTOM_RIGHT);
+        rootLayout.getChildren().addAll(buttonLayout, MMSnake);
+
+       // rootLayout.setBackground(new Background(backgroundFill));
+        System.out.println(rootLayout.getBackground());
+        // Set up the scene with the root layout
+        Scene sceneWithSnake = new Scene(rootLayout, FRAME_WIDTH, FRAME_HEIGHT);
+
+        mainStage.setScene(sceneWithSnake);
         mainStage.show();
+
     }
 
     private static void openLeaderboard() {
-
         LeaderBoard.display(getMainStage());
     }
 
 
-    private static Button createStyledButton(String text, String inlineStyle) {
-        Button button = new Button(text);
-        button.setStyle(inlineStyle);
-        return button;
-    }
+
 
     public static void startGame() {
         // Initialize your game components (Model, Controller, View)

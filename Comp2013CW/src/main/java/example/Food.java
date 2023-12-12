@@ -25,7 +25,7 @@ public class Food extends GameObject  {
 		this.width = (int) image.getWidth();
 		this.height = (int) image.getHeight();
 
-		this.scoreValue = scoreValue;
+		this.scoreValue = 1;
 
 		// Set random coordinates for the food within the game panel
 		this.x = (int) (Math.random() * (870 - width + 10));

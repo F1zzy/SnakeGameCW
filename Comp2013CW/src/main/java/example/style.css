@@ -1,8 +1,0 @@
-#main-menu {
-    -fx-background-color: #4CAF50; /* Green background for the main menu */
-}
-
-.menu-button {
-    -fx-background-color: #45A049; /* Green button background */
-    -fx-text-fill: white; /* White text color */
-}

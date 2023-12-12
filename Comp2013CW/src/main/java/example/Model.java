@@ -15,7 +15,7 @@ public class Model extends Observable {
 
     private static final int FRAME_WIDTH = 900;
     private static final int FRAME_HEIGHT = 600;
-    private static final int SNAKE_SPEED = 5;
+    private static final int SNAKE_SPEED = 1;
     private boolean isAlive;
 
     public Model() {
