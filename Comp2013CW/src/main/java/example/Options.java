@@ -5,10 +5,7 @@
     import javafx.geometry.Insets;
     import javafx.geometry.Pos;
     import javafx.scene.Scene;
-    import javafx.scene.control.Button;
-    import javafx.scene.control.CheckBox;
-    import javafx.scene.control.ComboBox;
-    import javafx.scene.control.Label;
+    import javafx.scene.control.*;
     import javafx.scene.image.Image;
     import javafx.scene.image.ImageView;
     import javafx.scene.layout.*;
@@ -27,14 +24,56 @@
     public class Options {
         private static final int FRAME_WIDTH = 900;
         private static final int FRAME_HEIGHT = 600;
+        public static void display(Stage stage){
+            VBox gameSettingsLayout = createGameSettingsLayout();
+            VBox uiSettingsLayout = createUISettingsLayout();
 
-        public static void display(Stage stage) {
-            stage.setTitle("Options");
-            stage.setResizable(false);
-            String CurrentHeadPath;
-            String CurrentBodyPath;
+            // Create a tab pane to switch between game and UI settings
+            TabPane tabPane = new TabPane();
+            Tab gameSettingsTab = new Tab("Game Settings", gameSettingsLayout);
+            Tab uiSettingsTab = new Tab("UI Settings", uiSettingsLayout);
+            tabPane.getTabs().addAll(gameSettingsTab, uiSettingsTab);
+
+            // Set up the scene with the tab pane
+            Scene scene = new Scene(tabPane, FRAME_WIDTH, FRAME_HEIGHT);
+            stage.setScene(scene);
+            stage.show();
+        }
+
+        private static VBox createUISettingsLayout() {
+            // Create layout for UI settings
+            VBox uiSettingsLayout = new VBox(10);
+            uiSettingsLayout.setPadding(new Insets(10));
+
+            // UI settings components
+            Label primaryColorLabel = new Label("Primary Color");
+            ColorPicker primaryColorPicker = new ColorPicker();
+
+            Label secondaryColorLabel = new Label("Secondary Color");
+            ColorPicker secondaryColorPicker = new ColorPicker();
+
+            ComboBox<String> fontComboBox = new ComboBox<>();
+            fontComboBox.setPromptText("Fonts");
+
+            Label textSizeLabel = new Label("Text Size");
+            Slider textSizeSlider = new Slider(10, 30, 10);
+            textSizeSlider.setShowTickMarks(true);
+            textSizeSlider.setSnapToTicks(true);
+
+            CheckBox boldCheckBox = new CheckBox("Bold");
+
+            // Add UI settings controls to the layout
+            uiSettingsLayout.getChildren().addAll(
+                    primaryColorLabel, primaryColorPicker,
+                    secondaryColorLabel, secondaryColorPicker,
+                    fontComboBox, textSizeLabel, textSizeSlider, boldCheckBox
+            );
+
+            return uiSettingsLayout;
+        }
 
 
+        public static VBox  createGameSettingsLayout() {
             VBox layout = new VBox(10);
             layout.setPadding(new Insets(10));
 
@@ -103,11 +142,8 @@
             // Add controls to change head and body
             layout.getChildren().addAll(headComboBox, bodyComboBox,goBackButton,Apply);
 
-
-
-            Scene scene = new Scene(layout, FRAME_WIDTH, FRAME_HEIGHT);
-            stage.setScene(scene);
-            stage.show();
+            layout.setBackground(Settings.ReturnBackgroundFill());
+            return layout;
         }
 
 

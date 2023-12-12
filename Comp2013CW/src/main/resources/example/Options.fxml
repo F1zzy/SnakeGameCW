@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="499.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+
+    <VBox fx:id="Base" prefHeight="608.0" prefWidth="908.0">
+        <children>
+            <StackPane prefHeight="62.0" prefWidth="900.0">
+                <children>
+                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="120.0" prefWidth="900.0" text="Options" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" StackPane.alignment="TOP_CENTER">
+                        <font>
+                            <Font size="50.0" />
+                        </font>
+                    </Label>
+                    <Button alignment="CENTER" mnemonicParsing="false" prefHeight="120.0" prefWidth="111.0" text="Go Back" StackPane.alignment="TOP_RIGHT">
+                        <font>
+                            <Font size="13.0" />
+                        </font>
+                    </Button>
+                </children>
+            </StackPane>
+            <HBox prefHeight="287.0" prefWidth="900.0">
+                <children>
+                    <Pane fx:id="primaryColorLabel" maxWidth="574.0" prefHeight="152.0" prefWidth="501.0">
+                        <children>
+                            <StackPane fx:id="GamePreveiw" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="293.0" prefWidth="480.0" />
+                            <VBox layoutX="319.0" prefHeight="293.0" prefWidth="152.0">
+                                <children>
+                                    <ComboBox fx:id="headComboBox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="178.0" promptText="Head Combo Box" />
+                                    <ComboBox fx:id="bodyComboBox" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="178.0" promptText="Body Combo Box" />
+                                    <Button fx:id="backgroundBut" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="43.0" prefWidth="81.0" text="Background" wrapText="true">
+                                        <font>
+                                            <Font size="10.0" />
+                                        </font>
+                                    </Button>
+                                </children>
+                            </VBox>
+                        </children>
+                    </Pane>
+                    <Pane prefHeight="287.0" prefWidth="450.0">
+                        <children>
+                            <VBox prefHeight="287.0" prefWidth="425.0">
+                                <children>
+                                    <Label fx:id="primaryColorLabel" text="Primary Color" />
+                                    <ColorPicker fx:id="primaryColorPicker" />
+                                    <Label fx:id="secondaryColorLabel" text="Secondary Color" />
+                                    <ColorPicker fx:id="primaryColorPicker" />
+                                    <ComboBox fx:id="fontComboBox" prefWidth="150.0" promptText="Fonts" />
+                                    <Label fx:id="textSizeLabel" text="Text Size" />
+                                    <Slider fx:id="textSizeSlider" max="30.0" min="10.0" showTickMarks="true" snapToTicks="true" />
+                                    <CheckBox fx:id="boldCheckBox" mnemonicParsing="false" text="Bold" />
+                                </children>
+                            </VBox>
+                        </children>
+                    </Pane>
+                </children>
+            </HBox>
+            <HBox prefHeight="194.0" prefWidth="891.0">
+                <children>
+                    <VBox prefHeight="194.0" prefWidth="721.0">
+                        <children>
+                            <ToggleButton mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="ToggleButton" />
+                            <Label prefHeight="17.0" prefWidth="335.0" text="Volume:">
+                                <font>
+                                    <Font size="13.0" />
+                                </font>
+                            </Label>
+                            <Slider fx:id="volumeSlider" prefHeight="24.0" prefWidth="239.0" showTickMarks="true" snapToTicks="true" />
+                            <CheckBox fx:id="enableTTSCB" mnemonicParsing="false" text=" - Enable Text To Speech" />
+                        </children>
+                    </VBox>
+                    <VBox prefHeight="194.0" prefWidth="554.0">
+                        <children>
+                            <HBox prefHeight="44.0" prefWidth="559.0">
+                                <children>
+                                    <Button fx:id="useProfile1But" mnemonicParsing="false" text="Use Profile 1" />
+                                    <Button fx:id="changeCurrentProfile1But" mnemonicParsing="false" text="Change Current to Profile 1" />
+                                </children>
+                            </HBox>
+                            <HBox prefHeight="43.0" prefWidth="559.0">
+                                <children>
+                                    <Button fx:id="useProfile2" mnemonicParsing="false" text="Use Profile 2" />
+                                    <Button fx:id="changeProfile2" mnemonicParsing="false" text="Change Current to Profile 2" />
+                                </children>
+                            </HBox>
+                            <HBox prefHeight="43.0" prefWidth="559.0">
+                                <children>
+                                    <Button fx:id="useProfile3" mnemonicParsing="false" text="Use Profile 3" />
+                                    <Button fx:id="changeProfile3" mnemonicParsing="false" text="Change Current to Profile 3" />
+                                </children>
+                            </HBox>
+                            <HBox prefHeight="63.0" prefWidth="559.0">
+                                <children>
+                                    <Button fx:id="highContrastBut" mnemonicParsing="false" text="High Contrast" />
+                                    <Button fx:id="defaultBut" mnemonicParsing="false" text="Default" />
+                                    <Button fx:id="applyBut" mnemonicParsing="false" text="Apply" />
+                                </children>
+                            </HBox>
+                        </children>
+                    </VBox>
+                </children>
+            </HBox>
+        </children>
+    </VBox>
+
+</AnchorPane>

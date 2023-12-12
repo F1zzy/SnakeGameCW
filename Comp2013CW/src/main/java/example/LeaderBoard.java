@@ -27,7 +27,7 @@ public class LeaderBoard{
     private static int Highscore;
     public static void Init(){
         data = readDataFromCSV();
-        Highscore = data.getFirst().getScore();
+        //Highscore = data.getFirst().getScore();
     }
 
 
