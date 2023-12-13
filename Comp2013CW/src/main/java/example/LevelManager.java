@@ -5,7 +5,7 @@ public class LevelManager {
     private Model model;
 
     public LevelManager(Model model) {
-        setLevelState(new MultipleFoodLevelState(this));
+        setLevelState(new InvisibleSnakeLevelState(this));
         this.model = model;
     }
 

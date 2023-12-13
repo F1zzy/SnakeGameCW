@@ -89,7 +89,9 @@ public class View implements Observer {
     }
 
     private void drawSnake() {
+
         Snake snake = model.getSnake();
+        if(!snake.isVisible) return;
         Image snakeHead = ImageUtil.images.get("snake-head-right");
         Image newImgSnakeHead = snakeHead;
         List<Point> bodyPoints = snake.getBodyPoints();
@@ -114,12 +116,15 @@ public class View implements Observer {
         }
 
         gc.drawImage(newImgSnakeHead, snake.x, snake.y);
+
         // Draw snake body
         drawBody();
     }
 
     private void drawBody() {
+
         Snake snake = model.getSnake();
+        if(!snake.isVisible) return;
         Image snakeBody = ImageUtil.images.get("snake-body");
         int length = snake.getBodyPoints().size() - 1 - snake.getNumOfBodies();
 

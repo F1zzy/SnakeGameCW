@@ -18,6 +18,7 @@ public class Snake extends GameObject {
     //private static final BufferedImage IMG_SNAKE_HEAD = (BufferedImage) ImageUtil.images.get("snake-head-right");
     private static BufferedImage newImgSnakeHead;
     boolean up, down, left, right = true;
+    boolean isVisible;
 
     public Snake(int x, int y) {
         this.isAlive = true;
@@ -29,6 +30,7 @@ public class Snake extends GameObject {
 
         this.speed_XY = SNAKE_SPEED;
         this.length = 1;
+        this.isVisible = true;
 
         this.numOfBodies = width / speed_XY;
     }
@@ -52,6 +54,11 @@ public class Snake extends GameObject {
     public void setSpeed(int boostedSpeed) {
         this.speed_XY = boostedSpeed;
     }
+    public void setVisible(boolean bool ){
+        this.isVisible = bool;
+    }
+    public boolean getVisible(){ return this.isVisible;}
+
 
 
     public void move() {
