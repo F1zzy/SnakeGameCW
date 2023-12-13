@@ -16,6 +16,8 @@ public class MainMenu {
 
     private static final int FRAME_WIDTH = 900;
     private static final int FRAME_HEIGHT = 600;
+    private static final int TARGET_FPS = 60; // Adjust as needed
+    private static final long TARGET_NANOSECONDS_PER_FRAME = 1_000_000_000 / TARGET_FPS;
     private static Stage mainStage;
     private static VBox layout;
 
@@ -104,6 +106,7 @@ public class MainMenu {
         AnimationTimer gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
+
                 if(model.EndGame) {
                     view.gameOverScene();
                     this.stop();

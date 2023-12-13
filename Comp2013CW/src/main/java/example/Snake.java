@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Snake extends GameObject implements movable {
+public class Snake extends GameObject {
     private static final int SNAKE_SPEED = 3;
     private int speed_XY;
     private int length;
@@ -46,7 +46,12 @@ public class Snake extends GameObject implements movable {
     }
     public int getNumOfBodies(){return numOfBodies;}
 
-
+    public int getOriginalSpeed() {
+        return SNAKE_SPEED;
+    }
+    public void setSpeed(int boostedSpeed) {
+        this.speed_XY = boostedSpeed;
+    }
 
 
     public void move() {
@@ -114,4 +119,15 @@ public class Snake extends GameObject implements movable {
         }
     }
 
+
+    public boolean collidesWith(Food food) {
+        Rectangle snakeRectangle = getRectangle();
+        Rectangle foodRectangle = food.getRectangle();
+
+        // Check for collision using bounding boxes
+        return snakeRectangle.intersects(foodRectangle);
+    }
+
+    public void eat(Food food) {
+    }
 }

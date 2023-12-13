@@ -4,6 +4,8 @@ import javafx.application.Platform;
 import java.awt.*;
 import java.util.List;
 import java.util.Observable;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Model extends Observable {
     private Snake SnakeObject;
@@ -12,34 +14,29 @@ public class Model extends Observable {
 
     boolean EndGame = false;
 
-
+    private LevelManager levelManager;
     private static final int FRAME_WIDTH = 900;
     private static final int FRAME_HEIGHT = 600;
-    private static final int SNAKE_SPEED = 1;
     private boolean isAlive;
 
+    private static final int DEFAULT_SPEED = 1;
+
+
+    private int speed;
+    private long speedBoostStartTime;
     public Model() {
+        levelManager = new LevelManager(this);
+
         SnakeObject = new Snake(100, 100);
-        food = FoodFactory.createNewFood();
+        food = FoodFactory.createNewFood(false);
         score = 0;
+
+
+
     }
+
     public void updateGame() {
-        outofBounds();
-        eatBody();
-
-        // Determine the state of the game.
-        if (SnakeObject.isAlive) {
-            if (food.isAlive) {
-                food.eaten(SnakeObject);
-            } else {
-                food = FoodFactory.createNewFood();
-
-
-            }
-        } else {
-
-            EndGame = true;
-        }
+        levelManager.update();
 
         SnakeObject.move();
         Platform.runLater(() -> {
@@ -47,6 +44,7 @@ public class Model extends Observable {
             notifyObservers();
         });
     }
+
 
 
 
@@ -59,7 +57,7 @@ public class Model extends Observable {
 
 
     public  Food NewFood(){
-        this.food = FoodFactory.createNewFood();
+        this.food = FoodFactory.createNewFood(false);
         return this.food;
     }
 
@@ -83,7 +81,7 @@ public class Model extends Observable {
             }
         }
     }
-    private void outofBounds()
+    void outofBounds()
     {
         boolean xOut = (SnakeObject.x <= 0 || SnakeObject.x >= (FRAME_WIDTH - SnakeObject.width));
         boolean yOut = (SnakeObject.y <= 0 || SnakeObject.y  >= (FRAME_HEIGHT - SnakeObject.height));
@@ -98,12 +96,6 @@ public class Model extends Observable {
         super.notifyObservers();
     }
 
-    public void reset() {
-        // ADD 3-Second Countdown then ruun
-        SnakeObject = new Snake(100, 100);
-        FoodFactory.reset();
-        food = FoodFactory.createNewFood();
-        score = 0;
-    }
+
 }
 
