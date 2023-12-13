@@ -97,27 +97,14 @@ public class MainMenu {
 
     public static void startGame() {
         // Initialize your game components (Model, Controller, View)
+
         Model model = new Model();
         Controller controller = new Controller(model);
         View view = new View(model, controller , mainStage);
 
-
-        // Start the game loop
-        AnimationTimer gameLoop = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-
-                if(model.EndGame) {
-                    view.gameOverScene();
-                    this.stop();
-                }
-                else{
-                    model.updateGame();  // Update game logic
-                }
-
-            }
-        };
-
+        GameLoop gameLoop = new GameLoop(model,view);
+        model.setGameLoop(gameLoop);
+        controller.setView(view);
         //MusicPlayer.getMusicPlay("src/main/resources/frogger.mp3");
 
         final int[] num = {3};
@@ -130,7 +117,7 @@ public class MainMenu {
                         view.drawCountdown(num[0]);
                         num[0]--;
                     } else {
-                        System.out.println("" + "GO");
+                        System.out.println("GO");
 
                         view.drawCountdown(4);
                         // Stop the countdown timeline

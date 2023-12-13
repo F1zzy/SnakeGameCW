@@ -43,11 +43,14 @@ public class View implements Observer {
 
     private Stage stage;
 
+    private VBox pauseMenu;
+    private StackPane pauseMenuOverlay;
     public View(Model model, Controller controller, Stage stage) {
         this.model = model;
         this.controller = controller;
 
         initializeUI(stage);
+        initPauseMenu();
 
         model.addObserver(this);
     }
@@ -64,6 +67,15 @@ public class View implements Observer {
         Scene scene = new Scene(root);
         scene.setOnKeyPressed(controller.keyPressed());
         root.setFocusTraversable(true);
+
+        Button pauseButton = Settings.createStyledButton("Pause");
+        pauseButton.setOnAction(e -> controller.pauseGame());
+        StackPane.setAlignment(pauseButton, Pos.TOP_RIGHT);
+        root.getChildren().add(pauseButton);
+
+        pauseMenuOverlay = new StackPane();
+        pauseMenuOverlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);"); // Adjust the alpha value as needed
+        pauseMenuOverlay.setAlignment(Pos.CENTER);
 
         // Add the scene to the stage
         stage.setTitle("Snake Game");
@@ -158,12 +170,12 @@ public class View implements Observer {
         drawSnake();
         drawBody();
         // Add "Go Back" button
-        Button goBackButton = createStyledButton("Go Back", "-fx-background-color: #45A049; -fx-text-fill: white; -fx-font-size: 18px;");
+        Button goBackButton = Settings.createStyledButton("Go Back");
         goBackButton.setOnAction(e -> controller.goBack());
         goBackButton.setFocusTraversable(true);
 
         // Add "Retry" button
-        Button retryButton = createStyledButton("Retry", "-fx-background-color: #45A049; -fx-text-fill: white; -fx-font-size: 18px;");
+        Button retryButton = Settings.createStyledButton("Retry");
         retryButton.setOnAction(e -> controller.retry());
         root.setFocusTraversable(true);
 
@@ -171,7 +183,7 @@ public class View implements Observer {
         TextField usernameInput = new TextField();
         usernameInput.setText("");
 
-        Button submitButton = createStyledButton("Submit Score", "-fx-background-color: #45A049; -fx-text-fill: white; -fx-font-size: 18px;");
+        Button submitButton = Settings.createStyledButton("Submit");
         submitButton.setOnAction(e -> {
             String username = usernameInput.getText();
             controller.submitScore(username, model.getScore());
@@ -205,11 +217,6 @@ public class View implements Observer {
         root.getChildren().add(buttonsLayout);
     }
 
-    private Button createStyledButton(String text, String inlineStyle) {
-        Button button = new Button(text);
-        button.setStyle(inlineStyle);
-        return button;
-    }
 
     @Override
     public void update(Observable o, Object arg) {
@@ -268,5 +275,38 @@ public class View implements Observer {
 
         // Convert the rotated BufferedImage back to JavaFX Image
         return SwingFXUtils.toFXImage(bufferedImage, null);
+    }
+
+    public void initPauseMenu() {
+
+
+        // Create "Resume" button
+        Button resumeButton = Settings.createStyledButton("Resume");
+        resumeButton.setOnAction(e -> controller.resumeGame());
+
+        // Create "Retry" button
+        Button retryButton = Settings.createStyledButton("Retry");
+        retryButton.setOnAction(e -> controller.retry());
+
+        // Create "Go Back" button
+        Button goBackButton = Settings.createStyledButton("Go Back");
+        goBackButton.setOnAction(e -> controller.goBack());
+
+        // Create layout for the pause menu
+        pauseMenu = new VBox(20);
+        pauseMenu.setAlignment(Pos.CENTER);
+        pauseMenu.getChildren().addAll(resumeButton, retryButton, goBackButton);
+    }
+    public void showPauseMenu() {
+        // Show the pause menu in the center of the screen
+        root.getChildren().add(pauseMenuOverlay);
+        root.getChildren().add(pauseMenu);
+
+
+    }
+
+    public void hidePauseMenu() {
+        // Hide the pause menu
+        root.getChildren().removeAll(pauseMenu, pauseMenuOverlay);
     }
 }

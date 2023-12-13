@@ -8,10 +8,14 @@ import java.time.format.DateTimeFormatter;
 
 public class Controller {
     private Model model;
-
-    public Controller(Model model) {
+    private  View view;
+    public Controller(Model model ) {
         this.model = model;
     }
+    public void setView(View setView){
+        this.view = setView;
+    }
+
 
     public EventHandler<? super KeyEvent> keyPressed() {
 
@@ -38,5 +42,17 @@ public class Controller {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
         System.out.println("ADDING SCORE");
         LeaderBoard.addScoreRecord(new ScoreEntry(username , score , currentDateTime.format(formatter)));
+    }
+
+    public void pauseGame() {
+        model.pauseGame();
+        view.showPauseMenu();
+
+
+    }
+
+    public void resumeGame() {
+        model.resumeGame();
+        view.hidePauseMenu();
     }
 }

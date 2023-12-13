@@ -17,7 +17,7 @@ public class Food extends GameObject  {
 	/**
 	 * Constructor to make a new Food object with a random image and position.
 	 */
-	public Food(Image image , int scoreValue){
+	public Food(Image image){
 		this.isAlive = true;
 		//ImageUtil.images.get(String.valueOf(new Random().nextInt(10)));
 		this.image = image;
@@ -25,7 +25,6 @@ public class Food extends GameObject  {
 		this.width = (int) image.getWidth();
 		this.height = (int) image.getHeight();
 
-		this.scoreValue = 1;
 
 		// Set random coordinates for the food within the game panel
 		this.x = (int) (Math.random() * (870 - width + 10));

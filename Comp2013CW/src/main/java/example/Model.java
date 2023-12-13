@@ -20,6 +20,7 @@ public class Model extends Observable {
 
     private static final int DEFAULT_SPEED = 1;
 
+    private GameLoop gameLoop;
     public Model() {
         SnakeObject = new Snake(100, 100);
         foods = new ArrayList<>();
@@ -27,6 +28,19 @@ public class Model extends Observable {
 
         levelManager = new LevelManager(this);
     }
+    public void setGameLoop(GameLoop givenGameLoop){
+        gameLoop = givenGameLoop;
+    }
+    public void pauseGame(){
+        gameLoop.stop();
+
+    }
+    public void resumeGame(){
+        gameLoop.start();
+    }
+
+
+
 
     public void updateGame() {
         levelManager.update();
@@ -47,7 +61,7 @@ public class Model extends Observable {
     }
 
     public Food newFood() {
-        return FoodFactory.createNewFood(false);
+        return FoodFactory.createNewFood(false , false);
     }
 
     public void addFood(Food food) {
