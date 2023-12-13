@@ -50,8 +50,8 @@ public class View implements Observer {
         this.controller = controller;
 
         initializeUI(stage);
-        initPauseMenu();
 
+        initPauseMenu();
         model.addObserver(this);
     }
 
@@ -63,6 +63,7 @@ public class View implements Observer {
         root.getChildren().add(canvas);
         drawBackground();
 
+
         // Set up key event handling
         Scene scene = new Scene(root);
         scene.setOnKeyPressed(controller.keyPressed());
@@ -70,10 +71,11 @@ public class View implements Observer {
 
         Button pauseButton = Settings.createStyledButton("Pause");
         pauseButton.setOnAction(e -> controller.pauseGame());
-        StackPane.setAlignment(pauseButton, Pos.TOP_RIGHT);
+        root.setAlignment(pauseButton, Pos.TOP_RIGHT);
         root.getChildren().add(pauseButton);
 
-        pauseMenuOverlay = new StackPane();
+        root.requestFocus();
+        pauseMenuOverlay = new StackPane(); // Initialize pauseMenuOverlay
         pauseMenuOverlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);"); // Adjust the alpha value as needed
         pauseMenuOverlay.setAlignment(Pos.CENTER);
 
@@ -92,6 +94,7 @@ public class View implements Observer {
             drawSnake();
             drawFoods();
             drawScore();
+
         }
     }
 
@@ -279,7 +282,6 @@ public class View implements Observer {
 
     public void initPauseMenu() {
 
-
         // Create "Resume" button
         Button resumeButton = Settings.createStyledButton("Resume");
         resumeButton.setOnAction(e -> controller.resumeGame());
@@ -294,7 +296,7 @@ public class View implements Observer {
 
         // Create layout for the pause menu
         pauseMenu = new VBox(20);
-        pauseMenu.setAlignment(Pos.CENTER);
+       pauseMenu.setAlignment(Pos.CENTER);
         pauseMenu.getChildren().addAll(resumeButton, retryButton, goBackButton);
     }
     public void showPauseMenu() {
@@ -307,6 +309,7 @@ public class View implements Observer {
 
     public void hidePauseMenu() {
         // Hide the pause menu
-        root.getChildren().removeAll(pauseMenu, pauseMenuOverlay);
+       root.getChildren().removeAll(pauseMenu , pauseMenuOverlay);
+        root.requestFocus();
     }
 }

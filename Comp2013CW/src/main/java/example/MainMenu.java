@@ -107,31 +107,7 @@ public class MainMenu {
         controller.setView(view);
         //MusicPlayer.getMusicPlay("src/main/resources/frogger.mp3");
 
-        final int[] num = {3};
-
-        Timeline countdownTimeline = new Timeline();
-        countdownTimeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(1), event -> {
-                    if (num[0] > 0) {
-                        System.out.println("" + num[0]);
-                        view.drawCountdown(num[0]);
-                        num[0]--;
-                    } else {
-                        System.out.println("GO");
-
-                        view.drawCountdown(4);
-                        // Stop the countdown timeline
-                        countdownTimeline.stop();
-
-                        // Start the game loop
-                        gameLoop.start();
-                    }
-                })
-        );
-
-        // Set the cycle count to 3 seconds (Need to include GO)
-        countdownTimeline.setCycleCount(4);
-        countdownTimeline.play();
+        gameLoop.CountdownStart();
 
     }
 

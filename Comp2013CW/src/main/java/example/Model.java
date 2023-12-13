@@ -36,7 +36,7 @@ public class Model extends Observable {
 
     }
     public void resumeGame(){
-        gameLoop.start();
+        gameLoop.CountdownStart();
     }
 
 
