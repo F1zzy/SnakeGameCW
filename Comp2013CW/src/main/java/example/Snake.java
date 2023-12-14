@@ -2,6 +2,7 @@ package example;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,7 +32,8 @@ public class Snake extends GameObject {
         this.speed_XY = SNAKE_SPEED;
         this.length = 1;
         this.isVisible = true;
-
+        System.out.println("BP Size : " + bodyPoints.size());
+        System.out.println("GET BODY POINTS: "+ getBodyPointsLength());
         this.numOfBodies = width / speed_XY;
     }
 
@@ -52,7 +54,11 @@ public class Snake extends GameObject {
         return SNAKE_SPEED;
     }
     public void setSpeed(int boostedSpeed) {
+
         this.speed_XY = boostedSpeed;
+        System.out.println(""+ getBodyPointsLength());
+        System.out.println("GET BODY POINTS: "+ getBodyPointsLength());
+        //this.numOfBodies = width / boostedSpeed;
     }
     public void setVisible(boolean bool ){
         this.isVisible = bool;
@@ -148,7 +154,17 @@ public class Snake extends GameObject {
         }
 
     }
+    public int getBodyPointsLength() {
+        int length = 0;
+        Iterator<Point> iterator = bodyPoints.iterator(); // Assuming LinkedList<Point> for bodyPoints
 
+        while (iterator.hasNext()) {
+            length++;
+            iterator.next();
+        }
+
+        return length;
+    }
     public boolean collidesWith(Food food) {
         Rectangle snakeRectangle = getRectangle();
         Rectangle foodRectangle = food.getRectangle();

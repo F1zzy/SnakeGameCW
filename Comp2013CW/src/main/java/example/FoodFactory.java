@@ -33,6 +33,9 @@ public class FoodFactory {
                 return new StaticFood(ImageUtil.images.get(( "" + randomType)));
             case 2:
                 return new NegativeFood(x , y);
+            case 3:
+                return new AiMoveableFood(ImageUtil.images.get("" + randomType));
+
         }
         return null;
 

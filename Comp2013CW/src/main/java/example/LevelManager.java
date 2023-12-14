@@ -5,7 +5,7 @@ public class LevelManager {
     private Model model;
 
     public LevelManager(Model model) {
-        setLevelState(new NegativeFoodLevelState(this));
+        setLevelState(new AIMoveableLevelState(this));
         this.model = model;
     }
 

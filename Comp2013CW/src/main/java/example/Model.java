@@ -131,4 +131,8 @@ public class Model extends Observable {
     public void clearFoods() {
         foodFactory.clearList();
     }
+
+    public Food newAIMoveableFood() {
+        return FoodFactory.createNewFood(3, 0,0); // Assuming 3 is the code for AI Moveable food
+    }
 }

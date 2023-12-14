@@ -4,7 +4,6 @@ import javafx.scene.image.Image;
 
 public class SpeedBoostLevelState implements LevelState {
     private LevelManager levelManager;
-    private int speedBoostStartTime;
 
     private int speedBoostDuration;
     private boolean boostTime;
@@ -12,8 +11,11 @@ public class SpeedBoostLevelState implements LevelState {
     public SpeedBoostLevelState(LevelManager levelManager) {
         this.levelManager = levelManager;
 
-        this.speedBoostDuration = 0;
+        this.speedBoostDuration = 121;
         this.isFruitGenerated = false;
+        System.out.println("SPEED LEVEL");
+
+        this.boostTime = false;
 
     }
 
@@ -30,7 +32,8 @@ public class SpeedBoostLevelState implements LevelState {
             speedBoostDuration++;
             if(speedBoostDuration > 120){
                 boostTime = false;
-                snake.setSpeed(1);
+                snake.setSpeed(snake.getOriginalSpeed());
+                System.out.println("STOP BOOSTing");
 
             }
         }
@@ -41,15 +44,16 @@ public class SpeedBoostLevelState implements LevelState {
                 // If no fruit, generate a new fruit
                 model.addFood(model.newStaticFood());
                 isFruitGenerated = true;
-                boostTime = true;
-                snake.setSpeed(2);
-                speedBoostDuration = 0;
             } else {
                 // Check if the fruit is eaten by the snake
                 Food fruit = model.getFoodsList().get(0);
                 if (snake.getRectangle().intersects(fruit.getRectangle())) {
                     fruit.eaten(snake);
                     model.getFoodsList().remove(0);
+                    boostTime = true;
+                    snake.setSpeed(snake.getOriginalSpeed() + 2);
+                    System.out.println("BOOOST");
+                    speedBoostDuration = 0;
                     isFruitGenerated = false; // Allow generating a new fruit
                 }
             }
