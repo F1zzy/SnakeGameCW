@@ -58,7 +58,7 @@ public class ImageUtil {
 		images.put("16", new Image("food-watermelon.png"));
 
 
-		images.put("Poo", new Image("food-poo.png"));
+		images.put("Poo", new Image("food-poo.png", 32, 32, true, true));
 	}
 
 	private static void loadUIImages() {

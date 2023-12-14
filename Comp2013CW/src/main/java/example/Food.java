@@ -3,36 +3,51 @@ package example;
 import javafx.scene.image.Image;
 
 import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * Represents a food object in the Snake game.
  */
-public class Food extends GameObject  {
-	private int scoreValue;
+public abstract class Food extends GameObject implements Serializable {
+	int scoreValue;
+	FoodType type;
+	public enum FoodType {
+		NORMAL, NEGATIVE
+	}
 
 	@Serial
 	private static final long serialVersionUID = -3641221053272056036L;
 
 
-	/**
-	 * Constructor to make a new Food object with a random image and position.
-	 */
-	public Food(Image image){
+    /**
+     * Constructor to make a new Food object with a random image and position.
+     */
+//	public Food(Image image){
+//		this.isAlive = true;
+//		//ImageUtil.images.get(String.valueOf(new Random().nextInt(10)));
+//		this.image = image;
+//
+//		this.width = (int) image.getWidth();
+//		this.height = (int) image.getHeight();
+//
+//
+//		// Set random coordinates for the food within the game panel
+//		this.x = (int) (Math.random() * (870 - width + 10));
+//		this.y = (int) (Math.random() * (560 - height - 40));
+//
+//	}
+    public Food(Image image) {
 		this.isAlive = true;
-		//ImageUtil.images.get(String.valueOf(new Random().nextInt(10)));
 		this.image = image;
-
 		this.width = (int) image.getWidth();
 		this.height = (int) image.getHeight();
+    }
+	public Food(int x , int y){}
 
-
-		// Set random coordinates for the food within the game panel
-		this.x = (int) (Math.random() * (870 - width + 10));
-		this.y = (int) (Math.random() * (560 - height - 40));
-
+    public Image getFoodImage(){return this.image;}
+	public FoodType getType() {
+		return this.type;
 	}
-	public Image getFoodImage(){return this.image;}
-
 
 
 	/**
@@ -40,7 +55,7 @@ public class Food extends GameObject  {
 	 *
 	 * @param snake The snake object.
 	 */
-	public void eaten(Snake mySnake){
+	public  void eaten(Snake mySnake){
 
 		// Check for collision between snake and food
 		if (mySnake.getRectangle().intersects(this.getRectangle()) && isAlive && mySnake.isAlive)	{

@@ -24,7 +24,7 @@ public class MultipleFoodLevelState implements LevelState {
 
         // Determine the state of the game.
         if (snake.isAlive) {
-            if (model.getFruits().isEmpty()) {
+            if (model.getFoodsList().isEmpty()) {
                 // If no fruits, generate a new set of random fruits
                 generateRandomFruits();
             } else {
@@ -51,7 +51,7 @@ public class MultipleFoodLevelState implements LevelState {
         int numFruits = random.nextInt(3) + 1; // Generate 1 to 3 fruits
 
         for (int i = 0; i < numFruits; i++) {
-            Food food = model.newFood();
+            Food food = model.newStaticFood();
             model.addFood(food);
         }
     }
@@ -62,7 +62,7 @@ public class MultipleFoodLevelState implements LevelState {
 
         List<Food> eatenFruits = new ArrayList<>();
 
-        for (Food fruit : model.getFruits()) {
+        for (Food fruit : model.getFoodsList()) {
             if (snake.getRectangle().intersects(fruit.getRectangle())) {
                 fruit.eaten(snake);
                 eatenFruits.add(fruit);
@@ -70,11 +70,11 @@ public class MultipleFoodLevelState implements LevelState {
         }
 
         // Remove eaten fruits from the model
-        model.getFruits().removeAll(eatenFruits);
+        model.getFoodsList().removeAll(eatenFruits);
 
         // Add new fruits to maintain a certain number on the screen
-        while (model.getFruits().size() < 3) {
-            Food food = model.newFood();
+        while (model.getFoodsList().size() < 3) {
+            Food food = model.newStaticFood();
             model.addFood(food);
         }
     }

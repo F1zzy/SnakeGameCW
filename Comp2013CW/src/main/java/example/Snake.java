@@ -126,6 +126,28 @@ public class Snake extends GameObject {
         }
     }
 
+    public int BehindheadX(){
+        switch(Direction){
+            case 2:
+                return (-width - 5);
+            case 4:
+                return width+ 5;
+            default:
+                return 0;
+        }
+
+    }
+    public int BehindheadY(){
+        switch(Direction){
+            case 1:
+                return (-width - 5);
+            case 3:
+                return width + 5;
+            default:
+                return 0;
+        }
+
+    }
 
     public boolean collidesWith(Food food) {
         Rectangle snakeRectangle = getRectangle();

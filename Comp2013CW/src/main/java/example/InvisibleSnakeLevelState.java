@@ -38,15 +38,15 @@ public class InvisibleSnakeLevelState implements LevelState {
         if (snake.isAlive) {
             if (!isFruitGenerated) {
                 // If no fruit, generate a new fruit
-                model.addFood(model.newFood());
+                model.addFood(model.newStaticFood());
                 isFruitGenerated = true;
 
             } else {
                 // Check if the fruit is eaten by the snake
-                Food fruit = model.getFruits().get(0);
+                Food fruit = model.getFoodsList().get(0);
                 if (snake.getRectangle().intersects(fruit.getRectangle())) {
                     fruit.eaten(snake);
-                    model.getFruits().remove(0);
+                    model.getFoodsList().remove(0);
                     isFruitGenerated = false;
 
                     invisibleTime = true;

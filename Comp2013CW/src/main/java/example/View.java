@@ -150,7 +150,11 @@ public class View implements Observer {
     }
 
     private void drawFoods() {
-        List<Food> foods = model.getFruits();
+        List<Food> foods = model.getFoodsList();
+        for (Food food : foods) {
+            gc.drawImage(food.getFoodImage(), food.x, food.y);
+        }
+        foods = model.getNegativeFoodsList();
         for (Food food : foods) {
             gc.drawImage(food.getFoodImage(), food.x, food.y);
         }
@@ -170,6 +174,7 @@ public class View implements Observer {
 
     public void gameOverScene() {
         drawBackground();
+        model.getSnake().setVisible(true);
         drawSnake();
         drawBody();
         // Add "Go Back" button
