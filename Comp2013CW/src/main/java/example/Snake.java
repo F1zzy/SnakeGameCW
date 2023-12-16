@@ -156,7 +156,7 @@ public class Snake extends GameObject {
     }
     public int getBodyPointsLength() {
         int length = 0;
-        Iterator<Point> iterator = bodyPoints.iterator(); // Assuming LinkedList<Point> for bodyPoints
+        Iterator<Point> iterator = bodyPoints.iterator();
 
         while (iterator.hasNext()) {
             length++;

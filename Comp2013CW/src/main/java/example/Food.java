@@ -11,8 +11,13 @@ import java.io.Serializable;
 public abstract class Food extends GameObject implements Serializable {
 	int scoreValue;
 	FoodType type;
+
+	public Food() {
+
+	}
+
 	public enum FoodType {
-		NORMAL, NEGATIVE
+		NORMAL, NEGATIVE , MOVEABLE , RAINDROP
 	}
 
 	@Serial
@@ -54,8 +59,9 @@ public abstract class Food extends GameObject implements Serializable {
 	 * When the food is eaten by the snake.
 	 *
 	 * @param snake The snake object.
+	 * @return
 	 */
-	public  void eaten(Snake mySnake){
+	public boolean eaten(Snake mySnake){
 
 		// Check for collision between snake and food
 		if (mySnake.getRectangle().intersects(this.getRectangle()) && isAlive && mySnake.isAlive)	{
@@ -64,7 +70,9 @@ public abstract class Food extends GameObject implements Serializable {
 			mySnake.changeLength(mySnake.getLength() + 1);
 			mySnake.score += scoreValue;
 			System.out.println("Length " + mySnake.getLength() + "\t Score:" + mySnake.score);
+			return  true;
 		}
+		return  false;
 	}
 
 

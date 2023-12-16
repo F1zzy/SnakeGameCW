@@ -16,10 +16,14 @@ public class FoodFactory {
     private static int numOfFood = 0;
     private List<Food> foodList;
     private List<Food> negativeFoodList;
+
+    private List<RainbowDrop> rainbowDropList;
+
     //1 = Static 2 = Negative 3 = AIMoveable
     public FoodFactory(){
         this.foodList = new ArrayList<Food>();
         this.negativeFoodList = new ArrayList<Food>();
+        this.rainbowDropList = new ArrayList<RainbowDrop>();
     }
 
     public static Food createNewFood(int foodtype  , int x ,int y) {
@@ -35,7 +39,8 @@ public class FoodFactory {
                 return new NegativeFood(x , y);
             case 3:
                 return new AiMoveableFood(ImageUtil.images.get("" + randomType));
-
+            case 4:
+                return new RainbowDrop(x , y);
         }
         return null;
 
@@ -69,4 +74,11 @@ public class FoodFactory {
         negativeFoodList.remove(food);
     }
 
+    public List<RainbowDrop> getRainbowDropList() {
+        return rainbowDropList;
+    }
+
+    public void AddRainbowDropList(RainbowDrop food) {
+        rainbowDropList.add(food);
+    }
 }

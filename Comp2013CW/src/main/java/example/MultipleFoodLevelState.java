@@ -38,12 +38,17 @@ public class MultipleFoodLevelState implements LevelState {
 
     @Override
     public String getName() {
-        return "Level 1 - Default";
+        return "Level 3 - Muliple Food";
     }
 
     @Override
     public Image getLevelBackground() {
-        return null;
+        return ImageUtil.images.get("MultipleFoodLevelState-background");
+    }
+
+    @Override
+    public void setStartState() {
+
     }
 
     private void generateRandomFruits() {
@@ -63,8 +68,7 @@ public class MultipleFoodLevelState implements LevelState {
         List<Food> eatenFruits = new ArrayList<>();
 
         for (Food fruit : model.getFoodsList()) {
-            if (snake.getRectangle().intersects(fruit.getRectangle())) {
-                fruit.eaten(snake);
+            if (fruit.eaten(snake)) {
                 eatenFruits.add(fruit);
             }
         }

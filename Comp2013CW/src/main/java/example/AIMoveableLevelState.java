@@ -13,6 +13,8 @@ public class AIMoveableLevelState implements LevelState {
         this.levelManager = levelManager;
         this.isFoodMoving = false;
         this.foodPosition = new Point(0, 0); // Initial food position
+        Model model = levelManager.getModel();
+        model.getFoodsList().clear();
     }
 
     @Override
@@ -54,11 +56,16 @@ public class AIMoveableLevelState implements LevelState {
 
     @Override
     public String getName() {
-        return "Level AI Moveable";
+        return "AI Moveable";
     }
 
     @Override
     public Image getLevelBackground() {
-        return null;
+        return ImageUtil.images.get("AIMoveableFoodLevelState-background");
+    }
+
+    @Override
+    public void setStartState() {
+
     }
 }

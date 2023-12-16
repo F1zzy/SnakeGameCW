@@ -43,16 +43,19 @@ public class Model extends Observable {
     public void updateGame() {
         levelManager.update();
 
+
         SnakeObject.move();
         Platform.runLater(() -> {
             setChanged();
             notifyObservers();
         });
+
     }
 
     public Snake getSnake() {
         return SnakeObject;
     }
+    public LevelState getLevelState(){return levelManager.getCurrentLevelState();}
 
     public List<Food> getFoodsList() {
         return foodFactory.getFoodList();
@@ -60,6 +63,7 @@ public class Model extends Observable {
     public List<Food> getNegativeFoodsList() {
         return foodFactory.getNegativeFoodList();
     }
+    public List<RainbowDrop> getrainbowDropList(){ return  foodFactory.getRainbowDropList();}
 
     public Food newStaticFood() {
         return FoodFactory.createNewFood(1 , 0 , 0);
@@ -89,11 +93,21 @@ public class Model extends Observable {
         System.out.println("Body Point Size: "+ bodyPoints.size());
         return FoodFactory.createNewFood(2, x, y );
     }
+    public Food newAIMoveableFood() {
+        return FoodFactory.createNewFood(3, 0,0);
+    }
+    public RainbowDrop newRainbowRainFood(int x , int y){
+        return (RainbowDrop) FoodFactory.createNewFood(4, x,y);
+    }
+
 
     public void addFood(Food food) {
         foodFactory.AddList(food);
     }
     public  void addNegativeFood(Food food){foodFactory.AddNegativeList(food);}
+    public void addrainbowRainFood(RainbowDrop food) {
+        foodFactory.AddRainbowDropList(food);
+    }
 
     public void removeFood(Food food) {
         foodFactory.RemoveList(food);
@@ -132,7 +146,5 @@ public class Model extends Observable {
         foodFactory.clearList();
     }
 
-    public Food newAIMoveableFood() {
-        return FoodFactory.createNewFood(3, 0,0); // Assuming 3 is the code for AI Moveable food
-    }
+
 }

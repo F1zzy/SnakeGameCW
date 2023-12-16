@@ -5,7 +5,9 @@ import javafx.scene.image.Image;
 import java.util.Random;
 
 public class DefaultLevelState implements LevelState {
+
     private LevelManager levelManager;
+    private Model model;
     private Random random;
     private boolean isFruitGenerated;
 
@@ -13,11 +15,25 @@ public class DefaultLevelState implements LevelState {
         this.levelManager = levelManager;
         this.random = new Random();
         this.isFruitGenerated = false;
+        this.model = levelManager.getModel();
+
+
+        
+
+
+    }
+
+    public void setStartState() {
+        //Get LevelState
+        Snake snake = model.getSnake();
+        snake.setSpeed(snake.getOriginalSpeed());
+        snake.setVisible(true);
+
     }
 
     @Override
     public void update() {
-        Model model = levelManager.getModel();
+        this.model = levelManager.getModel();
         Snake snake = model.getSnake();
         Food food;
         model.outOfBounds();
@@ -50,7 +66,7 @@ public class DefaultLevelState implements LevelState {
 
     @Override
     public Image getLevelBackground() {
-        return null;
+        return ImageUtil.images.get("DefaultLevelState-background");
     }
 
 

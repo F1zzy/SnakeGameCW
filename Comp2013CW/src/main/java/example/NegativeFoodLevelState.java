@@ -65,12 +65,17 @@ public class NegativeFoodLevelState implements LevelState {
 
     @Override
     public String getName() {
-        return "Level 1 - Default";
+        return "Negative Food";
     }
 
     @Override
     public Image getLevelBackground() {
-        return null;
+        return ImageUtil.images.get("NegativeFoodLevelState-background");
+    }
+
+    @Override
+    public void setStartState() {
+
     }
 
     private void checkNegativeFoodCollision() {

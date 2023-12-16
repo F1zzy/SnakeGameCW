@@ -42,6 +42,7 @@ public class View implements Observer {
     private GraphicsContext gc;
 
     private Stage stage;
+    private LevelState levelState;
 
     private VBox pauseMenu;
     private StackPane pauseMenuOverlay;
@@ -94,12 +95,27 @@ public class View implements Observer {
             drawSnake();
             drawFoods();
             drawScore();
+            drawLevelState();
 
         }
     }
 
+    private void drawLevelState() {
+        // Get the current level state name
+        String levelStateName = model.getLevelState().getName();
+
+        // Set the font and color for the title
+        gc.setFill(Settings.PrimaryColor);
+        gc.setFont(new Font("Arial", 30));
+
+        // Draw the title at the top
+        gc.fillText(levelStateName, 20, 50);
+    }
+
     private void drawBackground() {
-        Image background = ImageUtil.images.get("UI-background");
+
+        Image background = model.getLevelState().getLevelBackground();
+
         gc.drawImage(background, 0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
@@ -156,6 +172,10 @@ public class View implements Observer {
         }
         foods = model.getNegativeFoodsList();
         for (Food food : foods) {
+            gc.drawImage(food.getFoodImage(), food.x, food.y);
+        }
+        List<RainbowDrop> rainbowfoods = model.getrainbowDropList();
+        for (RainbowDrop food : rainbowfoods) {
             gc.drawImage(food.getFoodImage(), food.x, food.y);
         }
     }

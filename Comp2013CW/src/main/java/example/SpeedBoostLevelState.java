@@ -83,10 +83,13 @@ public class SpeedBoostLevelState implements LevelState {
 
     @Override
     public Image getLevelBackground() {
-        return null;
+        return ImageUtil.images.get("SpeedBoostLevelState-background");
     }
 
+    @Override
+    public void setStartState() {
 
+    }
 
 
 }

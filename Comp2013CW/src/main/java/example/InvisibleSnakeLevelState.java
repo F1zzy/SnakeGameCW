@@ -80,7 +80,10 @@ public class InvisibleSnakeLevelState implements LevelState {
         return null;
     }
 
+    @Override
+    public void setStartState() {
 
+    }
 
 
 }
