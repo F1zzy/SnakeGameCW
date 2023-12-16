@@ -11,20 +11,22 @@ public class DefaultLevelState implements LevelState {
     private Random random;
     private boolean isFruitGenerated;
 
+    private  SoundManager soundManager;
+
     public DefaultLevelState(LevelManager levelManager) {
         this.levelManager = levelManager;
         this.random = new Random();
         this.isFruitGenerated = false;
         this.model = levelManager.getModel();
-
+        this.soundManager = SoundManager.getInstance();
 
         
 
 
     }
 
-    public void setStartState() {
-        //Get LevelState
+        public void setStartState() {
+            //Get LevelState
         Snake snake = model.getSnake();
         snake.setSpeed(snake.getOriginalSpeed());
         snake.setVisible(true);
@@ -49,8 +51,10 @@ public class DefaultLevelState implements LevelState {
                 // Check if the fruit is eaten by the snake
                 Food fruit = model.getFoodsList().get(0);
                 if (snake.getRectangle().intersects(fruit.getRectangle())) {
+                    soundManager.PlayEatFood();
                     fruit.eaten(snake);
                     model.getFoodsList().remove(0);
+
                     isFruitGenerated = false; // Allow generating a new fruit
                 }
             }

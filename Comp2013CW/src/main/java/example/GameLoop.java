@@ -11,9 +11,12 @@ public  class  GameLoop extends AnimationTimer {
     private Model model;
     private View view;
 
+    private SoundManager soundManager;
+
     public GameLoop(Model model, View view) {
         this.model = model;
         this.view = view;
+        soundManager = SoundManager.getInstance();
     }
     public void CountdownStart(){
 
@@ -34,6 +37,7 @@ public  class  GameLoop extends AnimationTimer {
                         countdownTimeline.stop();
 
                         // Start the game loop
+                        soundManager.playBackgroundMusic();
                         this.start();
                     }
                 })
@@ -49,6 +53,8 @@ public  class  GameLoop extends AnimationTimer {
     public void handle(long now) {
         if (model.EndGame) {
             view.gameOverScene();
+            soundManager.stopBackgroundMusic();
+            soundManager.playGameOver();
             this.stop();
         } else {
             model.updateGame();

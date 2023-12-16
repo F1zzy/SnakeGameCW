@@ -7,11 +7,13 @@ public class LevelManager {
     private LevelState currentLevelState;
     private Model model;
 
+    public SoundManager soundManager;
     public LevelManager(Model model) {
         LevelState state = new DefaultLevelState(this);
         setLevelState(state);
         this.model = model;
         this.levelChanged = false;
+        this.soundManager = SoundManager.getInstance();
     }
 
     public void setLevelState(LevelState levelState) {
@@ -26,7 +28,8 @@ public class LevelManager {
             // Check conditions to change the level
             if (model.getSnake().getLength() % 3 == 0) {
                 // Change the level state when the body length is divisible by 5
-                changeLevelState();
+                //For Testing Purpose Dont change State
+                //changeLevelState();
                 this.model.getFoodsList().clear();
                 this.model.getNegativeFoodsList().clear();
 

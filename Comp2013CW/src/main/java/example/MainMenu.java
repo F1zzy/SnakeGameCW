@@ -105,7 +105,7 @@ public class MainMenu {
         GameLoop gameLoop = new GameLoop(model,view);
         model.setGameLoop(gameLoop);
         controller.setView(view);
-        //MusicPlayer.getMusicPlay("src/main/resources/frogger.mp3");
+        //MusicPlayer.getMusicPlay("src/main/resources/background-music.mp3");
 
         gameLoop.CountdownStart();
 

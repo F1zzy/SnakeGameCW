@@ -21,6 +21,8 @@ public class Model extends Observable {
     private static final int DEFAULT_SPEED = 1;
 
     private GameLoop gameLoop;
+    private final SoundManager soundManager= SoundManager.getInstance();
+
     public Model() {
         SnakeObject = new Snake(100, 100);
 
@@ -28,7 +30,9 @@ public class Model extends Observable {
         score = 0;
 
         levelManager = new LevelManager(this);
+
     }
+
     public void setGameLoop(GameLoop givenGameLoop){
         gameLoop = givenGameLoop;
     }
