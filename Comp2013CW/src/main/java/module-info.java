@@ -6,6 +6,7 @@ module Comp2013CW {
     requires javafx.graphics;
     requires javafx.controls;
     requires javafx.swing;
+    requires javafx.media;
     //requires jlayer;
 
 }
