@@ -16,6 +16,8 @@ public class MainMenu {
 
     private static final int FRAME_WIDTH = 900;
     private static final int FRAME_HEIGHT = 600;
+    private static final int TARGET_FPS = 60; // Adjust as needed
+    private static final long TARGET_NANOSECONDS_PER_FRAME = 1_000_000_000 / TARGET_FPS;
     private static Stage mainStage;
     private static VBox layout;
 
@@ -95,53 +97,17 @@ public class MainMenu {
 
     public static void startGame() {
         // Initialize your game components (Model, Controller, View)
+
         Model model = new Model();
         Controller controller = new Controller(model);
         View view = new View(model, controller , mainStage);
 
-
-        // Start the game loop
-        AnimationTimer gameLoop = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                if(model.EndGame) {
-                    view.gameOverScene();
-                    this.stop();
-                }
-                else{
-                    model.updateGame();  // Update game logic
-                }
-
-            }
-        };
-
+        GameLoop gameLoop = new GameLoop(model,view);
+        model.setGameLoop(gameLoop);
+        controller.setView(view);
         //MusicPlayer.getMusicPlay("src/main/resources/frogger.mp3");
 
-        final int[] num = {3};
-
-        Timeline countdownTimeline = new Timeline();
-        countdownTimeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(1), event -> {
-                    if (num[0] > 0) {
-                        System.out.println("" + num[0]);
-                        view.drawCountdown(num[0]);
-                        num[0]--;
-                    } else {
-                        System.out.println("" + "GO");
-
-                        view.drawCountdown(4);
-                        // Stop the countdown timeline
-                        countdownTimeline.stop();
-
-                        // Start the game loop
-                        gameLoop.start();
-                    }
-                })
-        );
-
-        // Set the cycle count to 3 seconds (Need to include GO)
-        countdownTimeline.setCycleCount(4);
-        countdownTimeline.play();
+        gameLoop.CountdownStart();
 
     }
 

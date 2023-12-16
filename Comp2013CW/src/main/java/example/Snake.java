@@ -2,10 +2,11 @@ package example;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Snake extends GameObject implements movable {
+public class Snake extends GameObject {
     private static final int SNAKE_SPEED = 3;
     private int speed_XY;
     private int length;
@@ -18,6 +19,7 @@ public class Snake extends GameObject implements movable {
     //private static final BufferedImage IMG_SNAKE_HEAD = (BufferedImage) ImageUtil.images.get("snake-head-right");
     private static BufferedImage newImgSnakeHead;
     boolean up, down, left, right = true;
+    boolean isVisible;
 
     public Snake(int x, int y) {
         this.isAlive = true;
@@ -29,7 +31,9 @@ public class Snake extends GameObject implements movable {
 
         this.speed_XY = SNAKE_SPEED;
         this.length = 1;
-
+        this.isVisible = true;
+        System.out.println("BP Size : " + bodyPoints.size());
+        System.out.println("GET BODY POINTS: "+ getBodyPointsLength());
         this.numOfBodies = width / speed_XY;
     }
 
@@ -46,6 +50,20 @@ public class Snake extends GameObject implements movable {
     }
     public int getNumOfBodies(){return numOfBodies;}
 
+    public int getOriginalSpeed() {
+        return SNAKE_SPEED;
+    }
+    public void setSpeed(int boostedSpeed) {
+
+        this.speed_XY = boostedSpeed;
+        System.out.println(""+ getBodyPointsLength());
+        System.out.println("GET BODY POINTS: "+ getBodyPointsLength());
+        //this.numOfBodies = width / boostedSpeed;
+    }
+    public void setVisible(boolean bool ){
+        this.isVisible = bool;
+    }
+    public boolean getVisible(){ return this.isVisible;}
 
 
 
@@ -114,4 +132,47 @@ public class Snake extends GameObject implements movable {
         }
     }
 
+    public int BehindheadX(){
+        switch(Direction){
+            case 2:
+                return (-width - 5);
+            case 4:
+                return width+ 5;
+            default:
+                return 0;
+        }
+
+    }
+    public int BehindheadY(){
+        switch(Direction){
+            case 1:
+                return (-width - 5);
+            case 3:
+                return width + 5;
+            default:
+                return 0;
+        }
+
+    }
+    public int getBodyPointsLength() {
+        int length = 0;
+        Iterator<Point> iterator = bodyPoints.iterator();
+
+        while (iterator.hasNext()) {
+            length++;
+            iterator.next();
+        }
+
+        return length;
+    }
+    public boolean collidesWith(Food food) {
+        Rectangle snakeRectangle = getRectangle();
+        Rectangle foodRectangle = food.getRectangle();
+
+        // Check for collision using bounding boxes
+        return snakeRectangle.intersects(foodRectangle);
+    }
+
+    public void eat(Food food) {
+    }
 }

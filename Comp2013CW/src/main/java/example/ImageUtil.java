@@ -56,11 +56,19 @@ public class ImageUtil {
 		images.put("14", new Image("food-pineapple.png"));
 		images.put("15", new Image("food-strawberry.png"));
 		images.put("16", new Image("food-watermelon.png"));
+
+
+		images.put("Poo", new Image("food-poo.png", 32, 32, true, true));
+		images.put("raindrop", new Image("raindrop.png", 32, 32, true, true));
 	}
 
 	private static void loadUIImages() {
-		images.put("UI-background", new Image("UI-background.png"));
 		images.put("MainMenu-background", new Image("MainMenu-Background-removebg-preview.png"));
+		images.put("DefaultLevelState-background", new Image("UI-background.png", 900, 600, true, true));
+		images.put("MultipleFoodLevelState-background", new Image("UIBackground1.jpg", 900, 600, true, true));
+		images.put("SpeedBoostLevelState-background", new Image("UI-background2.png", 900, 600, true, true));
+		images.put("AIMoveableFoodLevelState-background", new Image("UI-Background4.jpg", 900, 600, true, true));
+		images.put("NegativeFoodLevelState-background", new Image("UI-Background4.jpg", 900, 600, true, true));
 	}
 
 

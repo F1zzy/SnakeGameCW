@@ -16,19 +16,18 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.text.Font;
+import javafx.scene.control.TextField;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import javafx.scene.control.TextField;
 
 import static example.LeaderBoard.GreaterThanHighScore;
 
-
-public class View  implements Observer {
-
+public class View implements Observer {
 
     public Image background = ImageUtil.images.get("UI-background");
     public Image fail = ImageUtil.images.get("Fail-Scene");
@@ -43,20 +42,21 @@ public class View  implements Observer {
     private GraphicsContext gc;
 
     private Stage stage;
+    private LevelState levelState;
 
-
-
-    public View(Model model , Controller controller , Stage stage) {
+    private VBox pauseMenu;
+    private StackPane pauseMenuOverlay;
+    public View(Model model, Controller controller, Stage stage) {
         this.model = model;
         this.controller = controller;
 
         initializeUI(stage);
 
+        initPauseMenu();
         model.addObserver(this);
     }
 
     private void initializeUI(Stage stage) {
-
         root = new StackPane();
 
         canvas = new Canvas(FRAME_WIDTH, FRAME_HEIGHT);
@@ -64,13 +64,23 @@ public class View  implements Observer {
         root.getChildren().add(canvas);
         drawBackground();
 
+
         // Set up key event handling
         Scene scene = new Scene(root);
         scene.setOnKeyPressed(controller.keyPressed());
         root.setFocusTraversable(true);
 
-        // Add the scene to the stage
+        Button pauseButton = Settings.createStyledButton("Pause");
+        pauseButton.setOnAction(e -> controller.pauseGame());
+        root.setAlignment(pauseButton, Pos.TOP_RIGHT);
+        root.getChildren().add(pauseButton);
 
+        root.requestFocus();
+        pauseMenuOverlay = new StackPane(); // Initialize pauseMenuOverlay
+        pauseMenuOverlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);"); // Adjust the alpha value as needed
+        pauseMenuOverlay.setAlignment(Pos.CENTER);
+
+        // Add the scene to the stage
         stage.setTitle("Snake Game");
         stage.setScene(scene);
         stage.setResizable(false);
@@ -83,29 +93,46 @@ public class View  implements Observer {
         if (!model.EndGame) {
             drawBackground();
             drawSnake();
-            drawFood();
+            drawFoods();
             drawScore();
+            drawLevelState();
+
         }
     }
 
+    private void drawLevelState() {
+        // Get the current level state name
+        String levelStateName = model.getLevelState().getName();
+
+        // Set the font and color for the title
+        gc.setFill(Settings.PrimaryColor);
+        gc.setFont(new Font("Arial", 30));
+
+        // Draw the title at the top
+        gc.fillText(levelStateName, 20, 50);
+    }
+
     private void drawBackground() {
-        Image background = ImageUtil.images.get("UI-background");
+
+        Image background = model.getLevelState().getLevelBackground();
+
         gc.drawImage(background, 0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
     private void drawSnake() {
+
         Snake snake = model.getSnake();
+        if(!snake.isVisible) return;
         Image snakeHead = ImageUtil.images.get("snake-head-right");
         Image newImgSnakeHead = snakeHead;
         List<Point> bodyPoints = snake.getBodyPoints();
         bodyPoints.add(new Point(snake.x, snake.y));
 
-        if (bodyPoints.size() == (snake.getLength() + 1) * snake.getNumOfBodies())
-        {
+        if (bodyPoints.size() == (snake.getLength() + 1) * snake.getNumOfBodies()) {
             bodyPoints.remove(0);
         }
 
-        switch (snake.Direction){
+        switch (snake.Direction) {
             case 1:
                 newImgSnakeHead = rotateImage(snakeHead, -90);
                 break;
@@ -113,56 +140,44 @@ public class View  implements Observer {
                 newImgSnakeHead = rotateImage(snakeHead, 90);
                 break;
             case 4:
-                newImgSnakeHead = rotateImage(snakeHead,  -180);
+                newImgSnakeHead = rotateImage(snakeHead, -180);
                 break;
-           default:
+            default:
                 break;
         }
 
         gc.drawImage(newImgSnakeHead, snake.x, snake.y);
+
         // Draw snake body
         drawBody();
     }
 
-    private Image rotateImage(Image image, int degrees) {
-        int width = (int) image.getWidth();
-        int height = (int) image.getHeight();
+    private void drawBody() {
 
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
-        // Create a Graphics2D object from the BufferedImage
-        java.awt.Graphics2D graphics = bufferedImage.createGraphics();
-
-        // Rotate the image
-        AffineTransform transform = AffineTransform.getRotateInstance(Math.toRadians(degrees), width / 2, height / 2);
-        graphics.setTransform(transform);
-
-        // Draw the rotated image onto the BufferedImage
-        graphics.drawImage(SwingFXUtils.fromFXImage(image, null), 0, 0, null);
-
-        // Dispose the Graphics2D object
-        graphics.dispose();
-
-        // Convert the rotated BufferedImage back to JavaFX Image
-        return SwingFXUtils.toFXImage(bufferedImage, null);
-    }
-    public void drawBody()
-    {
-        Snake snake  = model.getSnake();
+        Snake snake = model.getSnake();
+        if(!snake.isVisible) return;
         Image snakeBody = ImageUtil.images.get("snake-body");
         int length = snake.getBodyPoints().size() - 1 - snake.getNumOfBodies();
 
-        for (int i = length; i >= snake.getNumOfBodies(); i -= snake.getNumOfBodies())
-        {
-            //System.out.println("Drawing Bodies");
+        for (int i = length; i >= snake.getNumOfBodies(); i -= snake.getNumOfBodies()) {
             Point point = snake.getBodyPoints().get(i);
             gc.drawImage(snakeBody, point.x, point.y);
         }
     }
 
-    private void drawFood() {
-        Food food = model.getFood();
-        gc.drawImage(food.getFoodImage(), food.x, food.y);
+    private void drawFoods() {
+        List<Food> foods = model.getFoodsList();
+        for (Food food : foods) {
+            gc.drawImage(food.getFoodImage(), food.x, food.y);
+        }
+        foods = model.getNegativeFoodsList();
+        for (Food food : foods) {
+            gc.drawImage(food.getFoodImage(), food.x, food.y);
+        }
+        List<RainbowDrop> rainbowfoods = model.getrainbowDropList();
+        for (RainbowDrop food : rainbowfoods) {
+            gc.drawImage(food.getFoodImage(), food.x, food.y);
+        }
     }
 
     private void drawScore() {
@@ -170,33 +185,25 @@ public class View  implements Observer {
         gc.setFill(Magenta);
         gc.setFont(new javafx.scene.text.Font("Arial", 20));
         GreaterThanHighScore(model.getScore());
-        if(GreaterThanHighScore(model.getScore())){
+        if (GreaterThanHighScore(model.getScore())) {
             gc.fillText("NEW HIGH SCORE: " + model.getScore(), 20, 30);
-        }
-       else{
+        } else {
             gc.fillText("SCORE: " + model.getScore(), 20, 30);
         }
-
-
-
     }
 
     public void gameOverScene() {
-
-        //gc.drawImage(fail, 0, 0, canvas.getWidth(), canvas.getHeight());
-
         drawBackground();
+        model.getSnake().setVisible(true);
         drawSnake();
         drawBody();
         // Add "Go Back" button
-        Button goBackButton = createStyledButton("Go Back", "-fx-background-color: #45A049; -fx-text-fill: white; -fx-font-size: 18px;");
-        goBackButton.setOnAction(e -> {
-            controller.goBack();
-        });
+        Button goBackButton = Settings.createStyledButton("Go Back");
+        goBackButton.setOnAction(e -> controller.goBack());
         goBackButton.setFocusTraversable(true);
 
         // Add "Retry" button
-        Button retryButton = createStyledButton("Retry", "-fx-background-color: #45A049; -fx-text-fill: white; -fx-font-size: 18px;");
+        Button retryButton = Settings.createStyledButton("Retry");
         retryButton.setOnAction(e -> controller.retry());
         root.setFocusTraversable(true);
 
@@ -204,11 +211,10 @@ public class View  implements Observer {
         TextField usernameInput = new TextField();
         usernameInput.setText("");
 
-
-        Button submitButton = createStyledButton("Submit Score", "-fx-background-color: #45A049; -fx-text-fill: white; -fx-font-size: 18px;");
+        Button submitButton = Settings.createStyledButton("Submit");
         submitButton.setOnAction(e -> {
             String username = usernameInput.getText();
-            controller.submitScore(username , model.getScore());
+            controller.submitScore(username, model.getScore());
             submitButton.setText("ADDED");
             submitButton.setDisable(true);
         });
@@ -239,11 +245,6 @@ public class View  implements Observer {
         root.getChildren().add(buttonsLayout);
     }
 
-    private Button createStyledButton(String text, String inlineStyle) {
-        Button button = new Button(text);
-        button.setStyle(inlineStyle);
-        return button;
-    }
 
     @Override
     public void update(Observable o, Object arg) {
@@ -257,7 +258,7 @@ public class View  implements Observer {
     public void drawCountdown(int i) {
         // Create a Text node with the countdown number or "GO"
         Text countdownText = new Text(i == 4 ? "GO" : Integer.toString(i));
-        countdownText.setFont(new Font("Arial" , 200.0));
+        countdownText.setFont(new Font("Arial", 200.0));
 
         countdownText.setFill(i == 4 ? Color.GREEN : Color.WHITE);
 
@@ -279,5 +280,61 @@ public class View  implements Observer {
 
         // Play the fade transition
         fadeTransition.play();
+    }
+
+    private Image rotateImage(Image image, int degrees) {
+        int width = (int) image.getWidth();
+        int height = (int) image.getHeight();
+
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        // Create a Graphics2D object from the BufferedImage
+        java.awt.Graphics2D graphics = bufferedImage.createGraphics();
+
+        // Rotate the image
+        AffineTransform transform = AffineTransform.getRotateInstance(Math.toRadians(degrees), width / 2, height / 2);
+        graphics.setTransform(transform);
+
+        // Draw the rotated image onto the BufferedImage
+        graphics.drawImage(SwingFXUtils.fromFXImage(image, null), 0, 0, null);
+
+        // Dispose the Graphics2D object
+        graphics.dispose();
+
+        // Convert the rotated BufferedImage back to JavaFX Image
+        return SwingFXUtils.toFXImage(bufferedImage, null);
+    }
+
+    public void initPauseMenu() {
+
+        // Create "Resume" button
+        Button resumeButton = Settings.createStyledButton("Resume");
+        resumeButton.setOnAction(e -> controller.resumeGame());
+
+        // Create "Retry" button
+        Button retryButton = Settings.createStyledButton("Retry");
+        retryButton.setOnAction(e -> controller.retry());
+
+        // Create "Go Back" button
+        Button goBackButton = Settings.createStyledButton("Go Back");
+        goBackButton.setOnAction(e -> controller.goBack());
+
+        // Create layout for the pause menu
+        pauseMenu = new VBox(20);
+       pauseMenu.setAlignment(Pos.CENTER);
+        pauseMenu.getChildren().addAll(resumeButton, retryButton, goBackButton);
+    }
+    public void showPauseMenu() {
+        // Show the pause menu in the center of the screen
+        root.getChildren().add(pauseMenuOverlay);
+        root.getChildren().add(pauseMenu);
+
+
+    }
+
+    public void hidePauseMenu() {
+        // Hide the pause menu
+       root.getChildren().removeAll(pauseMenu , pauseMenuOverlay);
+        root.requestFocus();
     }
 }
