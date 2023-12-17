@@ -4,6 +4,7 @@ import example.Utilities.ImageUtil;
 import example.SnakeGame.Model.GameObjects.FoodObjects.Food;
 import example.SnakeGame.Model.GameObjects.Snake;
 import example.SnakeGame.Model.Model;
+import example.Utilities.SoundManager;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -17,14 +18,23 @@ public class NegativeFoodLevelState implements LevelState {
     private LevelManager levelManager;
     private Random random;
     private boolean isFruitGenerated;
-
+    private Model model;
     private ScheduledExecutorService scheduler;
+    LevelStageType levelStageType = LevelStageType.NEGATIVEFOOD;
 
+    private SoundManager soundManager = SoundManager.getInstance();
     public NegativeFoodLevelState(LevelManager levelManager) {
         this.levelManager = levelManager;
         this.random = new Random();
         this.isFruitGenerated = false;
         this.scheduler = Executors.newScheduledThreadPool(1);
+
+        this.model = levelManager.getModel();
+        model.getFoodsList().clear();
+        Snake snake = model.getSnake();
+        snake.setSpeed(snake.getOriginalSpeed());
+        snake.setVisible(true);
+
     }
 
     @Override
@@ -47,14 +57,15 @@ public class NegativeFoodLevelState implements LevelState {
 
                 // If Snake Interacts with Fruit
                 if (snake.getRectangle().intersects(fruit.getRectangle())) {
+                    soundManager.PlayEatFood();
                     fruit.eaten(snake);
                     model.getFoodsList().remove(0);
 
                     // Schedule the appearance of negative food after a delay
                     scheduler.schedule(() -> {
                         model.addNegativeFood(model.newNegativeFood());
-
-                    }, 5, TimeUnit.MILLISECONDS);
+                        soundManager.PlayFart();
+                    }, 50, TimeUnit.MILLISECONDS);
 
                     isFruitGenerated = false; // Allow generating a new fruit
                 }
@@ -68,6 +79,11 @@ public class NegativeFoodLevelState implements LevelState {
     }
 
     @Override
+    public LevelStageType getType() {
+        return levelStageType;
+    }
+
+    @Override
     public String getName() {
         return "Negative Food";
     }
@@ -77,10 +93,7 @@ public class NegativeFoodLevelState implements LevelState {
         return ImageUtil.images.get("NegativeFoodLevelState-background");
     }
 
-    @Override
-    public void setStartState() {
 
-    }
 
     private void checkNegativeFoodCollision() {
         Model model = levelManager.getModel();

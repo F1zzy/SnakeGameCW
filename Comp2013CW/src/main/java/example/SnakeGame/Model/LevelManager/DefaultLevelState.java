@@ -16,8 +16,8 @@ public class DefaultLevelState implements LevelState {
     private Random random;
     private boolean isFruitGenerated;
 
-    private SoundManager soundManager;
-
+    private SoundManager  soundManager = SoundManager.getInstance();
+    private LevelStageType levelStageType = LevelStageType.DEFAULT;
     public DefaultLevelState(LevelManager levelManager) {
         this.levelManager = levelManager;
         this.random = new Random();
@@ -25,8 +25,10 @@ public class DefaultLevelState implements LevelState {
         this.model = levelManager.getModel();
         this.soundManager = SoundManager.getInstance();
 
-        
-
+        model.getFoodsList().clear();
+        Snake snake = model.getSnake();
+        snake.setSpeed(snake.getOriginalSpeed());
+        snake.setVisible(true);
 
     }
 
@@ -65,6 +67,11 @@ public class DefaultLevelState implements LevelState {
         } else {
             model.setEndGame(true);
         }
+    }
+
+    @Override
+    public LevelStageType getType() {
+        return this.levelStageType;
     }
 
     @Override

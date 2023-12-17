@@ -1,5 +1,7 @@
 package example.SnakeGame;
 
+import example.SnakeGame.Model.GameObjects.EnemyObject;
+import example.SnakeGame.Model.LevelManager.EvilAIEnemyLevelState;
 import example.Utilities.ImageUtil;
 import example.Settings.Settings;
 import example.SnakeGame.Model.GameObjects.FoodObjects.Food;
@@ -103,8 +105,14 @@ public class View implements Observer {
             drawFoods();
             drawScore();
             drawLevelState();
+            if(model.getLevelState().getType() == LevelState.LevelStageType.ENENMY) drawEnemy();
 
         }
+    }
+
+    private void drawEnemy() {
+        EnemyObject enemy = model.getEnemyObject();
+        gc.drawImage(enemy.getImage(), enemy.getX(), enemy.getY());
     }
 
     private void drawLevelState() {
@@ -190,7 +198,7 @@ public class View implements Observer {
     private void drawScore() {
         Color Magenta = Color.MAGENTA;
         gc.setFill(Magenta);
-        gc.setFont(new javafx.scene.text.Font("Arial", 20));
+        gc.setFont(new Font("Arial", 20));
         GreaterThanHighScore(model.getScore());
         if (GreaterThanHighScore(model.getScore())) {
             gc.fillText("NEW HIGH SCORE: " + model.getScore(), 20, 30);
@@ -228,7 +236,7 @@ public class View implements Observer {
 
         Color Magenta = Color.RED;
         gc.setFill(Magenta);
-        gc.setFont(new javafx.scene.text.Font("Arial", 120));
+        gc.setFont(new Font("Arial", 120));
         gc.fillText("YOU DIED :(", 140, 200);
 
         VBox userInputLayout = new VBox(10);
@@ -296,7 +304,7 @@ public class View implements Observer {
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
         // Create a Graphics2D object from the BufferedImage
-        java.awt.Graphics2D graphics = bufferedImage.createGraphics();
+        Graphics2D graphics = bufferedImage.createGraphics();
 
         // Rotate the image
         AffineTransform transform = AffineTransform.getRotateInstance(Math.toRadians(degrees), width / 2, height / 2);

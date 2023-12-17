@@ -4,6 +4,7 @@ import example.Utilities.ImageUtil;
 import example.SnakeGame.Model.GameObjects.FoodObjects.Food;
 import example.SnakeGame.Model.GameObjects.Snake;
 import example.SnakeGame.Model.Model;
+import example.Utilities.SoundManager;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -13,10 +14,19 @@ import java.util.Random;
 public class MultipleFoodLevelState implements LevelState {
     private LevelManager levelManager;
     private Random random;
+    LevelStageType levelStageType = LevelStageType.MULTIPLEFOOD;
 
+    private Model model;
+    private SoundManager soundManager = SoundManager.getInstance();
     public MultipleFoodLevelState(LevelManager levelManager) {
         this.levelManager = levelManager;
         this.random = new Random();
+        this.model = levelManager.getModel();
+
+        model.getFoodsList().clear();
+        Snake snake = model.getSnake();
+        snake.setSpeed(snake.getOriginalSpeed());
+        snake.setVisible(true);
     }
 
     @Override
@@ -30,6 +40,7 @@ public class MultipleFoodLevelState implements LevelState {
         if (snake.isAlive) {
             if (model.getFoodsList().isEmpty()) {
                 // If no fruits, generate a new set of random fruits
+                soundManager.PlayEatFood();
                 generateRandomFruits();
             } else {
                 // Check if any fruit is eaten by the snake
@@ -38,6 +49,11 @@ public class MultipleFoodLevelState implements LevelState {
         } else {
             model.setEndGame(true);
         }
+    }
+
+    @Override
+    public LevelStageType getType() {
+        return levelStageType;
     }
 
     @Override

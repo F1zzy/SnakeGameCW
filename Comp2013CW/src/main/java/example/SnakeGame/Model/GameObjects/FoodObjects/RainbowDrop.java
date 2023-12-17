@@ -20,10 +20,6 @@ public class RainbowDrop extends Food {
     public void setX(){}
     public void setY(int num){this.y = num;}
 
-    public int getY() {
-        return this.y;
-    }
-
 
     public Color getColor() {
         return this.col;

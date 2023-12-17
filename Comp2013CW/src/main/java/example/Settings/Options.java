@@ -136,6 +136,9 @@
                 MainMenu.display();
             });
             goBackButton.setStyle(Settings.CSSFormat);
+
+
+
             // Add controls to change head and body
             layout.getChildren().addAll(headComboBox, bodyComboBox,goBackButton,Apply);
 

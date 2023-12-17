@@ -26,11 +26,24 @@ public abstract class GameObject {
     public int getY() {
         return y;
     }
+
+    public void setX(int x){
+        this.x = x;
+    }
+    public  void setY(int y){
+        this.y = y;
+    }
+
+
     public int getWidth() {
         return width;
     }
     public int getHeight() {
         return height;
     }
+    public Image getImage(){return image;}
+
+    public void setAlive(boolean isVisisible ){ isAlive = isVisisible;}
+
 
 }

@@ -42,6 +42,10 @@ public class SoundManager {
     public void PlayEatFood(){
         SoundUtil.getAudioClip("eatFood").play();
     }
+    public  void PlayInvisible(){SoundUtil.getAudioClip("invisible").play();}
+    public  void PlayFart(){SoundUtil.getAudioClip("fart").play();}
+
+    public void PlayBoost(){SoundUtil.getAudioClip("boost").play();}
 
 
     // Other methods for managing game sounds...
@@ -59,9 +63,12 @@ public class SoundManager {
 
         private static void loadSounds() {
 
-            //loadAndStoreSound("eatBody", "eat_body.mp3");
+
             loadAndStoreSound("gameOver", "game-over.mp3");
             loadAndStoreSound("eatFood", "eat-food.mp3");
+            loadAndStoreSound("invisible", "invisible.mp3");
+            loadAndStoreSound("fart", "fart.mp3");
+            loadAndStoreSound("boost", "boost.mp3");
 
         }
 

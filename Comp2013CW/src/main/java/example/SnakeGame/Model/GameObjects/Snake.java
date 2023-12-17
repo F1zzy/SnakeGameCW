@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Snake extends GameObject {
-    private static final int SNAKE_SPEED = 1;
+    private static final int SNAKE_SPEED = 3;
     private int speed_XY;
     private int length;
     int numOfBodies;
@@ -91,7 +91,7 @@ public class Snake extends GameObject {
 
             case UP:
                 if (!down) {
-                    System.out.println("Up");
+
                     up = true;
                     down = false;
                     left = false;
@@ -102,7 +102,7 @@ public class Snake extends GameObject {
 
             case DOWN:
                 if (!up) {
-                    System.out.println("Down");
+
                     up = false;
                     down = true;
                     left = false;
@@ -113,7 +113,7 @@ public class Snake extends GameObject {
 
             case LEFT:
                 if (!right) {
-                    System.out.println("left");
+
                     up = false;
                     down = false;
                     left = true;
@@ -124,7 +124,7 @@ public class Snake extends GameObject {
 
             case RIGHT:
                 if (!left) {
-                    System.out.println("right");
+
                     up = false;
                     down = false;
                     left = false;

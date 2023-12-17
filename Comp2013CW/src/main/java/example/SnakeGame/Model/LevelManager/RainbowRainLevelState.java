@@ -16,7 +16,7 @@ public class RainbowRainLevelState implements LevelState {
     private static final int RAINBOW_DROP_SPEED = 3;
     private LevelManager levelManager;
     private Random random;
-
+    LevelStageType levelStageType = LevelStageType.;
     public RainbowRainLevelState(LevelManager levelManager) {
         this.levelManager = levelManager;
         this.random = new Random();
@@ -26,7 +26,6 @@ public class RainbowRainLevelState implements LevelState {
 
     public void update() {
         Model model = levelManager.getModel();
-        Snake snake = model.getSnake();
         //List<RainbowDrop> rainbowDrops = model.getrainbowDropList();
 
         model.outOfBounds();

@@ -34,6 +34,9 @@ public class ImageUtil {
 
 		images.put("temp-snake-head" , SnakeHead);
 		images.put("temp-snake-body" , SnakeBody);
+
+		images.put("Enemy" , new Image(String.valueOf(ImageUtil.class.getResource("/Images/Snake_Images/Snake_Heads/Enemy.png")), SNAKE_BODY_SIZE, SNAKE_BODY_SIZE, true, true));
+
 	}
 
 	private static void loadObstacleImages() {
@@ -58,7 +61,8 @@ public class ImageUtil {
 		images.put("15", new Image(String.valueOf(ImageUtil.class.getResource(filePath + "food-strawberry.png"))));
 		images.put("16", new Image(String.valueOf(ImageUtil.class.getResource(filePath + "food-watermelon.png"))));
 
-		images.put("Poo", new Image(String.valueOf(ImageUtil.class.getResource(filePath + "food-poo.png"))));
+		images.put("Poo", new Image(String.valueOf(ImageUtil.class.getResource(filePath + "food-poo.png")) ,
+				30 , 30 , true , true));
 		images.put("raindrop", new Image(String.valueOf(ImageUtil.class.getResource(filePath + "raindrop.png"))));
 	}
 

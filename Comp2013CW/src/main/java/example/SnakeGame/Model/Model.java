@@ -1,6 +1,7 @@
 package example.SnakeGame.Model;
 
 import example.SnakeGame.GameLoop;
+import example.SnakeGame.Model.GameObjects.EnemyObject;
 import example.SnakeGame.Model.GameObjects.FoodObjects.Food;
 import example.SnakeGame.Model.GameObjects.FoodObjects.RainbowDrop;
 import example.SnakeGame.Model.GameObjects.Snake;
@@ -30,6 +31,8 @@ public class Model extends Observable {
     private GameLoop gameLoop;
     private final SoundManager soundManager= SoundManager.getInstance();
 
+    private EnemyObject enemyObject;
+
     public Model() {
         SnakeObject = new Snake(100, 100);
 
@@ -39,6 +42,16 @@ public class Model extends Observable {
         levelManager = new LevelManager(this);
 
     }
+
+    public EnemyObject getEnemyObject() {
+
+        return enemyObject;
+    }
+    public void initEnemyObject(){
+        enemyObject = new EnemyObject(950 , 650 );
+    }
+
+
 
     public void setGameLoop(GameLoop givenGameLoop){
         gameLoop = givenGameLoop;
