@@ -63,7 +63,7 @@ public class SpeedBoostLevelState implements LevelState {
             }
         } else {
 
-            model.EndGame = true;
+            model.setEndGame(true);
         }
 
 

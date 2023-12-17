@@ -8,15 +8,29 @@ import java.awt.*;
  * Abstract class representing a generic Snake object.
  */
 public abstract class GameObject {
-    int x;
-    int y;
-    Image image;
-    int width;
-    int height;
+    protected int x;
+    protected int y;
+    protected Image image;
+    protected int width;
+    protected int height;
 
     public boolean isAlive;
 
     public Rectangle getRectangle() {
         return new Rectangle(x, y, width, height);
     }
+
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
+    public int getWidth() {
+        return width;
+    }
+    public int getHeight() {
+        return height;
+    }
+
 }

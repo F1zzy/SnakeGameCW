@@ -53,7 +53,7 @@ public  class  GameLoop extends AnimationTimer {
 
     @Override
     public void handle(long now) {
-        if (model.EndGame) {
+        if (model.endGame()) {
             view.gameOverScene();
             soundManager.stopBackgroundMusic();
             soundManager.playGameOver();

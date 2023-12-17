@@ -55,8 +55,8 @@ public class AiMoveableFood extends Food {
 
     private void adjustDirectionAwayFromSnake(Snake snake) {
 
-        int vectorX = this.x - snake.x;
-        int vectorY = this.y - snake.y;
+        int vectorX = this.x - snake.getX();
+        int vectorY = this.y - snake.getY();
 
 
         double distance = Math.sqrt(vectorX * vectorX + vectorY * vectorY);

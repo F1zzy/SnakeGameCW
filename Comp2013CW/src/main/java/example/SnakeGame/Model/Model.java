@@ -85,13 +85,13 @@ public class Model extends Observable {
        int bodyPointsSize = (bodyPoints.size()/8);
         Point point = SnakeObject.getBodyPoints().get(bodyPointsSize - 1);
         if (bodyPointsSize == 1) {
-            int displacement = SnakeObject.width; // Adjust this value based on your game's layout
+            int displacement = SnakeObject.getWidth(); // Adjust this value based on your game's layout
 
             switch (SnakeObject.Direction) {
-                case 1: y = SnakeObject.y + displacement; break; // UP
-                case 2: y = SnakeObject.y - displacement; break; // DOWN
-                case 3: x = SnakeObject.x + displacement; break; // LEFT
-                case 4: x = SnakeObject.x - displacement; break; // RIGHT
+                case 1: y = SnakeObject.getY() + displacement; break; // UP
+                case 2: y = SnakeObject.getY() - displacement; break; // DOWN
+                case 3: x = SnakeObject.getX() + displacement; break; // LEFT
+                case 4: x = SnakeObject.getX() - displacement; break; // RIGHT
                 default:
                     System.out.println("ERROR"); break;
             }
@@ -129,20 +129,22 @@ public class Model extends Observable {
     }
 
     public void eatBody() {
+
         if (SnakeObject.getLength() == 1) return;
         for (Point point : SnakeObject.bodyPoints) {
             for (Point point2 : SnakeObject.bodyPoints) {
                 if (point.equals(point2) && point != point2) {
                     SnakeObject.isAlive = false;
+                    System.out.println("Ate Body");
                     break;
                 }
             }
         }
     }
 
-    void outOfBounds() {
-        boolean xOut = (SnakeObject.x <= 0 || SnakeObject.x >= (FRAME_WIDTH - SnakeObject.width));
-        boolean yOut = (SnakeObject.y <= 0 || SnakeObject.y >= (FRAME_HEIGHT - SnakeObject.height));
+    public void outOfBounds() {
+        boolean xOut = (SnakeObject.getX() <= 0 || SnakeObject.getX() >= (FRAME_WIDTH - SnakeObject.getWidth()));
+        boolean yOut = (SnakeObject.getY() <= 0 || SnakeObject.getY() >= (FRAME_HEIGHT - SnakeObject.getHeight()));
         if (xOut || yOut) {
             SnakeObject.isAlive = false;
         }
@@ -156,6 +158,8 @@ public class Model extends Observable {
     public void clearFoods() {
         foodFactory.clearList();
     }
+    public boolean endGame(){ return EndGame;}
+    public void setEndGame(boolean bool ){ EndGame = bool;}
 
 
 }

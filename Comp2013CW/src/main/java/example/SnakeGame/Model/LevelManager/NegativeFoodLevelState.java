@@ -63,7 +63,7 @@ public class NegativeFoodLevelState implements LevelState {
                 checkNegativeFoodCollision();
             }
         } else {
-            model.EndGame = true;
+            model.setEndGame(true);
         }
     }
 

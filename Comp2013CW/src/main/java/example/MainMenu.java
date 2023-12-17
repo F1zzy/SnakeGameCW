@@ -40,7 +40,7 @@ public class MainMenu {
 
         // Create buttons with inline styles
         Button playButton = Settings.createStyledButton("Play");
-        Button leaderboardsButton = Settings.createStyledButton("example/LeaderBoard");
+        Button leaderboardsButton = Settings.createStyledButton("LeaderBoard");
         Button optionsButton = Settings.createStyledButton("Options");
         Button exitButton = Settings.createStyledButton("Exit");
 

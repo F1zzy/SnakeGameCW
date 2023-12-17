@@ -60,7 +60,7 @@ public class InvisibleSnakeLevelState implements LevelState {
                 }
             }
         } else {
-            model.EndGame = true;
+            model.setEndGame(true);
         }
     }
 

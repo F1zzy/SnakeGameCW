@@ -97,7 +97,7 @@ public class View implements Observer {
     public void draw() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        if (!model.EndGame) {
+        if (!model.endGame()) {
             drawBackground();
             drawSnake();
             drawFoods();
@@ -129,11 +129,11 @@ public class View implements Observer {
     private void drawSnake() {
 
         Snake snake = model.getSnake();
-        if(!snake.isVisible) return;
+        if(!snake.getVisible()) return;
         Image snakeHead = ImageUtil.images.get("snake-head-right");
         Image newImgSnakeHead = snakeHead;
         List<Point> bodyPoints = snake.getBodyPoints();
-        bodyPoints.add(new Point(snake.x, snake.y));
+        bodyPoints.add(new Point(snake.getX(), snake.getY()));
 
         if (bodyPoints.size() == (snake.getLength() + 1) * snake.getNumOfBodies()) {
             bodyPoints.remove(0);
@@ -153,7 +153,7 @@ public class View implements Observer {
                 break;
         }
 
-        gc.drawImage(newImgSnakeHead, snake.x, snake.y);
+        gc.drawImage(newImgSnakeHead, snake.getX(), snake.getY());
 
         // Draw snake body
         drawBody();
@@ -162,7 +162,7 @@ public class View implements Observer {
     private void drawBody() {
 
         Snake snake = model.getSnake();
-        if(!snake.isVisible) return;
+        if(!snake.getVisible()) return;
         Image snakeBody = ImageUtil.images.get("snake-body");
         int length = snake.getBodyPoints().size() - 1 - snake.getNumOfBodies();
 
@@ -175,15 +175,15 @@ public class View implements Observer {
     private void drawFoods() {
         List<Food> foods = model.getFoodsList();
         for (Food food : foods) {
-            gc.drawImage(food.getFoodImage(), food.x, food.y);
+            gc.drawImage(food.getFoodImage(), food.getX(), food.getY());
         }
         foods = model.getNegativeFoodsList();
         for (Food food : foods) {
-            gc.drawImage(food.getFoodImage(), food.x, food.y);
+            gc.drawImage(food.getFoodImage(), food.getX(), food.getY());
         }
         List<RainbowDrop> rainbowfoods = model.getrainbowDropList();
         for (RainbowDrop food : rainbowfoods) {
-            gc.drawImage(food.getFoodImage(), food.x, food.y);
+            gc.drawImage(food.getFoodImage(), food.getX(), food.getY());
         }
     }
 

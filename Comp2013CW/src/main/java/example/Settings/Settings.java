@@ -19,11 +19,11 @@ public class Settings {
     public Font font;
 
     public BackgroundFill backgroundFill;
-    public static String SnakeHeadPath = "snake-head-alien.png";
+    public static String SnakeHeadPath = "snake-head-default.png";
     public static String SnakeBodyPath = "snake-body-default.png";
 
-    public static String SnakeHeadLocation = "Snake_Images/Snake_Heads/";
-    public static String SnakeBodyLocation = "Snake_Images/Snake_Bodys/";
+    public static String SnakeHeadLocation = "/Images/Snake_Images/Snake_Heads/";
+    public static String SnakeBodyLocation = "/Images/Snake_Images/Snake_Bodys/";
 
 
     public static String CSSFormat;

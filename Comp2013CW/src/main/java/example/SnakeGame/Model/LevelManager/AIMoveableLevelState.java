@@ -49,7 +49,7 @@ public class AIMoveableLevelState implements LevelState {
                 }
             }
         } else {
-            model.EndGame = true;
+            model.setEndGame(true);
         }
         if(aiMoveableFood != null){
             aiMoveableFood.move(snake);

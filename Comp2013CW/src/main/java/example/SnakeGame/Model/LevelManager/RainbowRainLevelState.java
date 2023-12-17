@@ -42,7 +42,7 @@ public class RainbowRainLevelState implements LevelState {
                 checkSnakeCollisions(model , model.getrainbowDropList());
             }
         } else {
-            model.EndGame = true;
+            model.setEndGame(true);
         }
         updateRainbowDrops(model.getrainbowDropList());
 

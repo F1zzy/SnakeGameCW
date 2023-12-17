@@ -36,7 +36,7 @@ public class MultipleFoodLevelState implements LevelState {
                 checkFruitCollision();
             }
         } else {
-            model.EndGame = true;
+            model.setEndGame(true);
         }
     }
 

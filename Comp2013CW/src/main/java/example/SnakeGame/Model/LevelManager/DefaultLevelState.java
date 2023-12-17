@@ -63,7 +63,7 @@ public class DefaultLevelState implements LevelState {
                 }
             }
         } else {
-            model.EndGame = true;
+            model.setEndGame(true);
         }
     }
 

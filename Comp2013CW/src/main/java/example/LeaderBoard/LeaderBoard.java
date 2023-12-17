@@ -20,7 +20,7 @@ import java.util.List;
 public class LeaderBoard{
     private static final int FRAME_WIDTH = 900;
     private static final int FRAME_HEIGHT = 600;
-    private static final String LEADERBOARD_FILE = "src/main/java/example/leaderboard.csv";
+    private static final String LEADERBOARD_FILE = "src/main/resources/SaveFiles/leaderboard.csv";
 
     private static ObservableList<ScoreEntry> data;
 

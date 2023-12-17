@@ -47,11 +47,11 @@ public class SoundManager {
     // Other methods for managing game sounds...
 
     private static class SoundUtil {
-        private static final String SOUND_DIRECTORY = "sounds/";
+        private static final String SOUND_DIRECTORY = "/sounds/";
 
         // Map to store loaded sounds
         private static Map<String, AudioClip> sounds = new HashMap<>();
-        private static Media backgroundMusic = new Media(SoundUtil.class.getResource("sounds/background-music.mp3").toExternalForm());
+        private static Media backgroundMusic = new Media(SoundUtil.class.getResource(SOUND_DIRECTORY + "background-music.mp3").toExternalForm());
 
         static {
             loadSounds();

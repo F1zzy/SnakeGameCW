@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Snake extends GameObject {
-    private static final int SNAKE_SPEED = 3;
+    private static final int SNAKE_SPEED = 1;
     private int speed_XY;
     private int length;
     int numOfBodies;
@@ -71,9 +71,10 @@ public class Snake extends GameObject {
 
 
     public void move() {
+
         //let the swarm move
         if (up) {
-            y -= speed_XY;
+            y -=  speed_XY;
         } else if (down) {
             y += speed_XY;
         } else if (left) {
@@ -85,7 +86,9 @@ public class Snake extends GameObject {
     }
 
     public void keyPressed(javafx.scene.input.KeyEvent event) {
+
         switch (event.getCode()) {
+
             case UP:
                 if (!down) {
                     System.out.println("Up");
@@ -135,28 +138,7 @@ public class Snake extends GameObject {
         }
     }
 
-    public int BehindheadX(){
-        switch(Direction){
-            case 2:
-                return (-width - 5);
-            case 4:
-                return width+ 5;
-            default:
-                return 0;
-        }
 
-    }
-    public int BehindheadY(){
-        switch(Direction){
-            case 1:
-                return (-width - 5);
-            case 3:
-                return width + 5;
-            default:
-                return 0;
-        }
-
-    }
     public int getBodyPointsLength() {
         int length = 0;
         Iterator<Point> iterator = bodyPoints.iterator();
