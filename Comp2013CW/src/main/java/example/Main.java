@@ -1,5 +1,7 @@
 package example;
 
+import example.LeaderBoard.LeaderBoard;
+import example.Settings.Settings;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
