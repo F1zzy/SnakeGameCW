@@ -96,7 +96,7 @@
             headComboBox.setOnAction(event -> {
                 String selectedHead = headComboBox.getValue();
                 System.out.println("Selected Head: " + selectedHead);
-                ImageUtil.changeTempSnakeHeadImage("snake-head-" + selectedHead + ".png");
+                ImageUtil.changeTempSnakeHeadImage(Settings.SnakeHeadLocation + "snake-head-" + selectedHead + ".png");
                 StackPane updatedGamePreview = createGamePreview(new ImageView(ImageUtil.images.get("temp-snake-head")) , new ImageView(ImageUtil.images.get("temp-snake-body")) );
                 layout.getChildren().set(0, updatedGamePreview);
 
@@ -119,7 +119,7 @@
             bodyComboBox.setOnAction(event -> {
                 String selectedBody = bodyComboBox.getValue();
                 System.out.println("Selected Body: " + selectedBody);
-                ImageUtil.changeTempSnakeBodyImage("snake-body-"+ selectedBody +".png");
+                ImageUtil.changeTempSnakeBodyImage(Settings.SnakeBodyLocation + "snake-body-"+ selectedBody +".png");
                 StackPane updatedGamePreview = createGamePreview(new ImageView(ImageUtil.images.get("temp-snake-head")) , new ImageView(ImageUtil.images.get("temp-snake-body")) );
                 layout.getChildren().set(0, updatedGamePreview);
 

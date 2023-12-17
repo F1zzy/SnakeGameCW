@@ -21,7 +21,7 @@ public class ImageUtil {
 	}
 
 	private static void loadSnakeImages() {
-
+		System.out.println(Settings.ReturnSnakeBodyPath());
 		Image SnakeHead = new Image(String.valueOf(ImageUtil.class.getResource(Settings.ReturnSnakeHeadPath())), SNAKE_BODY_SIZE, SNAKE_BODY_SIZE, true, true);
 		Image SnakeBody = new Image(String.valueOf(ImageUtil.class.getResource(Settings.ReturnSnakeBodyPath())) , SNAKE_BODY_SIZE , SNAKE_BODY_SIZE , true , true );
 
@@ -61,24 +61,42 @@ public class ImageUtil {
 	}
 
 	private static void loadUIImages() {
-		images.put("MainMenu-background", new Image("example/Miscellaneous/MainMenu-Background-removebg-preview.png"));
-		images.put("DefaultLevelState-background", new Image("example/Level_Backgrounds/Game-background-1.png", 900, 600, true, true));
-		images.put("MultipleFoodLevelState-background", new Image("example/Level_Backgrounds/Game-Background-4.jpg", 900, 600, true, true));
-		images.put("SpeedBoostLevelState-background", new Image("example/Level_Backgrounds/Game-Background-2.png", 900, 600, true, true));
-		images.put("AIMoveableFoodLevelState-background", new Image("example/Level_Backgrounds/Game-Background-3.jpg", 900, 600, true, true));
-		images.put("NegativeFoodLevelState-background", new Image("example/Level_Backgrounds/Game-Background-3.jpg", 900, 600, true, true));
+		images.put("MainMenu-background",
+				new Image(String.valueOf(ImageUtil.class.getResource("Miscellaneous/MainMenu-Background-removebg-preview.png")) ,
+						900 , 600 , true , true));
+
+		images.put("DefaultLevelState-background",
+				new Image(String.valueOf(ImageUtil.class.getResource("Level_Backgrounds/Game-background-1.png")),
+						900, 600, true, true));
+
+		images.put("MultipleFoodLevelState-background",
+				new Image(String.valueOf(ImageUtil.class.getResource("Level_Backgrounds/Game-Background-2.png")),
+						900, 600, true, true));
+
+		images.put("SpeedBoostLevelState-background",
+				new Image(String.valueOf(ImageUtil.class.getResource("Level_Backgrounds/Game-Background-3.jpg")),
+						900, 600, true, true));
+
+		images.put("AIMoveableFoodLevelState-background",
+				new Image(String.valueOf(ImageUtil.class.getResource("Level_Backgrounds/Game-Background-4.jpg")),
+						900, 600, true, true));
+
+		images.put("NegativeFoodLevelState-background",
+				new Image(String.valueOf(ImageUtil.class.getResource("Level_Backgrounds/Game-Background-5.png")),
+						900, 600, true, true));
 	}
 
 
 	private static void loadSceneImages() {
-		images.put("Fail-Scene", new Image("example/Miscellaneous/Fail-Scene.jpg"));
+		images.put("Fail-Scene", new Image(String.valueOf(ImageUtil.class.getResource("Miscellaneous/Fail-Scene.jpg"))));
 	}
 	public static void changeSnakeHeadImage(String newImagePath ) {
 		// Remove the old snake head image from the map
 		images.remove("snake-head-right");
 
 		// Load and store the new snake head image
-		Image newSnakeHead = new Image(newImagePath, 25, 25, true, true);
+		Image newSnakeHead = new Image(String.valueOf(ImageUtil.class.getResource(newImagePath))
+				, 25, 25, true, true);
 		images.put("snake-head-right", newSnakeHead);
 	}
 	public static void changeSnakeBodyImage(String newImagePath ) {
@@ -86,7 +104,8 @@ public class ImageUtil {
 		images.remove("snake-body");
 
 		// Load and store the new snake head image
-		Image newSnakeBody = new Image(newImagePath, 25, 25, true, true);
+		Image newSnakeBody = new Image(String.valueOf(ImageUtil.class.getResource(newImagePath))
+				, 25, 25, true, true);
 		images.put("snake-body", newSnakeBody);
 	}
 
@@ -95,7 +114,8 @@ public class ImageUtil {
 		images.remove("temp-snake-head");
 
 		// Load and store the new snake head image
-		Image newSnakeHead = new Image(newImagePath, 25, 25, true, true);
+		Image newSnakeHead = new Image(String.valueOf(ImageUtil.class.getResource(newImagePath))
+				, 25, 25, true, true);
 		images.put("temp-snake-head", newSnakeHead);
 	}
 	public static void changeTempSnakeBodyImage(String newImagePath ) {
@@ -103,7 +123,9 @@ public class ImageUtil {
 		images.remove("temp-snake-body");
 
 		// Load and store the new snake head image
-		Image newSnakeBody = new Image(newImagePath, 25, 25, true, true);
+		System.out.println(newImagePath);
+		Image newSnakeBody = new Image(String.valueOf(ImageUtil.class.getResource(newImagePath))
+				, 25, 25, true, true);
 		images.put("temp-snake-body", newSnakeBody);
 	}
 }

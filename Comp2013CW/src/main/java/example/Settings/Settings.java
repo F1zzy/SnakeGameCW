@@ -19,8 +19,12 @@ public class Settings {
     public Font font;
 
     public BackgroundFill backgroundFill;
-    public static String SnakeHeadPath = "Snake_Images/Snake_Heads/snake-head-alien.png";
-    public static String SnakeBodyPath = "Snake_Images/Snake_Bodys/snake-body-default.png";
+    public static String SnakeHeadPath = "snake-head-alien.png";
+    public static String SnakeBodyPath = "snake-body-default.png";
+
+    public static String SnakeHeadLocation = "Snake_Images/Snake_Heads/";
+    public static String SnakeBodyLocation = "Snake_Images/Snake_Bodys/";
+
 
     public static String CSSFormat;
     public static void Init() {
@@ -41,9 +45,9 @@ public class Settings {
 
 
     }
-    public static String ReturnSnakeHeadPath(){return SnakeHeadPath;}
+    public static String ReturnSnakeHeadPath(){return SnakeHeadLocation + SnakeHeadPath;}
     public static String ReturnSnakeHeadName(){return SnakeHeadPath.substring(10, SnakeHeadPath.lastIndexOf("."));}
-    public static String ReturnSnakeBodyPath(){ return  SnakeBodyPath; }
+    public static String ReturnSnakeBodyPath(){ return  SnakeBodyLocation + SnakeBodyPath; }
     public static String ReturnSnakeBodyName(){return SnakeBodyPath.substring(10, SnakeBodyPath.lastIndexOf("."));}
     private static String toHex(Color color) {
         return String.format("#%02X%02X%02X",
