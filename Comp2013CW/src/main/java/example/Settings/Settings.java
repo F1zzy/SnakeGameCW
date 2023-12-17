@@ -1,4 +1,4 @@
-package example;
+package example.Settings;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -11,18 +11,18 @@ import javafx.scene.paint.Stop;
 import javafx.scene.text.Font;
 
 public class Settings {
-    static Color PrimaryColor = Color.RED;
-    static Color SecondaryColor = Color.BLACK;
+    public static Color PrimaryColor = Color.RED;
+    public static Color SecondaryColor = Color.BLACK;
 
-    int TextSize;
+    public int TextSize;
 
-    Font font;
+    public Font font;
 
-    BackgroundFill backgroundFill;
-    static String SnakeHeadPath = "snake-head-alien.png";
-    static String SnakeBodyPath = "snake-body-default.png";
+    public BackgroundFill backgroundFill;
+    public static String SnakeHeadPath = "Snake_Images/Snake_Heads/snake-head-alien.png";
+    public static String SnakeBodyPath = "Snake_Images/Snake_Bodys/snake-body-default.png";
 
-    static String CSSFormat;
+    public static String CSSFormat;
     public static void Init() {
         Color PrimaryColor = Color.RED;
         Color SecondaryColor = Color.BLACK;
@@ -64,12 +64,12 @@ public class Settings {
 
     }
 
-    static Button createStyledButton(String text) {
+    public static Button createStyledButton(String text) {
         Button button = new Button(text);
         button.setStyle(CSSFormat);
         return button;
     }
-    static ComboBox<String> createComboBox(ObservableList<String> comboBoxData){
+    public static ComboBox<String> createComboBox(ObservableList<String> comboBoxData){
 
         ComboBox<String> comboBox = new ComboBox<>(comboBoxData);
         comboBox.setStyle(CSSFormat);

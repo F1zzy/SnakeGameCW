@@ -54,7 +54,6 @@ public class DefaultLevelState implements LevelState {
                     soundManager.PlayEatFood();
                     fruit.eaten(snake);
                     model.getFoodsList().remove(0);
-
                     isFruitGenerated = false; // Allow generating a new fruit
                 }
             }

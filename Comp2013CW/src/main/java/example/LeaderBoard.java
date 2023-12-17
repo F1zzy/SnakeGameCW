@@ -1,5 +1,6 @@
 package example;
 
+import example.Settings.Settings;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,8 +13,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.*;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 

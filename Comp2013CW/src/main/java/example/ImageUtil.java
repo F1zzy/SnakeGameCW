@@ -1,11 +1,14 @@
 package example;
 
+import example.Settings.Settings;
 import javafx.scene.image.Image;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class ImageUtil {
 	public static Map<String, Image> images = new HashMap<>();
+	private static final int SNAKE_BODY_SIZE = 25;
 
 	static {
 		loadSnakeImages();
@@ -14,12 +17,13 @@ public class ImageUtil {
 		loadSceneImages();
 
 
-		images.put("logo", new Image("snake-logo.png"));
+		images.put("logo", new Image(String.valueOf(ImageUtil.class.getResource("logo/snake-logo.png"))));
 	}
 
 	private static void loadSnakeImages() {
-		Image SnakeHead = new Image(Settings.ReturnSnakeHeadPath(), 25, 25, true, true);
-		Image SnakeBody = new Image(Settings.ReturnSnakeBodyPath(), 25, 25, true, true);
+
+		Image SnakeHead = new Image(String.valueOf(ImageUtil.class.getResource(Settings.ReturnSnakeHeadPath())), SNAKE_BODY_SIZE, SNAKE_BODY_SIZE, true, true);
+		Image SnakeBody = new Image(String.valueOf(ImageUtil.class.getResource(Settings.ReturnSnakeBodyPath())) , SNAKE_BODY_SIZE , SNAKE_BODY_SIZE , true , true );
 
 		// Store the resized images in the images map
 		images.put("snake-head-right", SnakeHead);
@@ -33,47 +37,41 @@ public class ImageUtil {
 		// obstacles
 
 		//Each Fruit has been given its own Number. This number is used
-		images.put("0", new Image("food-kiwi.png")); //Size 20px
-		images.put("1", new Image("food-lemon.png")); //Size 25px
-		images.put("2", new Image("food-litchi.png")); //Size 30px
+		images.put("0", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-kiwi.png"))));
+		images.put("1", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-lemon.png"))));
+		images.put("2", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-litchi.png"))));
+		images.put("3", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-mango.png"))));
+		images.put("4", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-apple.png"))));
+		images.put("5", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-banana.png"))));
+		images.put("6", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-blueberry.png"))));
+		images.put("7", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-cherry.png"))));
+		images.put("8", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-durian.png"))));
+		images.put("9", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-grape.png"))));
+		images.put("10", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-grapefruit.png"))));
+		images.put("11", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-peach.png"))));
+		images.put("12", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-pear.png"))));
 
-		images.put("3", new Image("food-mango.png")); //Size 35px
-		images.put("4", new Image("food-apple.png")); //Size 40px
+		images.put("13", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-orange.png"))));
+		images.put("14", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-pineapple.png"))));
+		images.put("15", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-strawberry.png"))));
+		images.put("16", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-watermelon.png"))));
 
-
-		//For GamePlay Purposes The number of differenet fruits has been reduced.
-		images.put("5", new Image("food-banana.png"));
-		images.put("6", new Image("food-blueberry.png"));
-		images.put("7", new Image("food-cherry.png"));
-		images.put("8", new Image("food-durian.png"));
-
-		images.put("9", new Image("food-grape.png"));
-		images.put("10", new Image("food-grapefruit.png"));
-		images.put("11",new Image("food-peach.png"));
-		images.put("12", new Image("food-pear.png"));
-
-		images.put("13", new Image("food-orange.png"));
-		images.put("14", new Image("food-pineapple.png"));
-		images.put("15", new Image("food-strawberry.png"));
-		images.put("16", new Image("food-watermelon.png"));
-
-
-		images.put("Poo", new Image("food-poo.png", 32, 32, true, true));
-		images.put("raindrop", new Image("raindrop.png", 32, 32, true, true));
+		images.put("Poo", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/food-poo.png"))));
+		images.put("raindrop", new Image(String.valueOf(ImageUtil.class.getResource("foodImages/raindrop.png"))));
 	}
 
 	private static void loadUIImages() {
-		images.put("MainMenu-background", new Image("MainMenu-Background-removebg-preview.png"));
-		images.put("DefaultLevelState-background", new Image("UI-background.png", 900, 600, true, true));
-		images.put("MultipleFoodLevelState-background", new Image("UIBackground1.jpg", 900, 600, true, true));
-		images.put("SpeedBoostLevelState-background", new Image("UI-background2.png", 900, 600, true, true));
-		images.put("AIMoveableFoodLevelState-background", new Image("UI-Background4.jpg", 900, 600, true, true));
-		images.put("NegativeFoodLevelState-background", new Image("UI-Background4.jpg", 900, 600, true, true));
+		images.put("MainMenu-background", new Image("example/Miscellaneous/MainMenu-Background-removebg-preview.png"));
+		images.put("DefaultLevelState-background", new Image("example/Level_Backgrounds/Game-background-1.png", 900, 600, true, true));
+		images.put("MultipleFoodLevelState-background", new Image("example/Level_Backgrounds/Game-Background-4.jpg", 900, 600, true, true));
+		images.put("SpeedBoostLevelState-background", new Image("example/Level_Backgrounds/Game-Background-2.png", 900, 600, true, true));
+		images.put("AIMoveableFoodLevelState-background", new Image("example/Level_Backgrounds/Game-Background-3.jpg", 900, 600, true, true));
+		images.put("NegativeFoodLevelState-background", new Image("example/Level_Backgrounds/Game-Background-3.jpg", 900, 600, true, true));
 	}
 
 
 	private static void loadSceneImages() {
-		images.put("Fail-Scene", new Image("Fail-Scene.jpg"));
+		images.put("Fail-Scene", new Image("example/Miscellaneous/Fail-Scene.jpg"));
 	}
 	public static void changeSnakeHeadImage(String newImagePath ) {
 		// Remove the old snake head image from the map

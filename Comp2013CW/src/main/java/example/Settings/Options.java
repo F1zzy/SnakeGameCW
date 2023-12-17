@@ -1,18 +1,16 @@
-    package example;
+    package example.Settings;
 
+    import example.ImageUtil;
+    import example.MainMenu;
+    import example.Settings.Settings;
     import javafx.collections.FXCollections;
     import javafx.collections.ObservableList;
     import javafx.geometry.Insets;
     import javafx.geometry.Pos;
     import javafx.scene.Scene;
     import javafx.scene.control.*;
-    import javafx.scene.image.Image;
     import javafx.scene.image.ImageView;
     import javafx.scene.layout.*;
-    import javafx.scene.paint.Color;
-    import javafx.scene.paint.LinearGradient;
-    import javafx.scene.paint.Stop;
-    import javafx.stage.Modality;
     import javafx.stage.Stage;
 
     import java.util.ArrayList;

@@ -6,7 +6,7 @@ public class AiMoveableFood extends Food {
     private static final int SPEED = 2;
     private static final int CORNER_THRESHOLD = 10;
 
-    private static final int CHANGE_DIRECTION_INTERVAL = 60; // Adjust the interval for changing direction
+    private static final int CHANGE_DIRECTION_INTERVAL = 6; // Adjust the interval for changing direction ( In Frames)
     private static final double AVOIDANCE_DISTANCE = 3;
 
     private int directionChangeCounter = 0;

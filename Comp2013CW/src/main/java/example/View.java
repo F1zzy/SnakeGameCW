@@ -1,5 +1,6 @@
 package example;
 
+import example.Settings.Settings;
 import javafx.animation.FadeTransition;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Pos;
@@ -109,7 +110,7 @@ public class View implements Observer {
         gc.setFont(new Font("Arial", 30));
 
         // Draw the title at the top
-        gc.fillText(levelStateName, 20, 50);
+        gc.fillText(levelStateName, (double) FRAME_WIDTH /2, (double) FRAME_HEIGHT /2);
     }
 
     private void drawBackground() {
