@@ -1,8 +1,7 @@
     package example.Settings;
 
-    import example.ImageUtil;
+    import example.Utilities.ImageUtil;
     import example.MainMenu;
-    import example.Settings.Settings;
     import javafx.collections.FXCollections;
     import javafx.collections.ObservableList;
     import javafx.geometry.Insets;
@@ -16,8 +15,8 @@
     import java.util.ArrayList;
     import java.util.List;
 
-    import static example.ImageUtil.changeSnakeBodyImage;
-    import static example.ImageUtil.changeSnakeHeadImage;
+    import static example.Utilities.ImageUtil.changeSnakeBodyImage;
+    import static example.Utilities.ImageUtil.changeSnakeHeadImage;
 
     public class Options {
         private static final int FRAME_WIDTH = 900;

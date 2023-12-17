@@ -1,40 +1,41 @@
-package example;
+package example.SnakeGame.Model.LevelManager;
 
+import example.SnakeGame.Model.GameObjects.FoodObjects.Food;
+import example.SnakeGame.Model.GameObjects.Snake;
+import example.SnakeGame.Model.LevelManager.LevelManager;
+import example.SnakeGame.Model.LevelManager.LevelState;
+import example.SnakeGame.Model.Model;
 import javafx.scene.image.Image;
 
-public class SpeedBoostLevelState implements LevelState {
+public class InvisibleSnakeLevelState implements LevelState {
     private LevelManager levelManager;
+    private int speedBoostStartTime;
 
-    private int speedBoostDuration;
-    private boolean boostTime;
+    private int invisibleDuration;
+    private boolean invisibleTime;
     private boolean isFruitGenerated;
-    public SpeedBoostLevelState(LevelManager levelManager) {
+    public InvisibleSnakeLevelState(LevelManager levelManager) {
         this.levelManager = levelManager;
 
-        this.speedBoostDuration = 121;
+        this.invisibleDuration = 200;
         this.isFruitGenerated = false;
-        System.out.println("SPEED LEVEL");
-
-        this.boostTime = false;
-
     }
 
     @Override
     public void update() {
-
         Model model = levelManager.getModel();
         Snake snake = model.getSnake();
         Food food;
         model.outOfBounds();
         model.eatBody();
-        //Boost Logic
-        if(boostTime){
-            speedBoostDuration++;
-            if(speedBoostDuration > 120){
-                boostTime = false;
-                snake.setSpeed(snake.getOriginalSpeed());
-                System.out.println("STOP BOOSTing");
 
+        // Boost Logic
+        if (invisibleTime) {
+            invisibleDuration++;
+            if (invisibleDuration > 90) {
+                invisibleTime = false;
+                snake.setVisible(true);
+                snake.getBodyPoints().clear();
             }
         }
 
@@ -44,31 +45,29 @@ public class SpeedBoostLevelState implements LevelState {
                 // If no fruit, generate a new fruit
                 model.addFood(model.newStaticFood());
                 isFruitGenerated = true;
+
             } else {
                 // Check if the fruit is eaten by the snake
                 Food fruit = model.getFoodsList().get(0);
                 if (snake.getRectangle().intersects(fruit.getRectangle())) {
                     fruit.eaten(snake);
                     model.getFoodsList().remove(0);
-                    boostTime = true;
-                    snake.setSpeed(snake.getOriginalSpeed() + 2);
-                    System.out.println("BOOOST");
-                    speedBoostDuration = 0;
-                    isFruitGenerated = false; // Allow generating a new fruit
+                    isFruitGenerated = false;
+
+                    invisibleTime = true;
+                    snake.setVisible(false);
+                    invisibleDuration = 0;
                 }
             }
         } else {
-
             model.EndGame = true;
         }
-
-
     }
 
 
 
 
-        // Determine the state of the game.
+    // Determine the state of the game.
 
 
 
@@ -83,7 +82,7 @@ public class SpeedBoostLevelState implements LevelState {
 
     @Override
     public Image getLevelBackground() {
-        return ImageUtil.images.get("SpeedBoostLevelState-background");
+        return null;
     }
 
     @Override

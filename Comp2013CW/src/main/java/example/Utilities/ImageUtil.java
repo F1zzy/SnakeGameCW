@@ -1,4 +1,4 @@
-package example;
+package example.Utilities;
 
 import example.Settings.Settings;
 import javafx.scene.image.Image;

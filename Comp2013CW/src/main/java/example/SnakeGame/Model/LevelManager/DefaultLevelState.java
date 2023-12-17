@@ -1,5 +1,10 @@
-package example;
+package example.SnakeGame.Model.LevelManager;
 
+import example.Utilities.ImageUtil;
+import example.SnakeGame.Model.GameObjects.FoodObjects.Food;
+import example.SnakeGame.Model.GameObjects.Snake;
+import example.SnakeGame.Model.Model;
+import example.Utilities.SoundManager;
 import javafx.scene.image.Image;
 
 import java.util.Random;
@@ -11,7 +16,7 @@ public class DefaultLevelState implements LevelState {
     private Random random;
     private boolean isFruitGenerated;
 
-    private  SoundManager soundManager;
+    private SoundManager soundManager;
 
     public DefaultLevelState(LevelManager levelManager) {
         this.levelManager = levelManager;

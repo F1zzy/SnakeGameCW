@@ -1,5 +1,12 @@
-package example;
+package example.SnakeGame.Model;
 
+import example.SnakeGame.GameLoop;
+import example.SnakeGame.Model.GameObjects.FoodObjects.Food;
+import example.SnakeGame.Model.GameObjects.FoodObjects.RainbowDrop;
+import example.SnakeGame.Model.GameObjects.Snake;
+import example.SnakeGame.Model.LevelManager.LevelManager;
+import example.SnakeGame.Model.LevelManager.LevelState;
+import example.Utilities.SoundManager;
 import javafx.application.Platform;
 
 import java.awt.*;

@@ -1,6 +1,8 @@
-package example;
+package example.SnakeGame;
 
 
+import example.SnakeGame.Model.Model;
+import example.Utilities.SoundManager;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

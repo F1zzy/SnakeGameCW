@@ -1,4 +1,4 @@
-package example;
+package example.SnakeGame.Model.LevelManager;
 
 import javafx.scene.image.Image;
 

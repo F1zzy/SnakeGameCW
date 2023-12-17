@@ -1,5 +1,9 @@
-package example;
+package example.SnakeGame;
 
+import example.LeaderBoard.LeaderBoard;
+import example.MainMenu;
+import example.LeaderBoard.ScoreEntry;
+import example.SnakeGame.Model.Model;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
@@ -8,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Controller {
     private Model model;
-    private  View view;
+    private View view;
     public Controller(Model model ) {
         this.model = model;
     }

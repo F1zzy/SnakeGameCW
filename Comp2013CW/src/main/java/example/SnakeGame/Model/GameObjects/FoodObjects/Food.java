@@ -1,5 +1,7 @@
-package example;
+package example.SnakeGame.Model.GameObjects.FoodObjects;
 
+import example.SnakeGame.Model.GameObjects.GameObject;
+import example.SnakeGame.Model.GameObjects.Snake;
 import javafx.scene.image.Image;
 
 import java.io.Serial;

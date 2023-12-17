@@ -1,4 +1,4 @@
-package example;
+package example.Utilities;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;

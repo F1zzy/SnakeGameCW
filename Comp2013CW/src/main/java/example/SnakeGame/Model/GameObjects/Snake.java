@@ -1,4 +1,7 @@
-package example;
+package example.SnakeGame.Model.GameObjects;
+
+import example.Utilities.ImageUtil;
+import example.SnakeGame.Model.GameObjects.FoodObjects.Food;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

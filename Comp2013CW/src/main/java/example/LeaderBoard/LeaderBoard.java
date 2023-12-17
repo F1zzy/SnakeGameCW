@@ -1,5 +1,6 @@
-package example;
+package example.LeaderBoard;
 
+import example.MainMenu;
 import example.Settings.Settings;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

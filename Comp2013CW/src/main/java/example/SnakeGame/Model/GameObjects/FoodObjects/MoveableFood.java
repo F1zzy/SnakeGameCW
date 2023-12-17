@@ -1,5 +1,6 @@
-package example;
+package example.SnakeGame.Model.GameObjects.FoodObjects;
 
+import example.SnakeGame.Model.GameObjects.FoodObjects.Food;
 import javafx.scene.image.Image;
 
 public class MoveableFood extends Food {

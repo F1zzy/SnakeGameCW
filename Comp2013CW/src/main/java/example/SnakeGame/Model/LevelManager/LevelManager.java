@@ -1,4 +1,7 @@
-package example;
+package example.SnakeGame.Model.LevelManager;
+
+import example.SnakeGame.Model.Model;
+import example.Utilities.SoundManager;
 
 import java.util.Random;
 

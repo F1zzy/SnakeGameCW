@@ -1,5 +1,9 @@
-package example;
+package example.SnakeGame.Model.LevelManager;
 
+import example.Utilities.ImageUtil;
+import example.SnakeGame.Model.GameObjects.FoodObjects.AiMoveableFood;
+import example.SnakeGame.Model.GameObjects.Snake;
+import example.SnakeGame.Model.Model;
 import javafx.scene.image.Image;
 
 import java.awt.*;

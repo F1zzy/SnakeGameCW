@@ -1,7 +1,13 @@
 package example;
 
+import example.LeaderBoard.LeaderBoard;
 import example.Settings.Options;
 import example.Settings.Settings;
+import example.SnakeGame.Controller;
+import example.SnakeGame.GameLoop;
+import example.SnakeGame.Model.Model;
+import example.SnakeGame.View;
+import example.Utilities.ImageUtil;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -34,7 +40,7 @@ public class MainMenu {
 
         // Create buttons with inline styles
         Button playButton = Settings.createStyledButton("Play");
-        Button leaderboardsButton = Settings.createStyledButton("LeaderBoard");
+        Button leaderboardsButton = Settings.createStyledButton("example/LeaderBoard");
         Button optionsButton = Settings.createStyledButton("Options");
         Button exitButton = Settings.createStyledButton("Exit");
 

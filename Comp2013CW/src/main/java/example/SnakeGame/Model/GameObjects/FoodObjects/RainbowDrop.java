@@ -1,6 +1,6 @@
-package example;
+package example.SnakeGame.Model.GameObjects.FoodObjects;
 
-import javafx.scene.image.Image;
+import example.Utilities.ImageUtil;
 import javafx.scene.paint.Color;
 
 public class RainbowDrop extends Food {

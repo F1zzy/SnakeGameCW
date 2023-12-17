@@ -1,16 +1,14 @@
-package example;
+package example.SnakeGame.Model;
 
-import javafx.scene.image.Image;
+import example.Utilities.ImageUtil;
+import example.SnakeGame.Model.GameObjects.FoodObjects.NegativeFood;
+import example.SnakeGame.Model.GameObjects.FoodObjects.RainbowDrop;
+import example.SnakeGame.Model.GameObjects.FoodObjects.AiMoveableFood;
+import example.SnakeGame.Model.GameObjects.FoodObjects.Food;
+import example.SnakeGame.Model.GameObjects.FoodObjects.StaticFood;
 
-import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
-import javafx.scene.image.Image;
-
-import java.io.Serial;
-import java.util.Random;
 
 public class FoodFactory {
     private static int numOfFood = 0;

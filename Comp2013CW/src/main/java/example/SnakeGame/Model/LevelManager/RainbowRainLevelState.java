@@ -1,5 +1,10 @@
-package example;
+package example.SnakeGame.Model.LevelManager;
 
+import example.SnakeGame.Model.GameObjects.FoodObjects.RainbowDrop;
+import example.SnakeGame.Model.GameObjects.Snake;
+import example.SnakeGame.Model.LevelManager.LevelManager;
+import example.SnakeGame.Model.LevelManager.LevelState;
+import example.SnakeGame.Model.Model;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;

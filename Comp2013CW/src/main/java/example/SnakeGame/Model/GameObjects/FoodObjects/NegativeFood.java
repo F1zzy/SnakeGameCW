@@ -1,8 +1,8 @@
-package example;
+package example.SnakeGame.Model.GameObjects.FoodObjects;
 
-import javafx.scene.image.Image;
+import example.Utilities.ImageUtil;
 
-public class NegativeFood extends Food{
+public class NegativeFood extends Food {
     /**
      * Constructor to make a new Food object with a random image and position.
      *

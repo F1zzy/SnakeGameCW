@@ -1,8 +1,9 @@
-package example;
+package example.SnakeGame.Model.GameObjects.FoodObjects;
 
+import example.SnakeGame.Model.GameObjects.FoodObjects.Food;
 import javafx.scene.image.Image;
 
-public class StaticFood extends  Food{
+public class StaticFood extends Food {
 
 
     /**

@@ -1,6 +1,12 @@
-package example;
+package example.SnakeGame;
 
+import example.Utilities.ImageUtil;
 import example.Settings.Settings;
+import example.SnakeGame.Model.GameObjects.FoodObjects.Food;
+import example.SnakeGame.Model.GameObjects.FoodObjects.RainbowDrop;
+import example.SnakeGame.Model.GameObjects.Snake;
+import example.SnakeGame.Model.LevelManager.LevelState;
+import example.SnakeGame.Model.Model;
 import javafx.animation.FadeTransition;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Pos;
@@ -26,7 +32,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import static example.LeaderBoard.GreaterThanHighScore;
+import static example.LeaderBoard.LeaderBoard.GreaterThanHighScore;
 
 public class View implements Observer {
 

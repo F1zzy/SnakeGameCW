@@ -1,4 +1,4 @@
-package example;
+package example.SnakeGame.Model.GameObjects;
 
 import javafx.scene.image.Image;
 
