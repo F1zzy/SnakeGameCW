@@ -1,8 +1,13 @@
 package example;
 
-import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import example.LeaderBoard.LeaderBoard;
+import example.Settings.Options;
+import example.Settings.Settings;
+import example.SnakeGame.Controller;
+import example.SnakeGame.GameLoop;
+import example.SnakeGame.Model.Model;
+import example.SnakeGame.View;
+import example.Utilities.ImageUtil;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,14 +15,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class MainMenu {
 
     private static final int FRAME_WIDTH = 900;
     private static final int FRAME_HEIGHT = 600;
-    private static final int TARGET_FPS = 60; // Adjust as needed
-    private static final long TARGET_NANOSECONDS_PER_FRAME = 1_000_000_000 / TARGET_FPS;
+
+
     private static Stage mainStage;
     private static VBox layout;
 
@@ -105,7 +109,7 @@ public class MainMenu {
         GameLoop gameLoop = new GameLoop(model,view);
         model.setGameLoop(gameLoop);
         controller.setView(view);
-        //MusicPlayer.getMusicPlay("src/main/resources/frogger.mp3");
+        //MusicPlayer.getMusicPlay("src/main/resources/background-music.mp3");
 
         gameLoop.CountdownStart();
 
