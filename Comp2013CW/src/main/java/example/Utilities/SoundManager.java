@@ -14,6 +14,8 @@ public class SoundManager {
 
     private SoundManager() {
 
+
+
     }
 
     public static synchronized SoundManager getInstance() {
@@ -46,9 +48,6 @@ public class SoundManager {
     public  void PlayFart(){SoundUtil.getAudioClip("fart").play();}
 
     public void PlayBoost(){SoundUtil.getAudioClip("boost").play();}
-
-
-    // Other methods for managing game sounds...
 
     private static class SoundUtil {
         private static final String SOUND_DIRECTORY = "/sounds/";

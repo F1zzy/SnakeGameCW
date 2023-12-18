@@ -239,24 +239,20 @@ public class View implements Observer {
         gc.setFont(new Font("Arial", 120));
         gc.fillText("YOU DIED :(", 140, 200);
 
-        VBox userInputLayout = new VBox(10);
-        userInputLayout.setAlignment(Pos.CENTER);
-        userInputLayout.getChildren().addAll(usernameInput);
 
         // Create layout for buttons
         HBox buttonsLayout = new HBox(10);
-        buttonsLayout.setAlignment(Pos.BOTTOM_CENTER);
-        buttonsLayout.getChildren().addAll(submitButton, goBackButton, retryButton);
+        buttonsLayout.setAlignment(Pos.CENTER);
+        buttonsLayout.getChildren().addAll(usernameInput,submitButton, goBackButton, retryButton);
 
         // Create layout for the entire scene
         VBox allLayout = new VBox(20);
         allLayout.setAlignment(Pos.CENTER);
 
-        allLayout.getChildren().addAll(userInputLayout, buttonsLayout);
+        allLayout.getChildren().addAll(buttonsLayout);
 
         // Draw buttons And Score
         drawScore();
-        root.getChildren().add(userInputLayout);
         root.getChildren().add(buttonsLayout);
     }
 
