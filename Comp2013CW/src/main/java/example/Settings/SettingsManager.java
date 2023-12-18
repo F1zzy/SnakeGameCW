@@ -17,13 +17,26 @@ public class SettingsManager {
     private static final String CSS_FILE_PATH = "/SaveFiles/settings.properties"; // Update with your actual path
 
     public static void saveGameSettings(String head, String body) {
+        Properties properties = new Properties();
+
+        try (FileInputStream input = new FileInputStream(SETTINGS_FILE_PATH)) {
+            // Load existing properties
+            properties.load(input);
+        } catch (IOException e) {
+            // Handle or log the exception
+            e.printStackTrace(); // You might want to replace this with appropriate logging
+        }
+
+        // Update only "head" and "body" properties
+        properties.setProperty("head", head);
+        properties.setProperty("body", body);
+
         try (FileOutputStream output = new FileOutputStream(SETTINGS_FILE_PATH)) {
-            Properties properties = new Properties();
-            properties.setProperty("head", head);
-            properties.setProperty("body", body);
+            // Save the updated properties back to the file
             properties.store(output, null);
         } catch (IOException e) {
-            e.printStackTrace();
+            // Handle or log the exception
+            e.printStackTrace(); // You might want to replace this with appropriate logging
         }
     }
     public static void saveUISettings( Color primaryColor, Color secondaryColor, Font font, int textSize) {
