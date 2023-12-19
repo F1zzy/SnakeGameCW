@@ -5,6 +5,7 @@ import example.SnakeGame.Model.GameObjects.Snake;
 import example.SnakeGame.Model.LevelManager.LevelManager;
 import example.SnakeGame.Model.LevelManager.LevelState;
 import example.SnakeGame.Model.Model;
+import example.Utilities.ImageUtil;
 import example.Utilities.SoundManager;
 import javafx.scene.image.Image;
 
@@ -83,12 +84,12 @@ public class InvisibleSnakeLevelState implements LevelState {
 
     @Override
     public String getName() {
-        return "Speed Boost - Level 2";
+        return "Invisible Level";
     }
 
     @Override
     public Image getLevelBackground() {
-        return null;
+        return ImageUtil.images.get("InvisibleLevelState-background");
     }
 
 

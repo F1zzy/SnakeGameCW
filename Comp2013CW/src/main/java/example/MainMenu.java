@@ -45,8 +45,8 @@ public class MainMenu {
         Button exitButton = Settings.createStyledButton("Exit");
 
         // Create title
-        Label titleLabel = new Label("Snake Game");
-        titleLabel.setStyle("-fx-font-size: 90px; -fx-text-fill: white;");
+        Label titleLabel = Settings.createLabel("Snake Game" , 90);
+
 
         ImageView MMSnake = new ImageView(ImageUtil.images.get("MainMenu-background"));
 

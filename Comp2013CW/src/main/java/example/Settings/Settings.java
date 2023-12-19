@@ -124,6 +124,14 @@ public class Settings {
         label.setStyle(CSSFormat);
         return label;
     }
+    public static Label createLabel(String text , int textSize) {
+        Label label = new Label(text);
+        String CSSFormat = "-fx-text-fill: " + getHex(SecondaryColor) + "; " +
+                "-fx-font-weight: " + fontWeight.toString() + ";" +
+                "  -fx-font-size: " + textSize + ";" ;
+        label.setStyle(CSSFormat);
+        return label;
+    }
 
     public static ColorPicker createColorPicker(Color setColor) {
         String CSSFormat = "-fx-background-color: " + getHex(PrimaryColor) + ";" +
@@ -141,7 +149,14 @@ public class Settings {
     }
 
     public static Slider createTextSizeSlider() {
-        return new Slider();
+        Slider slider = new Slider();
+        slider.setShowTickMarks(true);
+        slider.setShowTickLabels(true);
+        slider.setSnapToTicks(true);
+        slider.setMajorTickUnit(5);
+        slider.setMinorTickCount(4);
+        slider.setBlockIncrement(1);
+        return slider;
     }
 
     private static String getHex(Color color) {

@@ -10,7 +10,6 @@
     import javafx.scene.control.*;
     import javafx.scene.image.ImageView;
     import javafx.scene.layout.*;
-    import javafx.scene.paint.Color;
     import javafx.scene.text.Font;
     import javafx.stage.Stage;
 
@@ -26,7 +25,7 @@
         private static final int FRAME_WIDTH = 900;
         private static final int FRAME_HEIGHT = 600;
         public static void display(Stage stage){
-            VBox gameSettingsLayout = createGameSettingsLayout();
+            VBox gameSettingsLayout = createGameObjectSettingsLayout();
             VBox uiSettingsLayout = createUISettingsLayout();
 
             // Create a tab pane to switch between game and UI settings
@@ -61,10 +60,9 @@
 
             Label textSizeLabel = Settings.createLabel("Text Size");
             Slider textSizeSlider = Settings.createTextSizeSlider();
-
-
-            textSizeSlider.setShowTickMarks(true);
-            textSizeSlider.setSnapToTicks(true);
+            textSizeSlider.setMin(1);
+            textSizeSlider.setMax(25);
+            textSizeSlider.setValue(Settings.TextSize);
 
             ComboBox<Settings.FontWeightEnum> boldComboBox;
             ObservableList<Settings.FontWeightEnum> comboBoxData = FXCollections.observableArrayList(
@@ -78,9 +76,10 @@
             
             Button Apply =  Settings.createStyledButton("Apply");
             Apply.setOnAction(e ->{
-            ApplyUI(primaryColorPicker.getValue() , secondaryColorPicker.getValue() ,
-                    fontComboBox.getValue() , textSizeSlider.getValue() ,
-                    boldComboBox.getValue());
+            SettingsManager.saveUISettings(primaryColorPicker.getValue() , secondaryColorPicker.getValue() ,
+                    Font.font(fontComboBox.getValue()), (int) textSizeSlider.getValue() , boldComboBox.getValue());
+
+
             });
             // Create "Go Back" button
             Button goBackButton = Settings.createStyledButton("Go Back");
@@ -101,11 +100,9 @@
             return uiSettingsLayout;
         }
 
-        private static void ApplyUI(Color value, Color value1, String value2, double value3, Settings.FontWeightEnum selected) {
-        }
 
 
-        public static VBox  createGameSettingsLayout() {
+        public static VBox createGameObjectSettingsLayout() {
             VBox layout = new VBox(10);
             layout.setPadding(new Insets(10));
 

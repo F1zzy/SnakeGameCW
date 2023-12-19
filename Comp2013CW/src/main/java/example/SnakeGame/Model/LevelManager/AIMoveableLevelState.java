@@ -23,6 +23,7 @@ public class AIMoveableLevelState implements LevelState {
 
         Model model = levelManager.getModel();
         model.getFoodsList().clear();
+        model.getNegativeFoodsList().clear();
 
         Snake snake = model.getSnake();
         snake.setSpeed(snake.getOriginalSpeed());

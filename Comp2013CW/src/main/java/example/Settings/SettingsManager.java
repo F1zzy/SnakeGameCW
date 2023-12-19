@@ -39,19 +39,34 @@ public class SettingsManager {
             e.printStackTrace(); // You might want to replace this with appropriate logging
         }
     }
-    public static void saveUISettings( Color primaryColor, Color secondaryColor, Font font, int textSize) {
+
+    public static void saveUISettings(Color primaryColor, Color secondaryColor, Font font, int textSize , Settings.FontWeightEnum bold) {
+        Properties properties = new Properties();
+
+        try (FileInputStream input = new FileInputStream(SETTINGS_FILE_PATH)) {
+            // Load existing properties
+            properties.load(input);
+        } catch (IOException e) {
+            // Handle or log the exception
+            e.printStackTrace(); // You might want to replace this with appropriate logging
+        }
+
+        // Update only UI  properties
+        properties.setProperty("primaryColor", toHex(primaryColor));
+        properties.setProperty("secondaryColor", toHex(secondaryColor));
+        properties.setProperty("font", font.getFamily());
+        properties.setProperty("textSize", String.valueOf(textSize));
+        properties.setProperty("bold" ,String.valueOf(bold) );
+
         try (FileOutputStream output = new FileOutputStream(SETTINGS_FILE_PATH)) {
-            Properties properties = new Properties();
-            properties.setProperty("primaryColor", toHex(primaryColor));
-            properties.setProperty("secondaryColor", toHex(secondaryColor));
-            properties.setProperty("font", font.getFamily());
-            properties.setProperty("textSize", String.valueOf(textSize));
+            // Save the updated properties back to the file
             properties.store(output, null);
         } catch (IOException e) {
-            e.printStackTrace();
+            // Handle or log the exception
+            e.printStackTrace(); // You might want to replace this with appropriate logging
         }
+        loadSettings();
     }
-
     public static void loadSettings() {
         try (FileInputStream input = new FileInputStream(SETTINGS_FILE_PATH)) {
             Properties properties = new Properties();

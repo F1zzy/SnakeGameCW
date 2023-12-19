@@ -15,7 +15,7 @@ public class LevelManager {
         this.model = model;
         this.levelChanged = false;
         this.soundManager = SoundManager.getInstance();
-        LevelState state = new DefaultLevelState(this);
+        LevelState state = new InvisibleSnakeLevelState(this);
         setLevelState(state);
         state.setStartState();
     }
@@ -57,7 +57,7 @@ public class LevelManager {
 
     public LevelState changeLevelState() {
         Random random = new Random();
-        int randomNumber = random.nextInt(7 - 1 + 1) + 1;
+        int randomNumber = 6;
         LevelState state;
         switch (randomNumber){
             case 1:
