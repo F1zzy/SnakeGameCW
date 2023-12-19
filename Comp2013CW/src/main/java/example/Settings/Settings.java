@@ -1,8 +1,8 @@
 package example.Settings;
 
+import example.LeaderBoard.ScoreEntry;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
@@ -10,13 +10,50 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.text.Font;
 
+import javax.swing.text.html.CSS;
+
+
 public class Settings {
-    public static Color PrimaryColor = Color.RED;
-    public static Color SecondaryColor = Color.BLACK;
+    public static Color PrimaryColor ;
+    public static Color SecondaryColor;
 
-    public int TextSize;
+    public static int TextSize;
 
-    public Font font;
+    public static Font font;
+
+    public static TableView<ScoreEntry> createTableView(ObservableList<ScoreEntry> data) {
+
+        String CSSFormat = "-fx-background-color: " + getHex(PrimaryColor) + ";" +
+                "-fx-text-fill: " + getHex(SecondaryColor) + ";" +
+                "-fx-font-size: " + TextSize + "px;" +
+                "-fx-border-color: " + getHex(SecondaryColor) + ";"
+                ;
+
+        TableView<ScoreEntry> tableView = new TableView<>(data);
+        tableView.setStyle(CSSFormat);
+        return tableView;
+
+    }
+
+    public static <T> TableColumn<ScoreEntry, T > createTableColumn(String username) {
+        String CSSFormat = "-fx-background-color: " + getHex(PrimaryColor) + ";" +
+                "-fx-text-fill: " + getHex(SecondaryColor) + ";" +
+                "-fx-font-size: " + TextSize + "px;" +
+                "-fx-border-color: " + getHex(SecondaryColor) + ";" +
+                "-fx-border-width: 2px;";
+
+        TableColumn<ScoreEntry, T> column = new TableColumn<>(username);
+        column.setStyle(CSSFormat);
+        return  column;
+    }
+
+    public enum FontWeightEnum {
+        NORMAL,
+        BOLD,
+        BOLDER,
+        LIGHTER
+    }
+    public static FontWeightEnum fontWeight;
 
     public BackgroundFill backgroundFill;
     public static String SnakeHeadPath = "snake-head-default.png";
@@ -27,24 +64,7 @@ public class Settings {
 
 
     public static String CSSFormat;
-    public static void Init() {
-        Color PrimaryColor = Color.RED;
-        Color SecondaryColor = Color.BLACK;
 
-        int TextSize = 18;
-
-        Font font = Font.font("Calibri");
-
-        BackgroundFill backgroundFill;
-
-        CSSFormat = String.format(
-                "-fx-background-color: %s; -fx-text-fill: %s; -fx-font-size: %dpx; -fx-font-family: '%s'; -fx-border-color: %s; -fx-border-width: 2px;",
-                toHex(PrimaryColor), toHex(SecondaryColor), TextSize, font.getFamily(), toHex(SecondaryColor)
-        );
-
-
-
-    }
     public static String ReturnSnakeHeadPath(){return SnakeHeadLocation + SnakeHeadPath;}
     public static String ReturnSnakeHeadName(){return SnakeHeadPath.substring(10, SnakeHeadPath.lastIndexOf("."));}
     public static String ReturnSnakeBodyPath(){ return  SnakeBodyLocation + SnakeBodyPath; }
@@ -70,17 +90,80 @@ public class Settings {
 
     public static Button createStyledButton(String text) {
         Button button = new Button(text);
+        String CSSFormat = "-fx-background-color: " + getHex(PrimaryColor) + ";" +
+                "-fx-text-fill: " + getHex(SecondaryColor) + ";" +
+                " -fx-font-size: " + TextSize + "px;" +
+                "-fx-font-weight: " + fontWeight.toString() + ";" +
+                " -fx-font: " + font + ";" +
+                "-fx-border-color: " + getHex(SecondaryColor) + ";"+
+                "-fx-border-width: 2px;";
+
         button.setStyle(CSSFormat);
         return button;
     }
-    public static ComboBox<String> createComboBox(ObservableList<String> comboBoxData){
+    public static <T> ComboBox<T> createComboBox(ObservableList<T> comboBoxData) {
+        String CSSFormat = "-fx-background-color: " + getHex(PrimaryColor) + ";" +
+                "-fx-text-fill: " + getHex(SecondaryColor) + ";" +
+                "-fx-font-weight: " + fontWeight.toString() + ";" +
+                "-fx-font-size: " + TextSize + "px;" +
+                "-fx-font: " + fontWeight.toString() + " " + font + ";" +
+                "-fx-border-color: " + getHex(SecondaryColor) + ";" +
+                "-fx-border-width: 2px;";
 
-        ComboBox<String> comboBox = new ComboBox<>(comboBoxData);
+        ComboBox<T> comboBox = new ComboBox<>(comboBoxData);
         comboBox.setStyle(CSSFormat);
         return comboBox;
-
     }
 
 
+    public static Label createLabel(String text) {
+        Label label = new Label(text);
+        String CSSFormat = "-fx-text-fill: " + getHex(SecondaryColor) + "; " +
+                "-fx-font-weight: " + fontWeight.toString() + ";" +
+                "  -fx-font-size: " + TextSize + ";" ;
+        label.setStyle(CSSFormat);
+        return label;
+    }
+    public static Label createLabel(String text , int textSize) {
+        Label label = new Label(text);
+        String CSSFormat = "-fx-text-fill: " + getHex(SecondaryColor) + "; " +
+                "-fx-font-weight: " + fontWeight.toString() + ";" +
+                "  -fx-font-size: " + textSize + ";" ;
+        label.setStyle(CSSFormat);
+        return label;
+    }
 
+    public static ColorPicker createColorPicker(Color setColor) {
+        String CSSFormat = "-fx-background-color: " + getHex(PrimaryColor) + ";" +
+            "-fx-text-fill: " + getHex(SecondaryColor) + ";" +
+            " -fx-font-size: " + TextSize + "px;" +
+                "-fx-font-weight: " + fontWeight.toString() + ";" +
+            " -fx-font: " + font + ";" +
+            "-fx-border-color: " + getHex(SecondaryColor) + ";"+
+            "-fx-border-width: 2px;";
+        ColorPicker colorPicker = new ColorPicker();
+        colorPicker.setStyle(CSSFormat);
+        colorPicker.setValue(setColor);
+
+        return colorPicker;
+    }
+
+    public static Slider createTextSizeSlider() {
+        Slider slider = new Slider();
+        slider.setShowTickMarks(true);
+        slider.setShowTickLabels(true);
+        slider.setSnapToTicks(true);
+        slider.setMajorTickUnit(5);
+        slider.setMinorTickCount(4);
+        slider.setBlockIncrement(1);
+        return slider;
+    }
+
+    private static String getHex(Color color) {
+        return String.format("#%02X%02X%02X",
+                (int) (color.getRed() * 255),
+                (int) (color.getGreen() * 255),
+                (int) (color.getBlue() * 255)
+        );
+    }
 }

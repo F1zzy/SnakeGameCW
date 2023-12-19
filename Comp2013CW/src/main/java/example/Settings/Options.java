@@ -10,11 +10,14 @@
     import javafx.scene.control.*;
     import javafx.scene.image.ImageView;
     import javafx.scene.layout.*;
+    import javafx.scene.text.Font;
     import javafx.stage.Stage;
 
     import java.util.ArrayList;
     import java.util.List;
 
+
+    import static example.Settings.Settings.createComboBox;
     import static example.Utilities.ImageUtil.changeSnakeBodyImage;
     import static example.Utilities.ImageUtil.changeSnakeHeadImage;
 
@@ -22,7 +25,7 @@
         private static final int FRAME_WIDTH = 900;
         private static final int FRAME_HEIGHT = 600;
         public static void display(Stage stage){
-            VBox gameSettingsLayout = createGameSettingsLayout();
+            VBox gameSettingsLayout = createGameObjectSettingsLayout();
             VBox uiSettingsLayout = createUISettingsLayout();
 
             // Create a tab pane to switch between game and UI settings
@@ -43,34 +46,63 @@
             uiSettingsLayout.setPadding(new Insets(10));
 
             // UI settings components
-            Label primaryColorLabel = new Label("Primary Color");
-            ColorPicker primaryColorPicker = new ColorPicker();
+            Label primaryColorLabel = Settings.createLabel("Primary Color");
+            ColorPicker primaryColorPicker = Settings.createColorPicker(Settings.PrimaryColor);
 
-            Label secondaryColorLabel = new Label("Secondary Color");
-            ColorPicker secondaryColorPicker = new ColorPicker();
 
-            ComboBox<String> fontComboBox = new ComboBox<>();
+            Label secondaryColorLabel =  Settings.createLabel("Secondary Color");
+            ColorPicker secondaryColorPicker = Settings.createColorPicker(Settings.SecondaryColor);
+
+            ComboBox<String> fontComboBox = Settings.createComboBox( FXCollections.observableArrayList(Font.getFamilies()));
             fontComboBox.setPromptText("Fonts");
 
-            Label textSizeLabel = new Label("Text Size");
-            Slider textSizeSlider = new Slider(10, 30, 10);
-            textSizeSlider.setShowTickMarks(true);
-            textSizeSlider.setSnapToTicks(true);
 
-            CheckBox boldCheckBox = new CheckBox("Bold");
+
+            Label textSizeLabel = Settings.createLabel("Text Size");
+            Slider textSizeSlider = Settings.createTextSizeSlider();
+            textSizeSlider.setMin(1);
+            textSizeSlider.setMax(25);
+            textSizeSlider.setValue(Settings.TextSize);
+
+            ComboBox<Settings.FontWeightEnum> boldComboBox;
+            ObservableList<Settings.FontWeightEnum> comboBoxData = FXCollections.observableArrayList(
+                    Settings.FontWeightEnum.BOLD,
+                    Settings.FontWeightEnum.BOLDER,
+                    Settings.FontWeightEnum.LIGHTER,
+                    Settings.FontWeightEnum.NORMAL
+            );
+            boldComboBox = createComboBox(comboBoxData);
+            boldComboBox.setValue(Settings.fontWeight);
+            
+            Button Apply =  Settings.createStyledButton("Apply");
+            Apply.setOnAction(e ->{
+            SettingsManager.saveUISettings(primaryColorPicker.getValue() , secondaryColorPicker.getValue() ,
+                    Font.font(fontComboBox.getValue()), (int) textSizeSlider.getValue() , boldComboBox.getValue());
+
+
+            });
+            // Create "Go Back" button
+            Button goBackButton = Settings.createStyledButton("Go Back");
+            goBackButton.setOnAction(e -> {
+                MainMenu.display();
+            });
+
 
             // Add UI settings controls to the layout
             uiSettingsLayout.getChildren().addAll(
                     primaryColorLabel, primaryColorPicker,
                     secondaryColorLabel, secondaryColorPicker,
-                    fontComboBox, textSizeLabel, textSizeSlider, boldCheckBox
+                    fontComboBox, textSizeLabel, textSizeSlider, boldComboBox , Apply , goBackButton
             );
 
+
+            uiSettingsLayout.setBackground(Settings.ReturnBackgroundFill());
             return uiSettingsLayout;
         }
 
 
-        public static VBox  createGameSettingsLayout() {
+
+        public static VBox createGameObjectSettingsLayout() {
             VBox layout = new VBox(10);
             layout.setPadding(new Insets(10));
 
@@ -88,7 +120,7 @@
                     "ninja",
                     "deer"
             );
-            headComboBox = Settings.createComboBox(comboBoxData);
+            headComboBox = createComboBox(comboBoxData);
             headComboBox.setValue(Settings.ReturnSnakeHeadName());
 
             // Add event handler for headComboBox
@@ -111,7 +143,7 @@
                     "moon",
                     "diamond"
             );
-            bodyComboBox = Settings.createComboBox(comboBoxData);
+            bodyComboBox = createComboBox(comboBoxData);
             bodyComboBox.setValue(Settings.ReturnSnakeBodyName());
 
             // Add event handler for bodyComboBox
@@ -127,15 +159,16 @@
 
             Button Apply =  Settings.createStyledButton("Apply");
             Apply.setOnAction(e ->{
-                changeSnakeHeadImage("snake-head-"+ headComboBox.getValue() +".png");
-                changeSnakeBodyImage("snake-body-"+ bodyComboBox.getValue()+ ".png");
+                changeSnakeHeadImage(Settings.SnakeHeadLocation + "snake-head-"+ headComboBox.getValue() +".png");
+                changeSnakeBodyImage(Settings.SnakeBodyLocation + "snake-body-"+ bodyComboBox.getValue()+ ".png");
+
+                SettingsManager.saveGameSettings(headComboBox.getValue() , bodyComboBox.getValue());
             });
             // Create "Go Back" button
-            Button goBackButton = new Button("Go Back");
+            Button goBackButton = Settings.createStyledButton("Go Back");
             goBackButton.setOnAction(e -> {
                 MainMenu.display();
             });
-            goBackButton.setStyle(Settings.CSSFormat);
 
 
 
@@ -151,7 +184,7 @@
 
         private static StackPane createGamePreview(ImageView snakeHead, ImageView snakeBody) {
             List<ImageView> bodyImageViews = new ArrayList<>();
-            ImageView backgroundImageView = new ImageView(ImageUtil.images.get("UI-background"));
+            ImageView backgroundImageView = new ImageView(ImageUtil.images.get("DefaultLevelState-background"));
 
             for (int i = 0; i < 3; i++) {
                 ImageView bodyImageView = new ImageView(snakeBody.getImage());  // Create a new instance

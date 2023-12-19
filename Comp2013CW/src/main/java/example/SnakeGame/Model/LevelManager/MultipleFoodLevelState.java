@@ -40,7 +40,6 @@ public class MultipleFoodLevelState implements LevelState {
         if (snake.isAlive) {
             if (model.getFoodsList().isEmpty()) {
                 // If no fruits, generate a new set of random fruits
-                soundManager.PlayEatFood();
                 generateRandomFruits();
             } else {
                 // Check if any fruit is eaten by the snake
@@ -89,6 +88,7 @@ public class MultipleFoodLevelState implements LevelState {
 
         for (Food fruit : model.getFoodsList()) {
             if (fruit.eaten(snake)) {
+                soundManager.PlayEatFood();
                 eatenFruits.add(fruit);
             }
         }

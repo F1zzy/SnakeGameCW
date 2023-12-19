@@ -91,6 +91,11 @@ public class ImageUtil {
 		images.put("NegativeFoodLevelState-background",
 				new Image(String.valueOf(ImageUtil.class.getResource(filePath + "Game-Background-5.png")),
 						900, 600, true, true));
+
+
+		images.put("InvisibleLevelState-background",
+				new Image(String.valueOf(ImageUtil.class.getResource(filePath + "Game-Background-6.png")),
+						900, 600, true, true));
 	}
 
 

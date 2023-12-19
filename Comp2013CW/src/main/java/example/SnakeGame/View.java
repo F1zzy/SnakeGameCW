@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -55,6 +56,8 @@ public class View implements Observer {
 
     private VBox pauseMenu;
     private StackPane pauseMenuOverlay;
+
+    private Label scoreLabel;
     public View(Model model, Controller controller, Stage stage) {
         this.model = model;
         this.controller = controller;
@@ -81,10 +84,15 @@ public class View implements Observer {
 
         Button pauseButton = Settings.createStyledButton("Pause");
         pauseButton.setOnAction(e -> controller.pauseGame());
-        root.setAlignment(pauseButton, Pos.TOP_RIGHT);
+        StackPane.setAlignment(pauseButton, Pos.TOP_RIGHT);
         root.getChildren().add(pauseButton);
 
         root.requestFocus();
+
+        scoreLabel = Settings.createLabel("Score: ");
+
+        root.getChildren().add(scoreLabel);
+        StackPane.setAlignment(scoreLabel, Pos.TOP_LEFT);
         pauseMenuOverlay = new StackPane(); // Initialize pauseMenuOverlay
         pauseMenuOverlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);"); // Adjust the alpha value as needed
         pauseMenuOverlay.setAlignment(Pos.CENTER);
@@ -124,7 +132,7 @@ public class View implements Observer {
         gc.setFont(new Font("Arial", 30));
 
         // Draw the title at the top
-        gc.fillText(levelStateName, (double) FRAME_WIDTH /2, (double) FRAME_HEIGHT /2);
+        gc.fillText(levelStateName, (double) FRAME_WIDTH /2, 0);
     }
 
     private void drawBackground() {
@@ -196,15 +204,14 @@ public class View implements Observer {
     }
 
     private void drawScore() {
-        Color Magenta = Color.MAGENTA;
-        gc.setFill(Magenta);
-        gc.setFont(new Font("Arial", 20));
-        GreaterThanHighScore(model.getScore());
-        if (GreaterThanHighScore(model.getScore())) {
-            gc.fillText("NEW HIGH SCORE: " + model.getScore(), 20, 30);
-        } else {
-            gc.fillText("SCORE: " + model.getScore(), 20, 30);
-        }
+        boolean isHighScore = GreaterThanHighScore(model.getScore());
+
+        String scoreMessage = isHighScore
+                ? "NEW HIGH SCORE: " + model.getScore()
+                : "SCORE: " + model.getScore();
+
+        // Update the text of the scoreLabel
+        scoreLabel.setText(scoreMessage);
     }
 
     public void gameOverScene() {
@@ -234,29 +241,24 @@ public class View implements Observer {
             submitButton.setDisable(true);
         });
 
-        Color Magenta = Color.RED;
-        gc.setFill(Magenta);
-        gc.setFont(new Font("Arial", 120));
-        gc.fillText("YOU DIED :(", 140, 200);
-
-        VBox userInputLayout = new VBox(10);
-        userInputLayout.setAlignment(Pos.CENTER);
-        userInputLayout.getChildren().addAll(usernameInput);
+        Label endGameText = Settings.createLabel("You Died" , 90);
+        StackPane.setAlignment(endGameText, Pos.TOP_CENTER);
+        endGameText.setTranslateY(100);
+        root.getChildren().add(endGameText);
 
         // Create layout for buttons
         HBox buttonsLayout = new HBox(10);
-        buttonsLayout.setAlignment(Pos.BOTTOM_CENTER);
-        buttonsLayout.getChildren().addAll(submitButton, goBackButton, retryButton);
+        buttonsLayout.setAlignment(Pos.CENTER);
+        buttonsLayout.getChildren().addAll(usernameInput,submitButton, goBackButton, retryButton);
 
         // Create layout for the entire scene
         VBox allLayout = new VBox(20);
         allLayout.setAlignment(Pos.CENTER);
 
-        allLayout.getChildren().addAll(userInputLayout, buttonsLayout);
+        allLayout.getChildren().addAll(buttonsLayout);
 
         // Draw buttons And Score
         drawScore();
-        root.getChildren().add(userInputLayout);
         root.getChildren().add(buttonsLayout);
     }
 

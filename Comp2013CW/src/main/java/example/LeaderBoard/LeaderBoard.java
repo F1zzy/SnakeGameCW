@@ -2,6 +2,7 @@ package example.LeaderBoard;
 
 import example.MainMenu;
 import example.Settings.Settings;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -37,47 +38,44 @@ public class LeaderBoard{
         data = readDataFromCSV();
 
         // Create TableView
-        TableView<ScoreEntry> tableView = new TableView<>(data);
+        TableView<ScoreEntry> tableView = Settings.createTableView(data);
+
+        TableColumn<ScoreEntry, Integer> positionCol = Settings.createTableColumn("Position");
+        positionCol.setCellValueFactory(cellData ->
+                Bindings.createIntegerBinding(() -> tableView.getItems().indexOf(cellData.getValue()) + 1, tableView.getItems()).asObject());
+
         // Create columns
-        TableColumn<ScoreEntry, String> usernameCol = new TableColumn<>("Username");
+        TableColumn<ScoreEntry, String> usernameCol = Settings.createTableColumn("Username");
         usernameCol.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
-        usernameCol.setStyle(Settings.CSSFormat);
 
 
-        TableColumn<ScoreEntry, Integer> scoreCol = new TableColumn<>("Score");
+        TableColumn<ScoreEntry, Integer> scoreCol = Settings.createTableColumn("Score");
         scoreCol.setCellValueFactory(cellData -> cellData.getValue().scoreProperty().asObject());
-        scoreCol.setStyle(Settings.CSSFormat);
 
-        TableColumn<ScoreEntry, String> timestampCol = new TableColumn<>("Time");
+        TableColumn<ScoreEntry, String> timestampCol = Settings.createTableColumn("Time");
         timestampCol.setCellValueFactory(cellData -> cellData.getValue().timestampProperty());
-        timestampCol.setStyle(Settings.CSSFormat);
 
-        tableView.getColumns().addAll(usernameCol, scoreCol, timestampCol);
 
-        tableView.setStyle(Settings.CSSFormat);
+        tableView.getColumns().addAll(positionCol , usernameCol, scoreCol, timestampCol);
+
+        //tableView.setStyle(Settings.CSSFormat);
 
         // Customize the row background
-        tableView.setRowFactory(tv -> {
-            TableRow<ScoreEntry> row = new TableRow<>();
-            row.setStyle(Settings.CSSFormat);
-            return row;
-        });
 
         for (TableColumn<ScoreEntry, ?> col : tableView.getColumns()) {
-            col.prefWidthProperty().bind(tableView.widthProperty().divide(3));
+            col.prefWidthProperty().bind(tableView.widthProperty().divide(4));
         }
 
         // Create "Go Back" button
-        Button goBackButton = new Button("Go Back");
+        Button goBackButton = Settings.createStyledButton("Go Back");
         goBackButton.setOnAction(e -> {
             MainMenu.display();
         });
-        goBackButton.setStyle(Settings.CSSFormat);
 
 
         // Create StackPane to overlap "Go Back" button over TableView
         StackPane stackPane = new StackPane(tableView, goBackButton);
-        stackPane.setAlignment(Pos.TOP_RIGHT); // Align the stackPane content to the top right
+        stackPane.setAlignment(Pos.BOTTOM_RIGHT); // Align the stackPane content to the top right
 
         // Set up the scene
         Scene scene = new Scene(stackPane, FRAME_WIDTH, FRAME_HEIGHT);
@@ -86,8 +84,6 @@ public class LeaderBoard{
         stage.show();
 
     }
-
-
 
 
 
@@ -127,7 +123,6 @@ public class LeaderBoard{
                 writer.println(Record.getUsername() + "," + Record.getScore() + "," + Record.getTimestamp());
             }
         } catch (IOException e) {
-            // Handle the exception more gracefully, e.g., log or notify the user
             e.printStackTrace();
         }
     }
