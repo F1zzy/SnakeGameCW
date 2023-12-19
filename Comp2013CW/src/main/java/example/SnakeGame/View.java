@@ -56,7 +56,7 @@ public class View implements Observer {
 
     private VBox pauseMenu;
     private StackPane pauseMenuOverlay;
-
+    private Label levelStateLabel;
     private Label scoreLabel;
     public View(Model model, Controller controller, Stage stage) {
         this.model = model;
@@ -90,9 +90,11 @@ public class View implements Observer {
         root.requestFocus();
 
         scoreLabel = Settings.createLabel("Score: ");
+        levelStateLabel = Settings.createLabel(model.getLevelState().getName());
 
-        root.getChildren().add(scoreLabel);
+        root.getChildren().addAll(scoreLabel , levelStateLabel);
         StackPane.setAlignment(scoreLabel, Pos.TOP_LEFT);
+        StackPane.setAlignment(levelStateLabel , Pos.TOP_CENTER);
         pauseMenuOverlay = new StackPane(); // Initialize pauseMenuOverlay
         pauseMenuOverlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);"); // Adjust the alpha value as needed
         pauseMenuOverlay.setAlignment(Pos.CENTER);
@@ -125,14 +127,7 @@ public class View implements Observer {
 
     private void drawLevelState() {
         // Get the current level state name
-        String levelStateName = model.getLevelState().getName();
-
-        // Set the font and color for the title
-        gc.setFill(Settings.PrimaryColor);
-        gc.setFont(new Font("Arial", 30));
-
-        // Draw the title at the top
-        gc.fillText(levelStateName, (double) FRAME_WIDTH /2, 0);
+        levelStateLabel.setText(model.getLevelState().getName());
     }
 
     private void drawBackground() {

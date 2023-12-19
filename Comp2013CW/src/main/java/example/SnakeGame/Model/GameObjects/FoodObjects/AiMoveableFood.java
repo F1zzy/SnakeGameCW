@@ -8,7 +8,7 @@ public class AiMoveableFood extends Food {
     private static final int CORNER_THRESHOLD = 10;
 
     private static final int CHANGE_DIRECTION_INTERVAL = 6; // Adjust the interval for changing direction ( In Frames)
-    private static final double AVOIDANCE_DISTANCE = 3;
+    private static final double AVOIDANCE_DISTANCE = 30;
 
     private int directionChangeCounter = 0;
     private int targetDirectionX;
@@ -42,9 +42,22 @@ public class AiMoveableFood extends Food {
         this.y += targetDirectionY * SPEED;
 
         // Ensure the food stays within the game boundaries
-        if (this.x < 0 || this.x > 900 - width || this.y < 0 || this.y > 600 - height) {
-            chooseRandomDirection(); // Change direction when hitting a boundary
+        if (this.x < 0) {
+            this.x = 0;
+            chooseRandomDirection();
+        } else if (this.x > 900 - width) {
+            this.x = 900 - width;
+            chooseRandomDirection();
         }
+
+        if (this.y < 0) {
+            this.y = 0;
+            chooseRandomDirection();
+        } else if (this.y > 600 - height) {
+            this.y = 600 - height;
+            chooseRandomDirection();
+        }
+
     }
 
     private void chooseRandomDirection() {

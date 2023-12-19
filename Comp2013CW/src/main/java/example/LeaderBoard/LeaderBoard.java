@@ -26,9 +26,10 @@ public class LeaderBoard{
     private static ObservableList<ScoreEntry> data;
 
     private static int Highscore;
-    public static void Init(){
+
+    static {
         data = readDataFromCSV();
-        //Highscore = data.getFirst().getScore();
+        Highscore = data.isEmpty() ? 0 : data.get(0).getScore();
     }
 
 

@@ -29,9 +29,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws URISyntaxException, IOException {
         //Gather Data for High Score Comparisons
-        LeaderBoard.Init();
-
-
         SettingsManager.loadSettings();
         MainMenu.display();
         //updateCSSFile();

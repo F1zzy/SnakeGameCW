@@ -68,8 +68,7 @@ public class ImageUtil {
 
 	private static void loadUIImages() {
 		images.put("MainMenu-background",
-				new Image(String.valueOf(ImageUtil.class.getResource("/Images/Miscellaneous/MainMenu-Background-removebg-preview.png")) ,
-						900 , 600 , true , true));
+				new Image(String.valueOf(ImageUtil.class.getResource("/Images/Miscellaneous/MainMenu-Background-removebg-preview.png"))));
 		String filePath = "/Images/Level_Backgrounds/";
 
 		images.put("DefaultLevelState-background",

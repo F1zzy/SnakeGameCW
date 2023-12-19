@@ -57,10 +57,12 @@ public class Model extends Observable {
         gameLoop = givenGameLoop;
     }
     public void pauseGame(){
+        soundManager.stopBackgroundMusic();
         gameLoop.stop();
 
     }
     public void resumeGame(){
+
         gameLoop.CountdownStart();
     }
 

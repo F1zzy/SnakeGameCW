@@ -15,10 +15,6 @@ public class ScoreEntry {
     public ScoreEntry(String username, int score , String time ) {
         this.username = new SimpleStringProperty(username);
         this.score = new SimpleIntegerProperty(score);
-        // Get the current date and time
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
-
         this.timestamp = new SimpleStringProperty(time);
     }
 

@@ -27,6 +27,7 @@ public class InvisibleSnakeLevelState implements LevelState {
 
         this.model = levelManager.getModel();
         model.getFoodsList().clear();
+        model.getNegativeFoodsList().clear();
         Snake snake = model.getSnake();
         snake.setSpeed(snake.getOriginalSpeed());
         snake.setVisible(true);
