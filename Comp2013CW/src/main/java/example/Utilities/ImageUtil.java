@@ -2,8 +2,11 @@ package example.Utilities;
 
 import example.MainMenu;
 import example.Settings.Settings;
-import javafx.embed.swing.SwingFXUtils;
+//import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -35,9 +38,9 @@ public class ImageUtil {
 
 	// Load snake-related images
 	private static void loadSnakeImages() {
-		System.out.println(Settings.ReturnSnakeHeadPath());
-		Image SnakeHead = new Image(String.valueOf(ImageUtil.class.getResource(Settings.ReturnSnakeHeadPath())), SNAKE_BODY_SIZE, SNAKE_BODY_SIZE, true, true);
-		Image SnakeBody = new Image(String.valueOf(ImageUtil.class.getResource(Settings.ReturnSnakeBodyPath())) , SNAKE_BODY_SIZE , SNAKE_BODY_SIZE , true , true );
+		System.out.println(Settings.returnSnakeHeadPath());
+		Image SnakeHead = new Image(String.valueOf(ImageUtil.class.getResource(Settings.returnSnakeHeadPath())), SNAKE_BODY_SIZE, SNAKE_BODY_SIZE, true, true);
+		Image SnakeBody = new Image(String.valueOf(ImageUtil.class.getResource(Settings.returnSnakeBodyPath())) , SNAKE_BODY_SIZE , SNAKE_BODY_SIZE , true , true );
 
 		// Store the resized images in the images map
 		images.put("snake-head-right", SnakeHead);
@@ -190,22 +193,35 @@ public class ImageUtil {
 		int width = (int) image.getWidth();
 		int height = (int) image.getHeight();
 
-		BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		// Create a WritableImage with the same dimensions
+		WritableImage rotatedImage = new WritableImage(width, height);
 
-		// Create a Graphics2D object from the BufferedImage
-		Graphics2D graphics = bufferedImage.createGraphics();
+		// Get the PixelReader and PixelWriter for the original and rotated images
+		PixelReader pixelReader = image.getPixelReader();
+		PixelWriter pixelWriter = rotatedImage.getPixelWriter();
 
-		// Rotate the image
-		AffineTransform transform = AffineTransform.getRotateInstance(Math.toRadians(degrees), width / 2, height / 2);
-		graphics.setTransform(transform);
+		// Calculate rotation center
+		double centerX = width / 2.0;
+		double centerY = height / 2.0;
 
-		// Draw the rotated image onto the BufferedImage
-		graphics.drawImage(SwingFXUtils.fromFXImage(image, null), 0, 0, null);
+		// Convert degrees to radians
+		double radians = Math.toRadians(degrees);
 
-		// Dispose the Graphics2D object
-		graphics.dispose();
+		// Perform the rotation
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				// Calculate new coordinates after rotation
+				double rotatedX = Math.cos(radians) * (x - centerX) - Math.sin(radians) * (y - centerY) + centerX;
+				double rotatedY = Math.sin(radians) * (x - centerX) + Math.cos(radians) * (y - centerY) + centerY;
 
-		// Convert the rotated BufferedImage back to JavaFX Image
-		return SwingFXUtils.toFXImage(bufferedImage, null);
+				// Check if the new coordinates are within bounds
+				if (rotatedX >= 0 && rotatedX < width && rotatedY >= 0 && rotatedY < height) {
+					// Sample the color from the original image and write it to the rotated image
+					pixelWriter.setColor((int) rotatedX, (int) rotatedY, pixelReader.getColor(x, y));
+				}
+			}
+		}
+
+		return rotatedImage;
 	}
 }

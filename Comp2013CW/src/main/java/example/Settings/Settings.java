@@ -43,17 +43,17 @@ public class Settings {
 
     //Util Function to Get Snake Path
 
-    public static String ReturnSnakeHeadPath(){return SnakeHeadLocation + SnakeHeadPath;}
-    public static String ReturnSnakeHeadName(){return SnakeHeadPath.substring(11, SnakeHeadPath.lastIndexOf("."));}
-    public static String ReturnSnakeBodyPath(){ return  SnakeBodyLocation + SnakeBodyPath; }
-    public static String ReturnSnakeBodyName(){return SnakeBodyPath.substring(11, SnakeBodyPath.lastIndexOf("."));}
+    public static String returnSnakeHeadPath(){return SnakeHeadLocation + SnakeHeadPath;}
+    public static String returnSnakeHeadName(){return SnakeHeadPath.substring(11, SnakeHeadPath.lastIndexOf("."));}
+    public static String returnSnakeBodyPath(){ return  SnakeBodyLocation + SnakeBodyPath; }
+    public static String returnSnakeBodyName(){return SnakeBodyPath.substring(11, SnakeBodyPath.lastIndexOf("."));}
 
     /**
      * Returns the formatted CSS for background fill using primary and secondary colors.
      *
      * @return The formatted CSS for background fill.
      */
-    public static  Background ReturnBackgroundFill(){
+    public static  Background returnBackgroundFill(){
         Stop[] stops = {
                 new Stop(0, primaryColor),
                 new Stop(1, secondaryColor)

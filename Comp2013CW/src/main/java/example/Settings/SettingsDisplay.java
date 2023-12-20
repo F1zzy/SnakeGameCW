@@ -115,7 +115,7 @@
             );
 
             //Set Background to Gradiant Background
-            uiSettingsLayout.setBackground(Settings.ReturnBackgroundFill());
+            uiSettingsLayout.setBackground(Settings.returnBackgroundFill());
             return uiSettingsLayout;
         }
 
@@ -142,7 +142,7 @@
                     "deer"
             );
             headComboBox = createComboBox(comboBoxData);
-            headComboBox.setValue(Settings.ReturnSnakeHeadName());
+            headComboBox.setValue(Settings.returnSnakeHeadName());
             headComboBox.setId("headComboBox");
             // Add event handler for headComboBox
             headComboBox.setOnAction(event -> {
@@ -165,7 +165,7 @@
                     "diamond"
             );
             bodyComboBox = createComboBox(comboBoxData);
-            bodyComboBox.setValue(Settings.ReturnSnakeBodyName());
+            bodyComboBox.setValue(Settings.returnSnakeBodyName());
             bodyComboBox.setId("bodyComboBox");
             // Add event handler for bodyComboBox
             bodyComboBox.setOnAction(event -> {
@@ -198,7 +198,7 @@
             // Add controls to change head and body
             layout.getChildren().addAll(headComboBox, bodyComboBox,goBackButton,applyButton);
 
-            layout.setBackground(Settings.ReturnBackgroundFill());
+            layout.setBackground(Settings.returnBackgroundFill());
             return layout;
         }
 

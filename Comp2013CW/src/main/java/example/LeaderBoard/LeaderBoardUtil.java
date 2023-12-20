@@ -103,7 +103,7 @@ public class LeaderBoardUtil {
      * @param givenScore The score to compare with the highest score.
      * @return Boolean of  if the given score is greater than the highest score, false otherwise.
      */
-    public static boolean GreaterThanHighScore(int givenScore) {
+    public static boolean greaterThanHighScore(int givenScore) {
         return Highscore <= givenScore;
     }
 

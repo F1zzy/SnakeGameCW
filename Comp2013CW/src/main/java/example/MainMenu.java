@@ -85,7 +85,7 @@ public class MainMenu {
         StackPane rootLayout = new StackPane();
 
         // Apply background fill from Settings
-        buttonLayout.setBackground(Settings.ReturnBackgroundFill());
+        buttonLayout.setBackground(Settings.returnBackgroundFill());
 
         //Apply main menu Snake Image to sit at the bottom right
         StackPane.setAlignment(mainMenuSnakeImage, Pos.BOTTOM_RIGHT);

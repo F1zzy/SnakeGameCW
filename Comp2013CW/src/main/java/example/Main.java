@@ -40,9 +40,6 @@ public class Main extends Application {
         // Set the static primaryStage variable to be accessed from anywhere
         this.primaryStage = primaryStage;
 
-        // Load Settings
-        SettingsManager.loadSettings();
-
         // Display the main menu
         MainMenu.display();
 

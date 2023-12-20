@@ -23,7 +23,6 @@ public class LeaderboardDisplay {
     public static void display(Stage stage) {
 
         //Get the Stage from MainMenu
-        stage = stage;
 
         // Set the title of the stage
         stage.setTitle("Leaderboard");

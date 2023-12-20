@@ -32,9 +32,9 @@ public class LeaderboardTest {
     public void testGreaterThanHighScore() {
         LeaderBoardUtil.setHighscoreForTesting(300);
 
-        assertTrue(LeaderBoardUtil.GreaterThanHighScore(900));
-        assertFalse(LeaderBoardUtil.GreaterThanHighScore(1));
-        assertTrue(LeaderBoardUtil.GreaterThanHighScore(300));
+        assertTrue(LeaderBoardUtil.greaterThanHighScore(900));
+        assertFalse(LeaderBoardUtil.greaterThanHighScore(1));
+        assertTrue(LeaderBoardUtil.greaterThanHighScore(300));
     }
 
     @Test

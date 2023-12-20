@@ -17,6 +17,9 @@ import javafx.scene.text.Font;
 public class SettingsManager {
     // Constants for file paths
     private static  String SETTINGS_FILE_PATH = "src/main/resources/SaveFiles/settings.properties";
+    static {
+        loadSettings();
+    }
 
     /**
      * Saves game settings (head and body) to the properties file.

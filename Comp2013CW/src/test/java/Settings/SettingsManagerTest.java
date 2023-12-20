@@ -1,6 +1,5 @@
 package Settings;
 
-import example.Settings.SettingsDisplay;
 import example.Settings.Settings;
 import example.Settings.SettingsManager;
 import javafx.scene.paint.Color;
@@ -81,8 +80,8 @@ public class SettingsManagerTest {
 
         // Load settings and verify
         SettingsManager.loadSettings();
-        assertEquals("initialHead", Settings.ReturnSnakeHeadName());
-        assertEquals("initialBody", Settings.ReturnSnakeBodyName());
+        assertEquals("initialHead", Settings.returnSnakeHeadName());
+        assertEquals("initialBody", Settings.returnSnakeBodyName());
         assertEquals(Color.web("#FF0000"), Settings.getPrimaryColor());
         assertEquals(Color.web("#0000FF"), Settings.getSecondaryColor());
         assertEquals(Font.font("Arial"), Settings.getFont());

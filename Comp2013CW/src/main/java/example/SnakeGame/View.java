@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import static example.LeaderBoard.LeaderBoardUtil.GreaterThanHighScore;
+import static example.LeaderBoard.LeaderBoardUtil.greaterThanHighScore;
 /**
  * The View class represents the user interface and handles the rendering of the Snake Game.
  * It observes the Model for changes and updates the UI accordingly.
@@ -240,7 +240,7 @@ public class View implements Observer {
      * Draws the current score on the canvas, highlighting a new high score if achieved.
      */
     private void drawScore() {
-        boolean isHighScore = GreaterThanHighScore(model.getScore());
+        boolean isHighScore = greaterThanHighScore(model.getScore());
 
         String scoreMessage = isHighScore
                 ? "NEW HIGH SCORE: " + model.getScore()

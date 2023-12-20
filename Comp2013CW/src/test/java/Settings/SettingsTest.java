@@ -2,19 +2,16 @@ package Settings;
 
 import example.LeaderBoard.ScoreEntry;
 import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import example.Settings.SettingsDisplay;
 import example.Settings.Settings;
-import example.Settings.SettingsManager;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import javafx.scene.control.*;
@@ -30,15 +27,13 @@ class SettingsTest {
 
     @BeforeAll
     static void setUpJavaFX() {
-        // Initialize JavaFX Toolkit
-        new JFXPanel();
-        Platform.runLater(() -> {});
+
     }
 
     @Test
     void returnBackgroundFill() {
         // Test the creation of BackgroundFill
-        Background background = Settings.ReturnBackgroundFill();
+        Background background = Settings.returnBackgroundFill();
         assertNotNull(background);
     }
 

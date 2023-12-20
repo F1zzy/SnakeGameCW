@@ -18,7 +18,7 @@ public class LevelManager {
         this.model = model;
         this.levelChanged = false;
         this.soundManager = SoundManager.getInstance();
-        LevelState state = new AIMoveableLevelState(this);
+        LevelState state = new DefaultLevelState(this);
         setLevelState(state);
     }
     /**
@@ -42,7 +42,7 @@ public class LevelManager {
             // Check conditions to change the level
             if (model.getSnake().getLength() % 5 == 0) {
                 // Change the level state when the body length is divisible by 5
-                //changeLevelState();
+                changeLevelState();
                 this.model.getFoodsList().clear();
                 this.model.getNegativeFoodsList().clear();
 
