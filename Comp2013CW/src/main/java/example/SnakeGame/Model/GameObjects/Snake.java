@@ -8,9 +8,12 @@ import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
+/**
+ * The Snake class represents the main player-controlled character in the Snake Game.
+ * It manages the snake's movement, length, direction, and visibility.
+ */
 public class Snake extends GameObject {
-    private static final int SNAKE_SPEED = 3;
+    private static final int SNAKE_SPEED = 4;
     private int speed_XY;
     private int length;
     int numOfBodies;
@@ -24,6 +27,12 @@ public class Snake extends GameObject {
     boolean up, down, left, right = true;
     boolean isVisible;
 
+    /**
+     * Constructs a new Snake object with an initial position.
+     *
+     * @param x x-coordinate of the snake.
+     * @param y y-coordinate of the snake.
+     */
     public Snake(int x, int y) {
         this.isAlive = true;
         this.x = x;
@@ -39,37 +48,73 @@ public class Snake extends GameObject {
         System.out.println("GET BODY POINTS: "+ getBodyPointsLength());
         this.numOfBodies = width / speed_XY;
     }
-
+    /**
+     * Gets the length of the snake.
+     *
+     * @return The length of the snake.
+     */
     public int getLength() {
         return length;
     }
-
+    /**
+     * Changes the length of the snake.
+     *
+     * @param length The new length of the snake.
+     */
     public void changeLength(int length) {
         this.length = length;
     }
-
+    /**
+     * Gets the list of body points representing the snake's segments.
+     *
+     * @return The list of body points.
+     */
     public List<Point> getBodyPoints(){
         return bodyPoints;
     }
+    /**
+     * Gets the number of bodies in the snake.
+     *
+     * @return The number of bodies.
+     */
     public int getNumOfBodies(){return numOfBodies;}
-
+    /**
+     * Gets the original speed of the snake.
+     *
+     * @return The original speed of the snake.
+     */
     public int getOriginalSpeed() {
         return SNAKE_SPEED;
     }
+
+    /**
+     * Sets the speed of the snake.
+     *
+     * @param boostedSpeed The new speed of the snake.
+     */
     public void setSpeed(int boostedSpeed) {
 
         this.speed_XY = boostedSpeed;
-        System.out.println(""+ getBodyPointsLength());
-        System.out.println("GET BODY POINTS: "+ getBodyPointsLength());
-        //this.numOfBodies = width / boostedSpeed;
     }
+    /**
+     * Sets the visibility of the snake.
+     *Used for Invisibility Level State
+     * @param bool The visibility status of the snake.
+     */
     public void setVisible(boolean bool ){
         this.isVisible = bool;
     }
+    /**
+     * Gets the visibility status of the snake.
+     *
+     * @return The visibility status of the snake.
+     */
     public boolean getVisible(){ return this.isVisible;}
 
 
-
+    /**
+     * Moves the snake based on the current direction.
+     */
     public void move() {
 
         //let the swarm move
@@ -84,7 +129,11 @@ public class Snake extends GameObject {
         }
 
     }
-
+    /**
+     * Handles key presses to change the direction of the snake.
+     *
+     * @param event The KeyEvent representing the key press.
+     */
     public void keyPressed(javafx.scene.input.KeyEvent event) {
 
         switch (event.getCode()) {
@@ -138,7 +187,11 @@ public class Snake extends GameObject {
         }
     }
 
-
+    /**
+     * Gets the length of the body points list.
+     *
+     * @return The length of the body points list.
+     */
     public int getBodyPointsLength() {
         int length = 0;
         Iterator<Point> iterator = bodyPoints.iterator();
@@ -150,14 +203,5 @@ public class Snake extends GameObject {
 
         return length;
     }
-    public boolean collidesWith(Food food) {
-        Rectangle snakeRectangle = getRectangle();
-        Rectangle foodRectangle = food.getRectangle();
 
-        // Check for collision using bounding boxes
-        return snakeRectangle.intersects(foodRectangle);
-    }
-
-    public void eat(Food food) {
-    }
 }

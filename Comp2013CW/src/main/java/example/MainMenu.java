@@ -122,7 +122,7 @@ public class MainMenu {
         controller.setView(view);
 
         //Start Countdown Start
-        gameLoop.CountdownStart();
+        gameLoop.countdownStart();
 
     }
 

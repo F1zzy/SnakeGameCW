@@ -2,8 +2,12 @@ package example.Utilities;
 
 import example.MainMenu;
 import example.Settings.Settings;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 /**
@@ -173,5 +177,35 @@ public class ImageUtil {
 		Image newSnakeBody = new Image(String.valueOf(ImageUtil.class.getResource(newImagePath))
 				, SNAKE_BODY_SIZE, SNAKE_BODY_SIZE, true, true);
 		images.put("temp-snake-body", newSnakeBody);
+	}
+
+	/**
+	 * Rotates the given image by the specified degrees.
+	 *
+	 * @param image   The image to rotate.
+	 * @param degrees The degrees to rotate the image.
+	 * @return The rotated image.
+	 */
+	public static Image rotateImage(Image image, int degrees) {
+		int width = (int) image.getWidth();
+		int height = (int) image.getHeight();
+
+		BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+		// Create a Graphics2D object from the BufferedImage
+		Graphics2D graphics = bufferedImage.createGraphics();
+
+		// Rotate the image
+		AffineTransform transform = AffineTransform.getRotateInstance(Math.toRadians(degrees), width / 2, height / 2);
+		graphics.setTransform(transform);
+
+		// Draw the rotated image onto the BufferedImage
+		graphics.drawImage(SwingFXUtils.fromFXImage(image, null), 0, 0, null);
+
+		// Dispose the Graphics2D object
+		graphics.dispose();
+
+		// Convert the rotated BufferedImage back to JavaFX Image
+		return SwingFXUtils.toFXImage(bufferedImage, null);
 	}
 }

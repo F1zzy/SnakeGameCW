@@ -69,8 +69,8 @@ public class SettingsDisplayTest extends ApplicationTest {
         ComboBox<String> bodyComboBox = lookup("#bodyComboBox").query();
 
         // Test setting values to Default
-        clickOn(headComboBox).type(KeyCode.DOWN).type(KeyCode.ENTER);
-        clickOn(bodyComboBox).type(KeyCode.DOWN).type(KeyCode.ENTER);
+        clickOn(headComboBox).type(KeyCode.UP).type(KeyCode.UP).type(KeyCode.UP).type(KeyCode.UP).type(KeyCode.UP).type(KeyCode.ENTER);
+        clickOn(bodyComboBox).type(KeyCode.UP).type(KeyCode.UP).type(KeyCode.UP).type(KeyCode.UP).type(KeyCode.UP).type(KeyCode.ENTER);
 
         Assertions.assertEquals("default", headComboBox.getValue());
         Assertions.assertEquals("default", bodyComboBox.getValue());

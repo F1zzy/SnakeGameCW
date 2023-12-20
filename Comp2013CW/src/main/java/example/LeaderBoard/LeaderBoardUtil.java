@@ -12,7 +12,7 @@ import java.util.List;
  * Utility class for managing a leaderboard.
  */
 public class LeaderBoardUtil {
-    private static String LEADERBOARD_FILE = "src/main/resources/SaveFiles/emptyLeaderboard.csv";
+    private static String LEADERBOARD_FILE = "src/main/resources/SaveFiles/leaderboard.csv";
 
     private static ObservableList<ScoreEntry> data;
 

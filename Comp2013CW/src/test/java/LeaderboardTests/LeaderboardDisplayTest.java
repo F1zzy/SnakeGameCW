@@ -4,12 +4,12 @@ import example.LeaderBoard.LeaderBoardUtil;
 import example.LeaderBoard.LeaderboardDisplay;
 import example.LeaderBoard.ScoreEntry;
 import example.Main;
-import example.MainMenu;
-import javafx.scene.Scene;
 import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxToolkit;
@@ -23,17 +23,23 @@ import static org.testfx.util.NodeQueryUtils.hasText;
 
 
 public class LeaderboardDisplayTest extends ApplicationTest {
-    private static final String TEST_CSV_FILE_PATH_SAMPLE1 = "src/test/test_resources/Leaderboard/test_leaderboard_invalid.csv";
+    private static final String TEST_CSV_FILE_PATH_SAMPLE1 = "src/test/test_resources/Leaderboard/test_leaderboard_sample1.csv";
     private static final String TEST_CSV_FILE_PATH_EMPTY = "src/test/test_resources/Leaderboard/emptyLeaderboard.csv";
     @Override
     public void start(Stage stage) {
         Main.setPrimary(stage);
-        LeaderBoardUtil.setLeaderboardFile(TEST_CSV_FILE_PATH_SAMPLE1);
         LeaderboardDisplay.display(stage);
+    }
+
+
+    public void setUp(){
+        LeaderBoardUtil.setLeaderboardFile(TEST_CSV_FILE_PATH_SAMPLE1);
     }
 
     @Test
     public void testLeaderboardDisplay() {
+
+        setUp();
         // Assuming there is sample data in your leaderboard display
         TableView<ScoreEntry> tableView = lookup("#tableView").query();
 
@@ -64,13 +70,15 @@ public class LeaderboardDisplayTest extends ApplicationTest {
 
     }
     @Test
-    public void testEmptyLeaderboardDisplay() {
+    public void testEmptyLeaderboardDisplay() throws InterruptedException {
+
         LeaderBoardUtil.setLeaderboardFile(TEST_CSV_FILE_PATH_EMPTY);
         // Assuming the leaderboard display is initially empty
         TableView<ScoreEntry> tableView = lookup("#tableView").query();
-
+        Thread.sleep(6000);
         // Check if no items exist in the ObservableList
         Assertions.assertTrue(tableView.getItems().isEmpty());
+
     }
 
     @Test

@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ImageUtilTest extends ApplicationTest {
@@ -89,6 +90,24 @@ public class ImageUtilTest extends ApplicationTest {
         // Verify that the new snake body image is loaded
         assertNotNull(ImageUtil.images.get("snake-body"));
         assertEquals(bodyIm.getUrl(), ImageUtil.images.get("snake-body").getUrl());
+    }
+
+    @Test
+    void rotateImage_shouldRotateImageCorrectly() {
+        // Create a sample image for testing
+        Image originalImage = new Image(String.valueOf(ImageUtil.class.getResource("/Images/logo/snake-logo.png")));
+
+        // Rotate the image by 90 degrees (clockwise)
+        Image rotatedImage = ImageUtil.rotateImage(originalImage, 90);
+
+        // Assert that the rotatedImage is not null
+        assertThat(rotatedImage).isNotNull();
+
+        // Assert that the width and height are swapped after rotation
+        assertThat(rotatedImage.getWidth()).isEqualTo(originalImage.getHeight());
+        assertThat(rotatedImage.getHeight()).isEqualTo(originalImage.getWidth());
+
+        // You can add more assertions based on your specific requirements
     }
 
     // Additional tests can be added for other methods and edge cases

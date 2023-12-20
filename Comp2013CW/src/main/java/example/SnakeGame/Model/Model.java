@@ -3,7 +3,6 @@ package example.SnakeGame.Model;
 import example.SnakeGame.GameLoop;
 import example.SnakeGame.Model.GameObjects.EnemyObject;
 import example.SnakeGame.Model.GameObjects.FoodObjects.Food;
-import example.SnakeGame.Model.GameObjects.FoodObjects.RainbowDrop;
 import example.SnakeGame.Model.GameObjects.Snake;
 import example.SnakeGame.Model.LevelManager.LevelManager;
 import example.SnakeGame.Model.LevelManager.LevelState;
@@ -13,11 +12,15 @@ import javafx.application.Platform;
 import java.awt.*;
 import java.util.List;
 import java.util.Observable;
-
+/**
+ * The Model class represents the core logic of the Snake game.
+ * It manages the game state, including the snake, food, levels-state.
+ * This class extends Observable to notify View when the game state changes.
+ */
 public class Model extends Observable {
     private Snake SnakeObject;
 
-    private int score;
+
 
     boolean EndGame = false;
 
@@ -32,40 +35,62 @@ public class Model extends Observable {
     private final SoundManager soundManager= SoundManager.getInstance();
 
     private EnemyObject enemyObject;
-
+    /**
+     * Constructor for the Model class.
+     * Initializes the snake, food factory, and level manager.
+     */
     public Model() {
         SnakeObject = new Snake(100, 100);
 
         foodFactory = new FoodFactory();
-        score = 0;
 
         levelManager = new LevelManager(this);
 
     }
-
+    /**
+     * Gets the enemy object.
+     *
+     * @return The enemy object.
+     */
     public EnemyObject getEnemyObject() {
 
         return enemyObject;
     }
+    /**
+     * Initializes the enemy object.
+     */
     public void initEnemyObject(){
         enemyObject = new EnemyObject(950 , 650 );
     }
 
 
-
+    /**
+     * Sets the game loop for the model.
+     *
+     * @param givenGameLoop The game loop to set.
+     */
     public void setGameLoop(GameLoop givenGameLoop){
         gameLoop = givenGameLoop;
     }
+
+    /**
+     * Pauses the game by stopping the background music and game loop.
+     */
     public void pauseGame(){
         soundManager.stopBackgroundMusic();
-        gameLoop.stop();
+        gameLoop.stopGameLoop();
 
     }
+    /**
+     * Resumes the game by starting a countdown.
+     */
     public void resumeGame(){
 
-        gameLoop.CountdownStart();
+        gameLoop.countdownStart();
     }
-
+    /**
+     * Updates the game state, including moving the snake and notifying view.
+     */
     public void updateGame() {
         levelManager.update();
 
@@ -77,19 +102,37 @@ public class Model extends Observable {
         });
 
     }
-
+    /**
+     * Gets the snake object.
+     *
+     * @return The snake object.
+     */
     public Snake getSnake() {
         return SnakeObject;
     }
+
+    /**
+     * Gets the current level state from level manager.
+     *
+     * @return The current level state.
+     */
     public LevelState getLevelState(){return levelManager.getCurrentLevelState();}
+    /**
+     * Gets the list of food objects in FoodFactory.
+     */
 
     public List<Food> getFoodsList() {
         return foodFactory.getFoodList();
     }
+
     public List<Food> getNegativeFoodsList() {
         return foodFactory.getNegativeFoodList();
     }
-    public List<RainbowDrop> getrainbowDropList(){ return  foodFactory.getRainbowDropList();}
+
+
+    /**
+     * Creates New Food from list in FoodFactory.
+     */
 
     public Food newStaticFood() {
         return FoodFactory.createNewFood(1 , 0 , 0);
@@ -122,27 +165,28 @@ public class Model extends Observable {
     public Food newAIMoveableFood() {
         return FoodFactory.createNewFood(3, 0,0);
     }
-    public RainbowDrop newRainbowRainFood(int x , int y){
-        return (RainbowDrop) FoodFactory.createNewFood(4, x,y);
-    }
+
 
 
     public void addFood(Food food) {
-        foodFactory.AddList(food);
+        foodFactory.addList(food);
     }
-    public  void addNegativeFood(Food food){foodFactory.AddNegativeList(food);}
-    public void addrainbowRainFood(RainbowDrop food) {
-        foodFactory.AddRainbowDropList(food);
-    }
+    public  void addNegativeFood(Food food){foodFactory.addNegativeList(food);}
 
+
+    /**
+     * Remove Food from FoodFactory List
+     */
     public void removeFood(Food food) {
-        foodFactory.RemoveList(food);
+        foodFactory.removeList(food);
     }
 
     public int getScore() {
         return SnakeObject.score;
     }
-
+    /**
+     *  Checks if Snakes head touchs Snakes Body
+     */
     public void eatBody() {
 
         if (SnakeObject.getLength() == 1) return;
@@ -157,6 +201,9 @@ public class Model extends Observable {
         }
     }
 
+    /**
+     *  Checks if Snake is within Boundaries of Screen
+     */
     public void outOfBounds() {
         boolean xOut = (SnakeObject.getX() <= 0 || SnakeObject.getX() >= (FRAME_WIDTH - SnakeObject.getWidth()));
         boolean yOut = (SnakeObject.getY() <= 0 || SnakeObject.getY() >= (FRAME_HEIGHT - SnakeObject.getHeight()));
@@ -164,7 +211,9 @@ public class Model extends Observable {
             SnakeObject.isAlive = false;
         }
     }
-
+    /**
+     *  Obseravble Function
+     */
     public void notifyObservers() {
         setChanged();
         super.notifyObservers();
@@ -173,7 +222,15 @@ public class Model extends Observable {
     public void clearFoods() {
         foodFactory.clearList();
     }
+    /**
+     * get the end game state.
+     */
     public boolean endGame(){ return EndGame;}
+    /**
+     * Sets the end game state.
+     *
+     * @param bool True to end the game, false otherwise.
+     */
     public void setEndGame(boolean bool ){ EndGame = bool;}
 
 

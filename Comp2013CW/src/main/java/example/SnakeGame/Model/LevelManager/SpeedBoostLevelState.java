@@ -6,7 +6,10 @@ import example.SnakeGame.Model.GameObjects.Snake;
 import example.SnakeGame.Model.Model;
 import example.Utilities.SoundManager;
 import javafx.scene.image.Image;
-
+/**
+ * The SpeedBoostLevelState class represents a game level where the snake can experience a speed boost.
+ * During a speed boost, the snake's movement speed is temporarily increased, adding excitement and challenge to the game.
+ */
 public class SpeedBoostLevelState implements LevelState {
     private LevelManager levelManager;
 
@@ -17,6 +20,13 @@ public class SpeedBoostLevelState implements LevelState {
     LevelStageType levelStageType = LevelStageType.SPEED_BOOST;
 
     private SoundManager soundManager = SoundManager.getInstance();
+
+
+    /**
+     * Constructor for the SpeedBoostLevelState class.
+     *
+     * @param levelManager The LevelManager associated with this level state.
+     */
     public SpeedBoostLevelState(LevelManager levelManager) {
         this.levelManager = levelManager;
         this.model = levelManager.getModel();
@@ -29,7 +39,10 @@ public class SpeedBoostLevelState implements LevelState {
         Snake snake = model.getSnake();
         snake.setVisible(true);
     }
-
+    /**
+     * Updates the state of the SpeedBoostLevelState.
+     * Manages the speed boost logic, including duration, activation, and the impact on the snake's speed.
+     */
     @Override
     public void update() {
 
@@ -101,10 +114,7 @@ public class SpeedBoostLevelState implements LevelState {
         return ImageUtil.images.get("SpeedBoostLevelState-background");
     }
 
-    @Override
-    public void setStartState() {
 
-    }
 
 
 }

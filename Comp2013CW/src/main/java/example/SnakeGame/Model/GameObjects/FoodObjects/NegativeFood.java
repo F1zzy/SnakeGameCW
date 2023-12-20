@@ -1,12 +1,16 @@
 package example.SnakeGame.Model.GameObjects.FoodObjects;
 
 import example.Utilities.ImageUtil;
-
+/**
+ * Represents a negative food object in the Snake game.
+ * Negative Points
+ */
 public class NegativeFood extends Food {
     /**
-     * Constructor to make a new Food object with a random image and position.
+     * Constructor to create a new NegativeFood object with a specific position.
      *
-     *
+     * @param x The x-coordinate of the NegativeFood object.
+     * @param y The y-coordinate of the NegativeFood object.
      */
     public NegativeFood(int x , int y){
         super(x, y);

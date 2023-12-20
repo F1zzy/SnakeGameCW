@@ -5,12 +5,10 @@ import example.SnakeGame.Model.GameObjects.EnemyObject;
 import example.Utilities.ImageUtil;
 import example.Settings.Settings;
 import example.SnakeGame.Model.GameObjects.FoodObjects.Food;
-import example.SnakeGame.Model.GameObjects.FoodObjects.RainbowDrop;
 import example.SnakeGame.Model.GameObjects.Snake;
 import example.SnakeGame.Model.LevelManager.LevelState;
 import example.SnakeGame.Model.Model;
 import javafx.animation.FadeTransition;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -29,21 +27,22 @@ import javafx.scene.text.Font;
 import javafx.scene.control.TextField;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import static example.LeaderBoard.LeaderBoardUtil.GreaterThanHighScore;
-
+/**
+ * The View class represents the user interface and handles the rendering of the Snake Game.
+ * It observes the Model for changes and updates the UI accordingly.
+ */
 public class View implements Observer {
 
     public Image background = ImageUtil.images.get("UI-background");
     public Image fail = ImageUtil.images.get("Fail-Scene");
 
-    private static final int FRAME_WIDTH = 900;
-    private static final int FRAME_HEIGHT = 600;
+    private static final int FRAME_WIDTH = MainMenu.FRAME_WIDTH;
+    private static final int FRAME_HEIGHT = MainMenu.FRAME_HEIGHT;
 
     private Model model;
     private Controller controller;
@@ -52,12 +51,17 @@ public class View implements Observer {
     private GraphicsContext gc;
 
     private final Stage stage;
-    private LevelState levelState;
 
     private VBox pauseMenu;
     private StackPane pauseMenuOverlay;
     private Label levelStateLabel;
     private Label scoreLabel;
+    /**
+     * Constructs a new View instance with the provided Model and Controller.
+     *
+     * @param model      The Model instance to observe for changes.
+     * @param controller The Controller instance to handle user input.
+     */
     public View(Model model, Controller controller) {
         this.stage = MainMenu.getMainStage();
         this.model = model;
@@ -68,7 +72,9 @@ public class View implements Observer {
         initPauseMenu();
         model.addObserver(this);
     }
-
+    /**
+     * Initializes the user interface components, including the canvas, buttons, and labels.
+     */
     private void initializeUI() {
         root = new StackPane();
 
@@ -84,6 +90,7 @@ public class View implements Observer {
         root.setFocusTraversable(true);
 
         Button pauseButton = Settings.createStyledButton("Pause");
+        pauseButton.setId("pauseButton");
         pauseButton.setOnAction(e -> controller.pauseGame());
         StackPane.setAlignment(pauseButton, Pos.TOP_RIGHT);
         root.getChildren().add(pauseButton);
@@ -106,38 +113,60 @@ public class View implements Observer {
         stage.setResizable(false);
         stage.show();
     }
+    @Override
+    public void update(Observable o, Object arg) {
+        draw();
+    }
 
+    /**
+     * Draws the game elements on the canvas, including the background, snake, foods, and score
+     * And Level Specifc Objects eg, Enenmy.
+     */
     public void draw() {
+        //Clear Screen
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
+
+        //If Game has not ended Draw to Screen
         if (!model.endGame()) {
+
             drawBackground();
             drawSnake();
             drawFoods();
             drawScore();
             drawLevelState();
             if(model.getLevelState().getType() == LevelState.LevelStageType.ENENMY) drawEnemy();
-
+            if(model.getLevelState().getType() == LevelState.LevelStageType.NEGATIVEFOOD) drawNegativeFood();
         }
     }
-
+    /**
+     * Draws the enemy object
+     * Only Used in AIEnemy Level State .
+     */
     private void drawEnemy() {
         EnemyObject enemy = model.getEnemyObject();
         gc.drawImage(enemy.getImage(), enemy.getX(), enemy.getY());
     }
 
+    /**
+     * Draws the current level state on the canvas.
+     */
     private void drawLevelState() {
         // Get the current level state name
         levelStateLabel.setText(model.getLevelState().getName());
     }
-
+    /**
+     * Draws the background image on the canvas.
+     */
     private void drawBackground() {
 
         Image background = model.getLevelState().getLevelBackground();
 
         gc.drawImage(background, 0, 0, canvas.getWidth(), canvas.getHeight());
     }
-
+    /**
+     * Draws the snake on the canvas, including the snake head and body segments.
+     */
     private void drawSnake() {
 
         Snake snake = model.getSnake();
@@ -153,13 +182,13 @@ public class View implements Observer {
 
         switch (snake.Direction) {
             case 1:
-                newImgSnakeHead = rotateImage(snakeHead, -90);
+                newImgSnakeHead = ImageUtil.rotateImage(snakeHead, -90);
                 break;
             case 3:
-                newImgSnakeHead = rotateImage(snakeHead, 90);
+                newImgSnakeHead = ImageUtil.rotateImage(snakeHead, 90);
                 break;
             case 4:
-                newImgSnakeHead = rotateImage(snakeHead, -180);
+                newImgSnakeHead = ImageUtil.rotateImage(snakeHead, -180);
                 break;
             default:
                 break;
@@ -170,7 +199,9 @@ public class View implements Observer {
         // Draw snake body
         drawBody();
     }
-
+    /**
+     * Draws the snake body on the canvas.
+     */
     private void drawBody() {
 
         Snake snake = model.getSnake();
@@ -183,22 +214,31 @@ public class View implements Observer {
             gc.drawImage(snakeBody, point.x, point.y);
         }
     }
-
+    /**
+     * Draws the food objects on the canvas
+     */
     private void drawFoods() {
         List<Food> foods = model.getFoodsList();
         for (Food food : foods) {
             gc.drawImage(food.getFoodImage(), food.getX(), food.getY());
         }
-        foods = model.getNegativeFoodsList();
+
+
+    }
+    /**
+     * Draws the Negative food objects
+     * Only called if Level State is Negative Food
+     */
+    private  void drawNegativeFood(){
+        List<Food> foods = model.getNegativeFoodsList();
         for (Food food : foods) {
-            gc.drawImage(food.getFoodImage(), food.getX(), food.getY());
-        }
-        List<RainbowDrop> rainbowfoods = model.getrainbowDropList();
-        for (RainbowDrop food : rainbowfoods) {
             gc.drawImage(food.getFoodImage(), food.getX(), food.getY());
         }
     }
 
+    /**
+     * Draws the current score on the canvas, highlighting a new high score if achieved.
+     */
     private void drawScore() {
         boolean isHighScore = GreaterThanHighScore(model.getScore());
 
@@ -209,7 +249,9 @@ public class View implements Observer {
         // Update the text of the scoreLabel
         scoreLabel.setText(scoreMessage);
     }
-
+    /**
+     * Displays the game over scene, including buttons for "Go Back" and "Retry," and an input box for submitting scores.
+     */
     public void gameOverScene() {
         drawBackground();
         model.getSnake().setVisible(true);
@@ -259,15 +301,16 @@ public class View implements Observer {
     }
 
 
-    @Override
-    public void update(Observable o, Object arg) {
-        draw();
-    }
+
 
     public Canvas getCanvas() {
         return canvas;
     }
-
+    /**
+     * Updates the countdown display with the given number or "GO."
+     *
+     * @param i The countdown number.
+     */
     public void drawCountdown(int i) {
         // Create a Text node with the countdown number or "GO"
         Text countdownText = new Text(i == 4 ? "GO" : Integer.toString(i));
@@ -295,56 +338,44 @@ public class View implements Observer {
         fadeTransition.play();
     }
 
-    private Image rotateImage(Image image, int degrees) {
-        int width = (int) image.getWidth();
-        int height = (int) image.getHeight();
-
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
-        // Create a Graphics2D object from the BufferedImage
-        Graphics2D graphics = bufferedImage.createGraphics();
-
-        // Rotate the image
-        AffineTransform transform = AffineTransform.getRotateInstance(Math.toRadians(degrees), width / 2, height / 2);
-        graphics.setTransform(transform);
-
-        // Draw the rotated image onto the BufferedImage
-        graphics.drawImage(SwingFXUtils.fromFXImage(image, null), 0, 0, null);
-
-        // Dispose the Graphics2D object
-        graphics.dispose();
-
-        // Convert the rotated BufferedImage back to JavaFX Image
-        return SwingFXUtils.toFXImage(bufferedImage, null);
-    }
-
+    /**
+     * Initializes the pause menu layout with buttons such as "Resume," "Retry," and "Go Back."
+     */
     public void initPauseMenu() {
 
         // Create "Resume" button
         Button resumeButton = Settings.createStyledButton("Resume");
         resumeButton.setOnAction(e -> controller.resumeGame());
+        resumeButton.setId("resumeButton");
 
         // Create "Retry" button
         Button retryButton = Settings.createStyledButton("Retry");
         retryButton.setOnAction(e -> controller.retry());
+        retryButton.setId("retryButton");
 
         // Create "Go Back" button
         Button goBackButton = Settings.createStyledButton("Go Back");
         goBackButton.setOnAction(e -> controller.goBack());
+        goBackButton.setId("goBackButton");
 
         // Create layout for the pause menu
         pauseMenu = new VBox(20);
        pauseMenu.setAlignment(Pos.CENTER);
         pauseMenu.getChildren().addAll(resumeButton, retryButton, goBackButton);
     }
+
+    /**
+     * Displays the pause menu in the center of the screen.
+     * With A Dimmed overlay
+     */
     public void showPauseMenu() {
         // Show the pause menu in the center of the screen
         root.getChildren().add(pauseMenuOverlay);
         root.getChildren().add(pauseMenu);
-
-
     }
-
+    /**
+     * Hides the pause menu.
+     */
     public void hidePauseMenu() {
         // Hide the pause menu
        root.getChildren().removeAll(pauseMenu , pauseMenuOverlay);

@@ -10,7 +10,10 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+/**
+ * The MultipleFoodLevelState class represents a game level where multiple static food items are generated
+ * Instead of 1.
+ */
 public class MultipleFoodLevelState implements LevelState {
     private LevelManager levelManager;
     private Random random;
@@ -18,6 +21,12 @@ public class MultipleFoodLevelState implements LevelState {
 
     private Model model;
     private SoundManager soundManager = SoundManager.getInstance();
+
+    /**
+     * Constructor for the MultipleFoodLevelState class.
+     *
+     * @param levelManager The LevelManager associated with this level state.
+     */
     public MultipleFoodLevelState(LevelManager levelManager) {
         this.levelManager = levelManager;
         this.random = new Random();
@@ -28,7 +37,10 @@ public class MultipleFoodLevelState implements LevelState {
         snake.setSpeed(snake.getOriginalSpeed());
         snake.setVisible(true);
     }
-
+    /**
+     * Updates the state of the MultipleFoodLevelState.
+     * Checks for collisions with static food and manages the generation of new random fruits.
+     */
     @Override
     public void update() {
         Model model = levelManager.getModel();
@@ -43,7 +55,7 @@ public class MultipleFoodLevelState implements LevelState {
                 generateRandomFruits();
             } else {
                 // Check if any fruit is eaten by the snake
-                checkFruitCollision();
+                checkMultipleFruitCollision();
             }
         } else {
             model.setEndGame(true);
@@ -65,10 +77,7 @@ public class MultipleFoodLevelState implements LevelState {
         return ImageUtil.images.get("MultipleFoodLevelState-background");
     }
 
-    @Override
-    public void setStartState() {
 
-    }
 
     private void generateRandomFruits() {
         Model model = levelManager.getModel();
@@ -79,8 +88,11 @@ public class MultipleFoodLevelState implements LevelState {
             model.addFood(food);
         }
     }
-
-    private void checkFruitCollision() {
+    /**
+     * Checks for collisions between the snake and Multiple  food items.
+     * Removes eaten fruits and adds new ones to maintain a certain number on the screen.
+     */
+    private void checkMultipleFruitCollision() {
         Model model = levelManager.getModel();
         Snake snake = model.getSnake();
 
