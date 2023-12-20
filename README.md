@@ -1,11 +1,4 @@
 # README.md
-
-![Options Screen](image.png)
-
-
-
-![Leaderboard](image-2.png)
-
 # COMP2013 - Snake Game
 
 ### Snakee Yipiee
