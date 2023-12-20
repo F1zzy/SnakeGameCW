@@ -1,7 +1,7 @@
 package example.SnakeGame;
 
+import example.MainMenu;
 import example.SnakeGame.Model.GameObjects.EnemyObject;
-import example.SnakeGame.Model.LevelManager.EvilAIEnemyLevelState;
 import example.Utilities.ImageUtil;
 import example.Settings.Settings;
 import example.SnakeGame.Model.GameObjects.FoodObjects.Food;
@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import static example.LeaderBoard.LeaderBoard.GreaterThanHighScore;
+import static example.LeaderBoard.LeaderBoardUtil.GreaterThanHighScore;
 
 public class View implements Observer {
 
@@ -51,24 +51,25 @@ public class View implements Observer {
     private Canvas canvas;
     private GraphicsContext gc;
 
-    private Stage stage;
+    private final Stage stage;
     private LevelState levelState;
 
     private VBox pauseMenu;
     private StackPane pauseMenuOverlay;
     private Label levelStateLabel;
     private Label scoreLabel;
-    public View(Model model, Controller controller, Stage stage) {
+    public View(Model model, Controller controller) {
+        this.stage = MainMenu.getMainStage();
         this.model = model;
         this.controller = controller;
 
-        initializeUI(stage);
+        initializeUI();
 
         initPauseMenu();
         model.addObserver(this);
     }
 
-    private void initializeUI(Stage stage) {
+    private void initializeUI() {
         root = new StackPane();
 
         canvas = new Canvas(FRAME_WIDTH, FRAME_HEIGHT);

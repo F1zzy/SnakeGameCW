@@ -10,12 +10,20 @@ import java.io.IOException;
 import java.util.Properties;
 import javafx.scene.text.Font;
 
-
+/**
+ * The SettingsManager class provides methods for saving and loading game and UI settings
+ * to and from a properties file.
+ */
 public class SettingsManager {
-    private static final String SAVE_FILE_PATH = "src/main/resources/SaveFiles";
-    private static final String SETTINGS_FILE_PATH = "src/main/resources/SaveFiles/settings.properties";
-    private static final String CSS_FILE_PATH = "/SaveFiles/settings.properties"; // Update with your actual path
+    // Constants for file paths
+    private static  String SETTINGS_FILE_PATH = "src/main/resources/SaveFiles/settings.properties";
 
+    /**
+     * Saves game settings (head and body) to the properties file.
+     *
+     * @param head The selected snake head image name.
+     * @param body The selected snake body image name.
+     */
     public static void saveGameSettings(String head, String body) {
         Properties properties = new Properties();
 
@@ -39,7 +47,16 @@ public class SettingsManager {
             e.printStackTrace(); // You might want to replace this with appropriate logging
         }
     }
-
+    /**
+     * Saves UI settings (primaryColor, secondaryColor, font, textSize, bold) to the properties file.
+     * Also loads the settings immediately after saving.
+     *
+     * @param primaryColor   The primary color selected by the user.
+     * @param secondaryColor The secondary color selected by the user.
+     * @param font           The selected font.
+     * @param textSize       The selected text size.
+     * @param bold           The selected font weight.
+     */
     public static void saveUISettings(Color primaryColor, Color secondaryColor, Font font, int textSize , Settings.FontWeightEnum bold) {
         Properties properties = new Properties();
 
@@ -67,6 +84,9 @@ public class SettingsManager {
         }
         loadSettings();
     }
+    /**
+     * Loads settings from the properties file and updates the Settings class to update Stage.
+     */
     public static void loadSettings() {
         try (FileInputStream input = new FileInputStream(SETTINGS_FILE_PATH)) {
             Properties properties = new Properties();
@@ -83,25 +103,30 @@ public class SettingsManager {
             Settings.SnakeBodyPath = "snake-body-" + body + ".png";
 
             // Set the loaded values to the Settings class
-            Settings.PrimaryColor = Color.web(primaryColor);
-            Settings.SecondaryColor = Color.web(secondaryColor);
+            Settings.primaryColor = Color.web(primaryColor);
+            Settings.secondaryColor = Color.web(secondaryColor);
             Settings.font = Font.font(font);
-            Settings.TextSize = Integer.parseInt(textSize);
+            Settings.textSize = Integer.parseInt(textSize);
             Settings.fontWeight = getFontWeightEnum(isBold);
 
             System.out.println("Loaded Head: " + head);
             System.out.println("Loaded Body: " + body);
-            System.out.println("Loaded Primary Color: " + Settings.PrimaryColor);
-            System.out.println("Loaded Secondary Color: " + Settings.SecondaryColor);
+            System.out.println("Loaded Primary Color: " + Settings.primaryColor);
+            System.out.println("Loaded Secondary Color: " + Settings.secondaryColor);
             System.out.println("Loaded Font: " + Settings.font.getFamily());
-            System.out.println("Loaded Text Size: " + Settings.TextSize);
+            System.out.println("Loaded Text Size: " + Settings.textSize);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    private static Settings.FontWeightEnum getFontWeightEnum(String isBold) {
+    /**
+     * Converts a string representation of font weight to the corresponding enum value.
+     *
+     * @param isBold The string representation of font weight.
+     * @return The corresponding FontWeightEnum value.
+     */
+    public static Settings.FontWeightEnum getFontWeightEnum(String isBold) {
         return switch (isBold) {
             case "BOLD" -> Settings.FontWeightEnum.BOLD;
             case "NORMAL" -> Settings.FontWeightEnum.NORMAL;
@@ -113,8 +138,13 @@ public class SettingsManager {
 
 
 
-    // Existing method to convert Color to hexadecimal
-    private static String toHex(Color color) {
+    /**
+     * Converts a Color object to its hexadecimal representation.
+     *
+     * @param color The Color object to convert.
+     * @return The hexadecimal representation of the color.
+     */
+    public static String toHex(Color color) {
         return String.format("#%02X%02X%02X",
                 (int) (color.getRed() * 255),
                 (int) (color.getGreen() * 255),
@@ -123,5 +153,10 @@ public class SettingsManager {
     }
 
 
+    //Testing Utitilities
+
+    public static void setSettingsFilePath( String path) {
+        SETTINGS_FILE_PATH = path;
+    }
 }
 

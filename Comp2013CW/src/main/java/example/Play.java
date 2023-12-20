@@ -17,13 +17,11 @@ import javax.swing.JPanel;
 import static java.lang.Thread.sleep;
 
 /**
- * 
  * @Project Snakee
- * @Description
- * Play the game
+ * @Description A simple Snakee game implementation using JavaFX.
  * @Author Abdullah Tukur
- * @version
- */ 
+ * @Version 1.0
+ */
 
 public class Play {
 
