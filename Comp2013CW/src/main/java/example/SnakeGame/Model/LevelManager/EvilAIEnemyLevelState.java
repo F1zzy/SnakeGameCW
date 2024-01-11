@@ -9,7 +9,10 @@ import example.Utilities.SoundManager;
 import javafx.scene.image.Image;
 
 import java.util.Random;
-
+/**
+ * The EvilAIEnemyLevelState class represents a game level where an evil AI enemy is introduced.
+ * The snake needs to avoid the enemy while eating static food items.
+ */
 public class EvilAIEnemyLevelState implements LevelState{
     private LevelManager levelManager;
     private Model model;
@@ -19,6 +22,12 @@ public class EvilAIEnemyLevelState implements LevelState{
 
     private LevelStageType levelStageType = LevelStageType.ENENMY;
     private final SoundManager  soundManager = SoundManager.getInstance();
+
+    /**
+     * Constructor for the EvilAIEnemyLevelState class.
+     *
+     * @param levelManager The LevelManager associated with this level state.
+     */
     public EvilAIEnemyLevelState(LevelManager levelManager) {
         this.levelManager = levelManager;
         this.random = new Random();
@@ -38,7 +47,10 @@ public class EvilAIEnemyLevelState implements LevelState{
 
     }
 
-
+    /**
+     * Updates the state of the EvilAIEnemyLevelState.
+     * Checks for collisions with static food and enemy and updates the enemy's position.
+     */
     @Override
     public void update() {
         this.model = levelManager.getModel();
@@ -69,6 +81,7 @@ public class EvilAIEnemyLevelState implements LevelState{
         } else {
             model.setEndGame(true);
         }
+        //Enemy Move Enemy Towards Snake Head
         enemy.move(snake.getX() , snake.getY());
 
     }

@@ -13,7 +13,10 @@ import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * The NegativeFoodLevelState class represents a game level where negative food items are introduced.
+ * Negative food items have a negative impact on the snake.
+ */
 public class NegativeFoodLevelState implements LevelState {
     private LevelManager levelManager;
     private Random random;
@@ -23,6 +26,10 @@ public class NegativeFoodLevelState implements LevelState {
     LevelStageType levelStageType = LevelStageType.NEGATIVEFOOD;
 
     private SoundManager soundManager = SoundManager.getInstance();
+    /**
+     * Updates the state of the NegativeFoodLevelState.
+     * Checks for collisions with static and negative food items, managing their generation and impact on the snake.
+     */
     public NegativeFoodLevelState(LevelManager levelManager) {
         this.levelManager = levelManager;
         this.random = new Random();
@@ -94,7 +101,10 @@ public class NegativeFoodLevelState implements LevelState {
     }
 
 
-
+    /**
+     * Checks for collisions between the snake and negative food items.
+     * Removes eaten negative fruits from the model's Food Factory
+     */
     private void checkNegativeFoodCollision() {
         Model model = levelManager.getModel();
         Snake snake = model.getSnake();

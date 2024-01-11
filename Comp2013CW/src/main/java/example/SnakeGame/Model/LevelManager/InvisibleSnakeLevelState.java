@@ -2,8 +2,6 @@ package example.SnakeGame.Model.LevelManager;
 
 import example.SnakeGame.Model.GameObjects.FoodObjects.Food;
 import example.SnakeGame.Model.GameObjects.Snake;
-import example.SnakeGame.Model.LevelManager.LevelManager;
-import example.SnakeGame.Model.LevelManager.LevelState;
 import example.SnakeGame.Model.Model;
 import example.Utilities.ImageUtil;
 import example.Utilities.SoundManager;
@@ -14,7 +12,7 @@ public class InvisibleSnakeLevelState implements LevelState {
     private int speedBoostStartTime;
 
     private int invisibleDuration;
-    private boolean invisibleTime;
+    private boolean isInvisible;
     private boolean isFruitGenerated;
     private final LevelStageType levelStageType = LevelStageType.INVISIBLE ;
 
@@ -42,11 +40,12 @@ public class InvisibleSnakeLevelState implements LevelState {
         model.outOfBounds();
         model.eatBody();
 
-        // Boost Logic
-        if (invisibleTime) {
+        // Invisible  Logic -
+        if (isInvisible) {
             invisibleDuration++;
             if (invisibleDuration > 90) {
-                invisibleTime = false;
+                //Invisiblity Gone.
+                isInvisible = false;
                 snake.setVisible(true);
                 snake.getBodyPoints().clear();
             }
@@ -67,8 +66,8 @@ public class InvisibleSnakeLevelState implements LevelState {
                     fruit.eaten(snake);
                     model.getFoodsList().remove(0);
                     isFruitGenerated = false;
-
-                    invisibleTime = true;
+                    //Food Eaten. invisible time
+                    isInvisible = true;
                     snake.setVisible(false);
                     invisibleDuration = 0;
                 }

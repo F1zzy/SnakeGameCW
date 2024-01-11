@@ -4,7 +4,7 @@ import example.SnakeGame.Model.Model;
 import example.Utilities.ImageUtil;
 
 public class EnemyObject extends GameObject{
-    private static final int Enemy_SPEED = 2;
+    private static final int Enemy_SPEED = 1;
 
 
     public  EnemyObject(int x , int y) {
@@ -29,6 +29,7 @@ public class EnemyObject extends GameObject{
     }
 
     public void move(double snakeX, double snakeY) {
+        double interpolationFactor = 0.1;
         // Calculate the direction from the enemy to the snake
         double directionX = snakeX - this.getX();
         double directionY = snakeY - this.getY();
@@ -40,9 +41,17 @@ public class EnemyObject extends GameObject{
         directionX /= distance;
         directionY /= distance;
 
-        // Calculate the new position based on the normalized direction and movement speed
-        this.x += (int) (directionX * Enemy_SPEED);
-        this.y += (int) (directionY * Enemy_SPEED);
+        // Calculate the target position based on the normalized direction and movement speed
+        double targetX = this.getX() + directionX * Enemy_SPEED;
+        double targetY = this.getY() + directionY * Enemy_SPEED;
+
+        // Linear interpolation for smoother movement
+        this.x = (int) lerp(this.getX(), targetX, interpolationFactor);
+        this.y = (int) lerp(this.getY(), targetY, interpolationFactor);
+    }
+
+    private double lerp(double start, double end, double interpolationFactor) {
+        return start + interpolationFactor * (end - start);
     }
 
 }

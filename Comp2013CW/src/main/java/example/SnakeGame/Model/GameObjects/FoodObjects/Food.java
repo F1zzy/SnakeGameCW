@@ -18,6 +18,10 @@ public abstract class Food extends GameObject implements Serializable {
 
 	}
 
+	public boolean isAlive() {
+		return isAlive;
+	}
+
 	public enum FoodType {
 		NORMAL, NEGATIVE , MOVEABLE , RAINDROP
 	}
@@ -29,20 +33,6 @@ public abstract class Food extends GameObject implements Serializable {
     /**
      * Constructor to make a new Food object with a random image and position.
      */
-//	public Food(Image image){
-//		this.isAlive = true;
-//		//ImageUtil.images.get(String.valueOf(new Random().nextInt(10)));
-//		this.image = image;
-//
-//		this.width = (int) image.getWidth();
-//		this.height = (int) image.getHeight();
-//
-//
-//		// Set random coordinates for the food within the game panel
-//		this.x = (int) (Math.random() * (870 - width + 10));
-//		this.y = (int) (Math.random() * (560 - height - 40));
-//
-//	}
     public Food(Image image) {
 		this.isAlive = true;
 		this.image = image;

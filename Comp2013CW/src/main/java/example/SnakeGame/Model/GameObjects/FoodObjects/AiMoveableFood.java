@@ -1,14 +1,16 @@
 package example.SnakeGame.Model.GameObjects.FoodObjects;
 
+import example.MainMenu;
 import example.SnakeGame.Model.GameObjects.Snake;
 import javafx.scene.image.Image;
 
-public class AiMoveableFood extends Food {
-    private static final int SPEED = 2;
-    private static final int CORNER_THRESHOLD = 10;
+import javafx.scene.image.Image;
 
-    private static final int CHANGE_DIRECTION_INTERVAL = 6; // Adjust the interval for changing direction ( In Frames)
-    private static final double AVOIDANCE_DISTANCE = 30;
+public class AiMoveableFood extends Food {
+    private static final int SPEED = 1;
+
+    private static final int CHANGE_DIRECTION_INTERVAL = 120; // Adjust the interval for changing direction
+    private static final double AVOIDANCE_DISTANCE = 10;
 
     private int directionChangeCounter = 0;
     private int targetDirectionX;
@@ -17,16 +19,15 @@ public class AiMoveableFood extends Food {
         super(image);
 
         this.isAlive = true;
-        //ImageUtil.images.get(String.valueOf(new Random().nextInt(10)));
         this.image = image;
 
         this.width = (int) image.getWidth();
         this.height = (int) image.getHeight();
-        this.scoreValue = 1;
+        this.scoreValue = 5;
 
         // Set random coordinates for the food within the game panel
-        this.x = (int) (Math.random() * (870 - width + 10));
-        this.y = (int) (Math.random() * (560 - height - 40));
+        this.x = (int) (Math.random() * (MainMenu.FRAME_WIDTH - width));
+        this.y = (int) (Math.random() * (MainMenu.FRAME_HEIGHT - height));
     }
     public void move(Snake snake) {
         directionChangeCounter++;
@@ -41,23 +42,8 @@ public class AiMoveableFood extends Food {
         this.x += targetDirectionX * SPEED;
         this.y += targetDirectionY * SPEED;
 
-        // Ensure the food stays within the game boundaries
-        if (this.x < 0) {
-            this.x = 0;
-            chooseRandomDirection();
-        } else if (this.x > 900 - width) {
-            this.x = 900 - width;
-            chooseRandomDirection();
-        }
-
-        if (this.y < 0) {
-            this.y = 0;
-            chooseRandomDirection();
-        } else if (this.y > 600 - height) {
-            this.y = 600 - height;
-            chooseRandomDirection();
-        }
-
+        // Wrap around the edges
+        wrapAroundEdges();
     }
 
     private void chooseRandomDirection() {
@@ -87,9 +73,18 @@ public class AiMoveableFood extends Food {
             chooseRandomDirection();
         }
     }
+    private void wrapAroundEdges() {
+        if (this.x < 0) {
+            this.x = MainMenu.FRAME_WIDTH - width; // Wrap to the right side
+        } else if (this.x > MainMenu.FRAME_WIDTH - width) {
+            this.x = 0; // Wrap to the left side
+        }
 
+        if (this.y < 0) {
+            this.y = MainMenu.FRAME_HEIGHT - height; // Wrap to the bottom
+        } else if (this.y > MainMenu.FRAME_HEIGHT - height) {
+            this.y = 0; // Wrap to the top
+        }
     }
-
-
-
+}
 
