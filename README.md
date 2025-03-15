@@ -1,16 +1,11 @@
-# COMP2013 - Snake Game
+# Snake Game
 Author: Abdullah Tukur 
 **Last Update: 31st October 2023**
 # Introduction
-This coursework is about maintaining and extending a re-implementation of a classic retro game called Snake. The new implementation has never been completed, but at least it runs, once it is set up properly. More information about the original Snake game and its history is available on [Wikipedia](https://en.wikipedia.org/wiki/Snake_(video_game_genre)). In addition, you will find many opportunities on the internet to play the game online (e.g. [Crazy Games](https://www.crazygames.com/t/snake)).
+This Project is about maintaining and extending a re-implementation of a classic retro game called Snake. The new implementation has never been completed, but at least it runs, once it is set up properly. More information about the original Snake game and its history is available on [Wikipedia](https://en.wikipedia.org/wiki/Snake_(video_game_genre)). In addition, you will find many opportunities on the internet to play the game online (e.g. [Crazy Games](https://www.crazygames.com/t/snake)).
 
 This coursework contributes 75% to your overall 20 Credit COMP2013 assessment mark and will be marked out of 100. It is a substantial piece of work, so please plan your time well. We recommend dedicating approximately 40-60 total hours to the coursework. We expect 30-40 hours of work for those aiming for a pass (40+) and 60 or more hours for those aiming for a first (70+). Please keep in mind that the skill level varies quite a bit in a large class of students, and the exact number of hours depends on your individual skill level. To help you, we have fewer required lectures in the last two weeks of term, and some lab sessions are dedicated to your coursework.
 
-
-## COMP2013 Coursework Task Description
-**Deadline:**
-- Milestone 1 – Friday the 24th of November 2023
-- Milestone 2 – Tuesday 12th of December 2023
 
 **Assessment Criteria**
 The marks will be split as follows (for details see Appendix 1):
@@ -41,9 +36,7 @@ As a part of initial maintenance understand the code. You can perhaps do the fol
   - Explain the source and your initial thoughts on some maintenance tasks( refactoring and additional functionalities). Here we will look for your basic understanding of the source code and some understanding of what maintenance tasks you have to carry out.
   - Video recording should not be more than 3 minutes. We will look for the quality of the video, clarity of the voice, clear images, clear navigation synch with clear explanation.
 
-**Milestone 2 – Final deliverable (90%)**
 
-[See the marking scheme for the individual requirements and attached .](COMP2013%20Marking%20Scheme.md)
 
 **2nd Video presentation 7 minutes**
 Use screen-capturing software to demonstrate your achievements.
